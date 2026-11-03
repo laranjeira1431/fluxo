@@ -257,8 +257,8 @@ flutter doctor
 Só para quem ainda não tem a pasta no computador:
 
 ```bash
-git clone https://github.com/annaelizacc/ProjetoDeSoftware.git
-cd ProjetoDeSoftware
+git clone https://github.com/laranjeira1431/fluxo.git
+cd fluxo
 ```
 
 Configurar o Git com o **seu** nome e e-mail (para o histórico mostrar

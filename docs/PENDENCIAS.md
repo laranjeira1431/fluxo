@@ -104,6 +104,17 @@ branch própria.
   linha). As tabelas não mudaram. Depois que a F04 entrar na `main`,
   **recriar o banco local** com o script novo para ver os passos novos;
   sem recriar, o app funciona com as descrições antigas.
+- **Mudança de repositório que afeta todo mundo (03/11/2026):** o
+  repositório oficial passou a ser
+  <https://github.com/laranjeira1431/fluxo>. Ele é uma cópia exata do
+  antigo (`annaelizacc/ProjetoDeSoftware`), com todos os commits e
+  branches. Os Pull Requests #1 a #27 não são copiados pelo Git e ficam
+  só no repositório antigo, que continua no ar para consulta. Antes da
+  próxima tarefa, cada pessoa aponta a própria pasta para o endereço
+  novo e confere:
+  `git remote set-url origin https://github.com/laranjeira1431/fluxo.git`,
+  depois `git remote -v` e `git fetch`. Os Pull Requests novos são
+  abertos no repositório novo.
 - **Por que essa ordem:** a Pessoa A faz as tarefas que as outras usam
   como base (banco, visual, autenticação, área do organizador). A Pessoa
   B começa pelo que não depende de nada.

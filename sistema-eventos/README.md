@@ -8,71 +8,15 @@ regras de inscrição/favoritos do primeiro projeto foram aproveitados; a
 estrutura de Models e Repositories compatível com o banco oficial veio do
 segundo projeto. O SQL final preserva as tabelas e os dados do banco oficial.
 
-## 1. Funcionalidades implementadas
+## 1. Funcionalidades
 
-1. Visualizar a programação geral do evento.
-2. Visualizar detalhes de uma palestra.
-3. Inscrever-se em uma palestra com controle automático de vagas.
-4. Cancelar inscrição e devolver a vaga.
-5. Favoritar uma palestra.
-6. Visualizar agenda personalizada com as palestras inscritas.
-7. Visualizar notificações relacionadas às palestras.
-8. Pesquisar palestras por tema pela API.
-9. Visualizar e gerenciar os favoritos.
-10. Ativar e desativar lembretes de palestras.
-11. Alternar entre modo claro e modo escuro (Perfil → Modo escuro); a
-    escolha fica salva no celular.
-12. Criar uma conta pelo app (Login → "Criar conta"): nome, e-mail e
-    senha de 8 a 16 caracteres. Depois do cadastro, a pessoa já
-    entra no app.
-13. Avaliar uma palestra com 1 a 5 estrelas e um comentário opcional
-    (Detalhes → "Avaliar"), além de editar ou excluir a própria
-    avaliação. Só quem está inscrito pode avaliar, e só depois que a
-    palestra começa. A média aparece nos cards da Programação e nos
-    Detalhes, com a lista de comentários.
-14. Área do organizador (Perfil → Área do organizador, só para
-    organizadores): painel do evento (palestras, inscrições, esgotadas,
-    ocupação das vagas e média das avaliações), ranking das palestras e
-    gerenciamento das inscrições (ver os inscritos e remover uma
-    inscrição, que devolve a vaga e avisa a pessoa). Cada evento tem um
-    só organizador responsável, que vê só os próprios eventos; o
-    administrador vê todos.
-15. Sair da conta (Perfil → Sair).
-16. Ver os patrocinadores do evento (Programação → "Patrocinadores"):
-    logo, nome, descrição e site de cada empresa. Sem logo cadastrado,
-    aparecem as iniciais da empresa.
-17. Cadastros do organizador (Área do organizador → "Cadastros do
-    evento"): criar e editar o evento com a imagem da planta, os locais
-    com o passo a passo de como chegar, os palestrantes (com foto), as
-    palestras (com local, palestrante e total de vagas) e os
-    patrocinadores (com logo). As imagens aceitas são PNG, JPG ou WEBP
-    de até 5 MB. Excluir um evento pede a senha de quem está logado.
-18. Ver e pesquisar os palestrantes do evento pelo nome (Início →
-    "Palestrantes"). Tocar num palestrante abre o perfil dele, e tocar
-    numa palestra do perfil abre os detalhes dela.
-19. Ver a planta do lugar do evento (Início → "Localização", ou
-    Detalhes → **Ver planta**): o nome do lugar e quantas salas ele tem, a
-    imagem enviada pelo organizador, com zoom, e a lista das salas com o
-    caminho até cada uma e quantas palestras ela recebe.
-20. Ver como chegar até a sala de uma palestra (Detalhes → seção "Como
-    chegar", que começa fechada e abre ao tocar): o passo a passo a partir da entrada, escrito pelo
-    organizador com um passo por linha. O botão **Ver planta**, na linha
-    "Onde", abre a planta do evento.
-21. Aviso de choque de horário (F16): ao se inscrever numa palestra que
-    bate no horário com outra em que a pessoa já está inscrita, o app
-    mostra as duas e pergunta se ela quer se inscrever mesmo assim. A
-    inscrição não é bloqueada. Depois que a palestra começa, não dá mais
-    para se inscrever nem cancelar a inscrição. No Início, o card do
-    evento mostra a situação (**ACONTECENDO AGORA**, **EM 14 DIAS** ou
-    **ENCERRADO**); o evento encerrado fica cinza, com o botão **Ver
-    avaliações** (as palestras com a média e o total de avaliações).
-22. Aviso de início das palestras no celular (F02, RF09): com o lembrete
-    ativo, o Android mostra uma notificação 10 minutos antes do início,
-    mesmo com o app fechado. Tocar nela abre os detalhes da palestra. Só
-    no Android (veja "Celular Android pelo cabo USB"); no Chrome, o
-    lembrete é gravado e aparece em Avisos, sem a notificação.
+A lista numerada das funcionalidades implementadas, com a tela e a rota
+de cada uma, fica no [`README.md` da raiz do repositório](../README.md),
+na seção "Funcionalidades Implementadas". Ela fica num lugar só para não
+ficar diferente em dois arquivos. Como usar cada tela está na seção
+"Navegação e visual", e as regras de cada rota estão na seção "Rotas".
 
-Todas as funcionalidades principais percorrem:
+Todas as funcionalidades percorrem:
 
 ```text
 Flutter
@@ -88,7 +32,10 @@ Flutter
 
 - MySQL ou MariaDB;
 - Python 3.10 ou mais recente;
-- Flutter 3 ou mais recente;
+- Flutter **3.47.7** (canal stable), a versão usada pela equipe. Confira
+  com `flutter --version`. Com outra versão, o `flutter pub get` pode
+  escolher outras versões dos pacotes e reescrever o `pubspec.lock`.
+  Como trocar a versão: `docs/FLUXO_DE_TRABALHO.md`, passo 0.3;
 - Android Studio, Chrome ou outro dispositivo Flutter.
 
 ## 3. Criar o banco oficial
@@ -120,8 +67,12 @@ local, para o app não precisar mudar. As respostas trazem também
 `como_chegar`, com o passo a passo da entrada até a sala (F04).
 
 **Atenção:** o script começa com `DROP DATABASE`, ou seja, apaga e recria o
-banco inteiro. Quem já tinha o banco criado por uma versão anterior precisa
-rodá-lo de novo, sabendo que os dados locais serão perdidos.
+banco inteiro, **inclusive dados reais**. Por isso ele deve ser rodado
+**só na instalação** (ou num computador de testes). Quem já tinha o banco
+criado por uma versão anterior precisa rodá-lo de novo, sabendo que os
+dados locais serão perdidos. Com o sistema em uso, com dados reais, as
+mudanças no banco devem ser feitas com scripts de migração
+(`ALTER TABLE`), sem recriar o banco.
 
 A tabela oficial `notificacao` já tinha `id_palestra` e `tipo_notificacao`.
 Por isso ela também armazena os lembretes, sem criar uma tabela adicional.
@@ -199,7 +150,9 @@ explicação de cada comando e os erros mais comuns:
 `docs/FLUXO_DE_TRABALHO.md`, seções "0. Preparar o computador" e "Rodar o
 sistema no dia a dia".
 
-No terminal, a partir da raiz do repositório (`ProjetoDeSoftware/`):
+No terminal, a partir da raiz do repositório (a pasta `fluxo/`, criada
+pelo `git clone`; em cópias antigas do projeto, ela se chama
+`ProjetoDeSoftware/`):
 
 ```bash
 cd sistema-eventos
@@ -263,7 +216,9 @@ imagens antigas continuam na pasta, mas deixam de ser usadas.
 
 ## 5. Executar o Flutter
 
-Em outro terminal, também a partir da raiz do repositório:
+Em outro terminal, também a partir da raiz do repositório. A API e o
+app rodam separados, cada um no seu processo: o app só fala com a API
+pelas requisições HTTP.
 
 ```bash
 cd sistema-eventos/frontend/Flutter
@@ -344,6 +299,10 @@ breve"), o interruptor de **Modo escuro** e o botão **Sair**, que volta
 para o login. A escolha do tema é salva no próprio aparelho com o pacote
 `shared_preferences` (não vai para o banco).
 
+- **Início:** o card do evento mostra a situação (**ACONTECENDO AGORA**,
+  **EM 14 DIAS** ou **ENCERRADO**). O evento encerrado fica cinza, com o
+  botão **Ver avaliações** (as palestras com a média e o total de
+  avaliações).
 - **Programação:** uma aba para cada dia do evento (os dias que já
   passaram ficam acinzentados, mas abrem), filtros por tema, a lupa para
   buscar e o botão de **Patrocinadores** no topo. Cada palestra mostra um
@@ -406,16 +365,34 @@ Eles não controlam vagas nem fazem consultas complexas diretamente.
 
 ### Services
 
-Os Services estão em `backend/services/` e contêm as regras:
+Os Services estão em `backend/services/` e contêm as regras. Cada caso
+de uso tem o próprio Service, uma classe responsável por uma única ação
+(ex.: `CriarInscricaoService`, `CancelarInscricaoService`). As classes
+ficam numa subpasta por recurso:
 
-- `AuthService`: procura o usuário e valida a senha;
-- `EventoService`: lista eventos, programação e agenda;
-- `PalestraService`: detalha e pesquisa palestras;
-- `InscricaoService`: valida usuário, duplicidade, vagas e cancelamento;
-- `FavoritoService`: valida e gerencia favoritos;
-- `NotificacaoService`: ativa, desativa e lista lembretes;
-- `EnviarComunicadoService`: valida o comunicado e grava uma cópia para
-  cada participante do evento (F09).
+| Pasta | Services (casos de uso) |
+|---|---|
+| `auth/` | `AutenticarUsuarioService` (confere e-mail e senha), `TokenService` (gera e lê o token) |
+| `usuario/` | `CriarUsuarioService`, `BuscarUsuarioService`, `ListarUsuariosService`, `AtualizarUsuarioService`, `RemoverUsuarioService` |
+| `evento/` | `CriarEventoService`, `BuscarEventoService`, `ListarEventosService`, `AtualizarEventoService`, `RemoverEventoService`, `ObterProgramacaoService` |
+| `palestra/` | `CriarPalestraService`, `BuscarPalestraService`, `ListarPalestrasService` (com a pesquisa por tema), `AtualizarPalestraService`, `RemoverPalestraService` |
+| `participacao/` | `CriarInscricaoService` (vagas, duplicidade, choque de horário e palestra já iniciada), `CancelarInscricaoService` |
+| `agenda/` | `ObterAgendaUsuarioService` |
+| `favorito/` | `AdicionarFavoritoService`, `ListarFavoritosService`, `RemoverFavoritoService` |
+| `notificacao/` | `AtivarLembreteService`, `DesativarLembreteService`, `ListarNotificacoesService` |
+| `avaliacao/` | `CriarAvaliacaoService`, `ListarAvaliacoesService`, `AtualizarAvaliacaoService`, `RemoverAvaliacaoService` |
+| `organizador/` | `ListarMeusEventosService`, `ObterPainelService`, `ListarInscritosService`, `RemoverInscricaoService`, `EnviarComunicadoService` |
+| `palestrante/` | `CriarPalestranteService`, `BuscarPalestranteService`, `ListarPalestrantesService`, `AtualizarPalestranteService`, `RemoverPalestranteService` |
+| `localizacao/` | `CriarLocalService`, `ListarLocaisService`, `AtualizarLocalService`, `RemoverLocalService` |
+| `patrocinador/` | `CriarPatrocinadorService`, `ListarPatrocinadoresService`, `AtualizarPatrocinadorService`, `RemoverPatrocinadorService` |
+| `planta/` | `BuscarPlantaService`, `SalvarPlantaService` |
+| `upload/` | `SalvarImagemService` (confere o tipo e o tamanho da imagem e grava o arquivo) |
+
+As validações usadas por mais de um Service ficam em arquivos próprios:
+`services/usuario/validacoes_usuario.py` (nome, formato do e-mail e
+tamanho da senha, usados no cadastro e na edição da conta) e
+`services/validacoes_cadastro.py` (campos de texto dos cadastros do
+organizador).
 
 ### Models
 
@@ -424,13 +401,21 @@ Os Models representam as tabelas oficiais. Os nomes usam `id_usuario`,
 
 ### Repositories
 
-Repositories só foram usados quando a consulta deixa de ser um CRUD simples:
+Os Repositories estão em `backend/repositories/` e só foram usados
+quando a consulta deixa de ser um CRUD simples (o CRUD comum fica nas
+próprias Models, pelo `models/crud_mixin.py`):
 
-- busca de palestras com filtros;
-- agenda baseada em `participacao`;
-- favoritos com a palestra relacionada;
-- lembretes filtrados por usuário e palestra;
-- avaliações de uma palestra com o nome de quem avaliou.
+- `PalestraRepository`: busca de palestras com filtros (evento e tema);
+- `AgendaRepository` (em `palestra_repository.py`): agenda baseada em
+  `participacao`;
+- `FavoritoRepository`: favoritos com a palestra relacionada;
+- `NotificacaoRepository`: avisos e lembretes filtrados por usuário e
+  palestra;
+- `AvaliacaoRepository`: avaliações de uma palestra com o nome de quem
+  avaliou e a média das estrelas;
+- `OrganizadorRepository`: totais do painel, ranking das palestras,
+  inscritos de uma palestra e participantes de um evento (para os
+  comunicados).
 
 ### Controle de vagas
 
@@ -538,8 +523,8 @@ administrador; os outros recebem 403).
 | DELETE | `/api/eventos/<id>` | Remove o evento com tudo o que é dele (corpo: `senha` de quem está logado) | dono do evento |
 | GET | `/api/eventos/<id>/planta` | Planta do evento (`null` se ainda não tem) | login |
 | PUT | `/api/eventos/<id>/planta` | Cria ou atualiza a planta (`imagem_mapa`, `descricao`) | dono do evento |
-| GET | `/api/eventos/<id>/programacao` | Programação do evento | login |
-| GET | `/api/eventos/<id_usuario>/agenda` | Agenda personalizada | própria |
+| GET | `/api/eventos/<id>/programacao` | Programação do evento (o app usa `GET /api/palestras?id_evento=`, que traz também a pesquisa por tema e as médias) | login |
+| GET | `/api/eventos/<id_usuario>/agenda` | Agenda personalizada. **Atenção:** apesar de ficar dentro de `/api/eventos`, o número na URL é o id do **usuário**, não do evento (veja abaixo) | própria |
 | GET | `/api/palestras?id_evento=&tema=` | Lista e pesquisa, com `media_estrelas` e `total_avaliacoes` | login |
 | GET | `/api/palestras/<id>` | Detalhes, média das avaliações e status do usuário do token (`inscrito`, `favorita`, `lembrete_ativo`, `minha_avaliacao`, `pode_avaliar`) | login |
 | POST | `/api/palestras` | Cria palestra | dono do evento |
@@ -579,12 +564,29 @@ por `POST /api/uploads`. Qualquer outro valor (um caminho ou o endereço
 de outro site) é recusado. A palestra só aceita local e palestrante do
 mesmo evento.
 
+**Rota da agenda:** `GET /api/eventos/<id_usuario>/agenda` devolve as
+palestras em que o usuário está inscrito, de **todos** os eventos. O
+caminho começa com `/api/eventos` porque a rota foi criada junto com as
+rotas de evento, mas o número é o id do usuário: `/api/eventos/3/agenda`
+é a agenda do usuário 3, e não a do evento 3. Só a própria pessoa vê a
+sua agenda (outro id → 403). Um caminho mais claro seria
+`/api/usuarios/<id_usuario>/agenda`. A troca fica como próximo passo,
+porque muda o backend e o app ao mesmo tempo.
+
 Nas rotas de inscrição, favorito, lembrete e avaliação, o usuário é
 sempre o do token: um `id_usuario` enviado no corpo é ignorado. Só nas
 rotas do organizador o `id_usuario` vem da URL, porque é ele quem
 escolhe de quem remover a inscrição.
 
 ## 8. Fluxos para demonstrar ao professor
+
+O vídeo de demonstração tem **até 2 minutos** e precisa mostrar pelo
+menos **quatro funcionalidades principais que não sejam CRUD** (só
+cadastrar, listar, editar ou excluir não conta). Os fluxos que atendem
+a isso são: inscrição com controle de vagas e aviso de choque de
+horário (2), agenda (5), lembrete com o aviso no celular (6), pesquisa
+(7), avaliação com a média (9), gerenciamento das inscrições pelo
+organizador (10) e comunicado do organizador (13).
 
 ### Fluxo 1 — programação
 
@@ -596,13 +598,14 @@ Login -> Início (Outros eventos, se houver mais de um) -> Ver programação
 ### Fluxo 2 — inscrição
 
 ```text
-Detalhes -> Inscrever-se -> InscricaoService -> participacao + vaga
+Detalhes -> Garantir vaga -> CriarInscricaoService -> participacao + vaga
 ```
 
 ### Fluxo 3 — cancelamento
 
 ```text
-Detalhes -> Cancelar inscrição -> remove participacao -> devolve vaga
+Detalhes -> Cancelar inscrição -> CancelarInscricaoService
+  -> remove participacao -> devolve vaga
 ```
 
 ### Fluxo 4 — favorito

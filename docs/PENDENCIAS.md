@@ -115,6 +115,11 @@ branch própria.
   `git remote set-url origin https://github.com/laranjeira1431/fluxo.git`,
   depois `git remote -v` e `git fetch`. Os Pull Requests novos são
   abertos no repositório novo.
+- **Mudança da P17 que afeta todo mundo (03/11/2026):** a versão do
+  Flutter da equipe é a **3.47.7**. Depois que a P17 entrar na `main`,
+  cada pessoa confere com `flutter --version` e, se for outra, troca
+  seguindo o passo 0.3 do `FLUXO_DE_TRABALHO.md`. Sem isso, o
+  `pubspec.lock` volta a mudar a cada `flutter pub get`.
 - **Por que essa ordem:** a Pessoa A faz as tarefas que as outras usam
   como base (banco, visual, autenticação, área do organizador). A Pessoa
   B começa pelo que não depende de nada.
@@ -1168,8 +1173,13 @@ Uma sugestão aprovada vira uma tarefa F; uma recusada é marcada como tal.
 | S08 | Marcar avisos como lidos | Sem isso, o contador de avisos novos da barra de navegação (canvas) não tem o que contar | Aprovada: virou F21 |
 | S09 | Deixar claro que o app tem vários eventos, cada um em um lugar: imagem de capa do evento enviada pelo organizador (no card do Início e na lista de eventos) e tela "Escolher evento" no lugar da lista "Trocar evento" (página "Proposta · eventos, lugares e salas" do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | No teste da F03, a equipe não percebeu que "Trocar evento" leva a outro evento, em outro lugar, com outra planta. Decidido pela equipe (23/10/2026): a legibilidade do texto sobre a imagem fica a critério do organizador, e o cadastro avisa que a imagem deve ser horizontal. Precisa de `evento.imagem_capa` (o banco muda) e mexe no Início e no formulário do evento (trilha da Manuela) | Aprovada para "se sobrar tempo": item 18 da seção 0.2 |
 | S10 | Encerrar o token também no servidor ao sair | Testado em 23/10/2026: depois do logout, o mesmo token continua funcionando por até 8 horas. Quem copiou o token ainda acessa a conta | Aprovada em 23/10/2026: entra na F17 |
-| S11 | Explicar no README a rota da agenda (`/api/eventos/<id_usuario>/agenda`) | O caminho fica dentro de "eventos", mas recebe o id do usuário, o que confunde quem lê a API | Aprovada em 23/10/2026: entra na P09; trocar o caminho fica como "próximos passos" |
-| S12 | Escrever o `README.md` da raiz do repositório, hoje vazio, e corrigir o nome da pasta do projeto em `sistema-eventos/README.md` (linha "a partir da raiz do repositório") e no início do `docs/FLUXO_DE_TRABALHO.md` | O README da raiz é o que o GitHub mostra na página inicial do repositório, a primeira coisa que o professor vê. Depois da troca para `laranjeira1431/fluxo` (03/11/2026), quem clona recebe a pasta `fluxo/`, e quem já tinha o projeto continua com `ProjetoDeSoftware/` | Aprovada em 03/11/2026: fica para depois. Ainda falta decidir se o README da raiz é um resumo curto com links ou o conteúdo completo, e como citar a equipe |
+| S11 | Explicar no README a rota da agenda (`/api/eventos/<id_usuario>/agenda`) | O caminho fica dentro de "eventos", mas recebe o id do usuário, o que confunde quem lê a API | Aprovada em 23/10/2026: feita na P09 (03/11/2026); trocar o caminho fica como "próximos passos" |
+| S12 | Escrever o `README.md` da raiz do repositório, hoje vazio, e corrigir o nome da pasta do projeto em `sistema-eventos/README.md` (linha "a partir da raiz do repositório") e no início do `docs/FLUXO_DE_TRABALHO.md` | O README da raiz é o que o GitHub mostra na página inicial do repositório, a primeira coisa que o professor vê. Depois da troca para `laranjeira1431/fluxo` (03/11/2026), quem clona recebe a pasta `fluxo/`, e quem já tinha o projeto continua com `ProjetoDeSoftware/` | Aprovada em 03/11/2026: feita junto com a P09 (03/11/2026). O README da raiz tem a descrição, a equipe, as "Funcionalidades Implementadas" e o link para o diagrama de classes; a instalação e as rotas continuam em `sistema-eventos/README.md` |
+| S13 | Diagrama de classes do domínio, em `docs/`, com o link no README da raiz | Exigido nos requisitos de entrega (`arq_ref/requisitos_entregas.pdf`) e vale 3 pontos na rubrica (`arq_ref/rubrica_projeto_de_conclusao.docx`): classes e atributos, relacionamentos (com herança, composição e agregação, quando houver) e correspondência com as 15 Models de `backend/models/`. Hoje o repositório não tem diagrama, e o README da raiz diz que ele ainda está sendo feito: ao concluir, trocar esse texto pelo link do arquivo | Aguardando aprovação |
+| S14 | Fluxogramas dos casos de uso: um de recuperação de dados e um de entrada de dados | Valem 4 pontos na rubrica. Cada fluxograma mostra o passo a passo pelas camadas (tela, Controller, Service, Repository, Model e banco). Bons candidatos: agenda (recuperação, passa pelo `AgendaRepository`) e inscrição (entrada, com o controle de vagas) | Aguardando aprovação |
+| S15 | Nomes dos métodos de CRUD das Models iguais aos dos requisitos | Os requisitos de entrega pedem `salvar()`, `atualizar()`, `deletar()`, `listar_todos()` e `buscar_por_id()` nas Models. O `models/crud_mixin.py` usa `criar()`, `buscar_por_id()`, `listar()`, `atualizar()` e `remover()`. O professor confere a coerência com a arquitetura da aula. Mexe em vários Services, então precisa ser uma tarefa própria, com teste de todas as telas | Aguardando aprovação |
+| S16 | Slides da apresentação | Exigidos pela rubrica: descrição, público-alvo e problema; cinco casos de uso com as telas; figura da arquitetura e as pastas de Controllers, Services, Repositories e Models; tecnologias; apresentação do README | Aguardando aprovação |
+| S17 | Termos de consentimento no cadastro | Bônus de 1 ponto na rubrica: mostrar os termos no cadastro (F01) e guardar no banco a decisão da pessoa (ex.: coluna com a data do aceite em `usuario`) | Aguardando aprovação |
 
 ---
 
@@ -1190,7 +1200,7 @@ qualquer alteração.
 | P06 | 🟡 | Fuso horário inconsistente | Pendente |
 | P07 | 🟢 | Uso de método obsoleto do SQLAlchemy | Pendente |
 | P08 | 🟢 | Tipo de notificação "atencao" nunca é criado | Concluído |
-| P09 | 🔴 | README desatualizado | Pendente |
+| P09 | 🔴 | README desatualizado | Concluído |
 | P10 | 🟢 | Comentário desatualizado na tela de favoritos | Pendente |
 | P11 | 🔴 **antes da P14** | Arquivos locais versionados e falta de `.gitignore` | Concluído |
 | P12 | 🟢 | Projeto sem testes automatizados | Pendente |
@@ -1198,7 +1208,7 @@ qualquer alteração.
 | P14 | 🔴 | Versão antiga e nova sem commit | Concluído |
 | P15 | 🟡 | Botão de inscrição não mostra o estado da inscrição | Concluído |
 | P16 | 🟡 | Fim de linha diferente entre sistemas (falta `.gitattributes`) | Pendente |
-| P17 | 🟡 | Versão do Flutter não definida (`pubspec.lock` muda em cada máquina) | Pendente |
+| P17 | 🟡 | Versão do Flutter não definida (`pubspec.lock` muda em cada máquina) | Concluído |
 
 ---
 
@@ -1387,6 +1397,24 @@ qualquer alteração.
     porque mexe no backend e no app juntos.
 - **Por que importa:** o README é a primeira coisa que o professor ou
   avaliador vai ler e usar para rodar o projeto.
+- **Concluído (03/11/2026), seguindo os requisitos de entrega e a rubrica
+  (`arq_ref/requisitos_entregas.pdf` e
+  `arq_ref/rubrica_projeto_de_conclusao.docx`), junto com a S12 e a P17:**
+  - `README.md` da raiz (antes vazio): descrição, problema, público-alvo,
+    equipe, a seção **"Funcionalidades Implementadas"** (31 itens, cada
+    um com a tela e a rota, conferidos no código de ponta a ponta), a
+    seção do diagrama de classes e o link para o README técnico. Modo
+    escuro e "Sair" ficaram fora da lista porque não passam pelo banco;
+  - `sistema-eventos/README.md`: a seção 1 aponta para a lista da raiz
+    (para não ter duas listas diferentes); Services listados por caso de
+    uso; Repositories completos; a rota da agenda explicada (S11); a
+    rota `/programacao` com a observação de que o app usa
+    `/api/palestras?id_evento=`; o aviso de que o script SQL apaga o
+    banco e só deve rodar na instalação; o nome da pasta do projeto; e a
+    observação do vídeo (até 2 minutos, pelo menos quatro
+    funcionalidades que não sejam CRUD, decidido pela Manuela em
+    03/11/2026, seguindo a rubrica).
+  - **Falta:** o link do diagrama de classes, que depende da S13.
 
 ### P10 🟢 Comentário desatualizado na tela de favoritos
 
@@ -1511,5 +1539,13 @@ qualquer alteração.
 - **Proposta (aprovada em 22/10/2026):** registrar no `README.md` a
   versão exata do Flutter que a equipe usa (conferir com
   `flutter --version`) e todas as pessoas usarem essa versão.
-- **Decidir com a Manuela:** qual versão usar (a 3.44.1 da Bianca ou a
-  da Manuela, que gerou o `pubspec.lock` atual).
+- **Decidido (03/11/2026):** a versão da equipe é a **3.47.7**, a da
+  Manuela.
+- **Concluído (03/11/2026, na branch da P09):** a versão está no
+  `README.md` (Pré-requisitos) e no `FLUXO_DE_TRABALHO.md` (passo 0.3,
+  com o passo a passo para trocar de versão). O `pubspec.lock` foi
+  regerado na 3.47.7: quatro pacotes indiretos que vêm com o Flutter
+  subiram (`matcher`, `meta`, `test_api` e `vector_math`), porque o
+  arquivo anterior tinha sido gerado na F02 com outra versão.
+  `flutter analyze` sem problemas. **A Bianca precisa trocar para a
+  3.47.7** (passo 0.3) antes da próxima tarefa.

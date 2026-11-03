@@ -15,8 +15,10 @@ Resumo:
 9. Merge  →  10. Testar na main  →  11. Avisar a outra pessoa  →  12. Fechar a tarefa
 ```
 
-Os comandos partem da raiz do repositório (`ProjetoDeSoftware/`), a não
-ser quando o passo diz para entrar em outra pasta.
+Os comandos partem da raiz do repositório (a pasta `fluxo/`, criada pelo
+`git clone`; em cópias antigas do projeto, ela se chama
+`ProjetoDeSoftware/`), a não ser quando o passo diz para entrar em outra
+pasta.
 
 **Primeira vez no projeto?** Antes da primeira tarefa, siga a seção
 "0. Preparar o computador (uma vez só)". Para subir o sistema nos dias
@@ -251,6 +253,46 @@ flutter doctor
 **Windows:** seguir o guia oficial
 (<https://docs.flutter.dev/get-started/install/windows>) e rodar
 `flutter doctor` no final.
+
+**Versão da equipe: Flutter 3.47.7** (P17). Todas as pessoas usam a
+mesma versão, porque com outra o `flutter pub get` escolhe outras
+versões dos pacotes e reescreve o `pubspec.lock`. Conferir com:
+
+```bash
+flutter --version
+```
+
+Se a primeira linha não mostrar `Flutter 3.47.7`, trocar a versão:
+
+```bash
+flutter doctor -v
+```
+
+- A segunda linha do `flutter doctor -v` mostra a pasta onde o Flutter
+  está instalado (`• Flutter version 3.xx.x on channel stable at <pasta>`).
+- O Flutter instalado é um repositório Git. Por isso, a versão é
+  trocada com `git checkout` dentro dessa pasta:
+
+```bash
+cd <pasta mostrada pelo flutter doctor -v>
+git fetch --tags
+git checkout 3.47.7
+flutter --version
+```
+
+- **`git checkout 3.47.7`:** coloca o Flutter na versão marcada com a
+  etiqueta (*tag*) `3.47.7`. O próximo comando `flutter` baixa o
+  restante dessa versão, o que demora alguns minutos.
+- Depois, voltar para a pasta do projeto e rodar `flutter pub get` em
+  `sistema-eventos/frontend/Flutter`. O `git status` não deve mostrar o
+  `pubspec.lock` como alterado.
+- Depois do `git checkout`, o `flutter --version` mostra
+  `channel [user-branch]` no lugar de `channel stable`, e o
+  `flutter doctor` pode avisar que o canal é desconhecido. É normal: o
+  Flutter está numa versão fixa, e não num canal. O que importa é
+  aparecer `Flutter 3.47.7`.
+- Não usar `flutter upgrade` nem `flutter channel stable`, que levam
+  para a versão mais nova e fazem o `pubspec.lock` mudar de novo.
 
 ### 0.4 Baixar o projeto
 

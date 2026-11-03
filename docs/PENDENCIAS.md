@@ -164,6 +164,18 @@ mais rápidas, por último as maiores.
 A P13 não entra na lista: ela se resolve quando F03, F04, F08 e F13
 forem feitas.
 
+## 0.3 Testes pendentes
+
+Testes que não puderam ser feitos na hora em que a tarefa foi concluída
+(no celular, no emulador ou no app). O que dá para testar com `curl` é
+testado durante a tarefa e registrado no próprio item dela. Cada tarefa
+concluída acrescenta aqui os testes que ficaram para depois. Depois do
+teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
+
+| Tarefa | O que testar | Como testar | Onde | Status |
+|---|---|---|---|---|
+| P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
+
 ---
 
 # 1. Funcionalidades a desenvolver

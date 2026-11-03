@@ -164,6 +164,18 @@ mais rápidas, por último as maiores.
 A P13 não entra na lista: ela se resolve quando F03, F04, F08 e F13
 forem feitas.
 
+## 0.3 Testes pendentes
+
+Testes que não puderam ser feitos na hora em que a tarefa foi concluída
+(no celular, no emulador ou no app). O que dá para testar com `curl` é
+testado durante a tarefa e registrado no próprio item dela. Cada tarefa
+concluída acrescenta aqui os testes que ficaram para depois. Depois do
+teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
+
+| Tarefa | O que testar | Como testar | Onde | Status |
+|---|---|---|---|---|
+| P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
+
 ---
 
 # 1. Funcionalidades a desenvolver
@@ -712,6 +724,18 @@ o nome indicado, que aparece acima de cada tela.
   Perfil apaga o token e volta para o login, sem deixar "voltar" com o
   botão do celular. Falta manter o login ao reabrir o app e a volta
   automática ao login no 401.
+- **Sair também no servidor (S10, aprovada em 23/10/2026):** hoje o
+  `POST /api/auth/logout` só responde "Apague o token no app". O token
+  continua valendo no servidor até vencer (testado em 23/10/2026: depois
+  do logout, o mesmo token ainda listou as palestras). Quem copiou o
+  token consegue usá-lo por até 8 horas. Uma solução simples é guardar
+  no banco os tokens encerrados (uma "lista de bloqueio", ou
+  *blocklist*) e recusar esses tokens na autenticação. Tarefa de
+  segurança: `/security-review` antes do commit. Ao concluir, atualizar
+  também os textos que tratam isso como "próximo passo": a limitação da
+  P01, a `DOCUMENTACAO.md` e a docstring do
+  `backend/controllers/auth_controller.py` ("O logout não precisa fazer
+  nada no servidor").
 
 ### F18 Entrar com Google
 
@@ -1132,6 +1156,8 @@ Uma sugestão aprovada vira uma tarefa F; uma recusada é marcada como tal.
 | S07 | Outros tipos de atividade além de palestra (workshop, mesa-redonda), com mais de um palestrante por atividade | Amplia o uso do app para eventos variados. Fica fora desta entrega porque nenhum RF pede e o diagrama não prevê | Melhoria futura: só registrar na documentação final |
 | S08 | Marcar avisos como lidos | Sem isso, o contador de avisos novos da barra de navegação (canvas) não tem o que contar | Aprovada: virou F21 |
 | S09 | Deixar claro que o app tem vários eventos, cada um em um lugar: imagem de capa do evento enviada pelo organizador (no card do Início e na lista de eventos) e tela "Escolher evento" no lugar da lista "Trocar evento" (página "Proposta · eventos, lugares e salas" do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | No teste da F03, a equipe não percebeu que "Trocar evento" leva a outro evento, em outro lugar, com outra planta. Decidido pela equipe (23/10/2026): a legibilidade do texto sobre a imagem fica a critério do organizador, e o cadastro avisa que a imagem deve ser horizontal. Precisa de `evento.imagem_capa` (o banco muda) e mexe no Início e no formulário do evento (trilha da Manuela) | Aprovada para "se sobrar tempo": item 18 da seção 0.2 |
+| S10 | Encerrar o token também no servidor ao sair | Testado em 23/10/2026: depois do logout, o mesmo token continua funcionando por até 8 horas. Quem copiou o token ainda acessa a conta | Aprovada em 23/10/2026: entra na F17 |
+| S11 | Explicar no README a rota da agenda (`/api/eventos/<id_usuario>/agenda`) | O caminho fica dentro de "eventos", mas recebe o id do usuário, o que confunde quem lê a API | Aprovada em 23/10/2026: entra na P09; trocar o caminho fica como "próximos passos" |
 
 ---
 
@@ -1151,7 +1177,7 @@ qualquer alteração.
 | P05 | 🟢 | Abas do app recarregam a cada troca | Pendente |
 | P06 | 🟡 | Fuso horário inconsistente | Pendente |
 | P07 | 🟢 | Uso de método obsoleto do SQLAlchemy | Pendente |
-| P08 | 🟢 | Tipo de notificação "atencao" nunca é criado | Parcial |
+| P08 | 🟢 | Tipo de notificação "atencao" nunca é criado | Concluído |
 | P09 | 🔴 | README desatualizado | Pendente |
 | P10 | 🟢 | Comentário desatualizado na tela de favoritos | Pendente |
 | P11 | 🔴 **antes da P14** | Arquivos locais versionados e falta de `.gitignore` | Concluído |
@@ -1309,6 +1335,23 @@ qualquer alteração.
 - **Andamento (22/10/2026, F08):** o backend passou a criar avisos do
   tipo `atencao` quando o organizador remove uma inscrição. Falta o
   envio real do lembrete (F02).
+- **Resolvido (02/11/2026):** as duas partes foram feitas em outras
+  tarefas, sem código novo na P08:
+  - **tipo `atencao`** (F08): `remover_inscricao_service.py` cria o
+    aviso quando o organizador remove uma inscrição. Testado em
+    02/11/2026 com `curl`: a Elisa removeu a inscrição da Ana na
+    palestra 7, e a lista de avisos da Ana trouxe um aviso novo
+    (`id_notificacao` 9, com a data do teste), "Sua inscrição em
+    Experimentos de Química no Dia a Dia foi removida pela
+    organização.", com `"tipo_notificacao": "atencao"`. O script SQL já
+    traz um aviso igual (id 4, dos dados de demonstração); por isso o
+    teste conferiu o id e a data, e não só o texto;
+  - **envio real do lembrete** (F02): o `lembrete_service.dart` agenda
+    uma notificação local, que aparece no celular cerca de 10 minutos
+    antes do início, mesmo com o app fechado. Só no Android, só para
+    quem ativou o lembrete e permitiu as notificações, e o Android pode
+    atrasar o aviso em 1 ou 2 minutos (agendamento aproximado, para
+    poupar bateria).
 
 ## Documentação e organização
 
@@ -1323,7 +1366,13 @@ qualquer alteração.
   - diz que a programação usa `/api/eventos/<id>/programacao`, mas o app
     usa `/api/palestras?id_evento=`;
   - não lista as rotas de CRUD de usuários, eventos, palestras e
-    comentários.
+    comentários;
+  - não explica a rota da agenda (S11, aprovada em 23/10/2026):
+    `GET /api/eventos/<id_usuario>/agenda` fica dentro de "eventos", mas
+    o número na URL é o id do **usuário**, não do evento. O README deve
+    deixar isso claro. Trocar o caminho da rota (por exemplo, para
+    `/api/usuarios/<id_usuario>/agenda`) fica como "próximos passos",
+    porque mexe no backend e no app juntos.
 - **Por que importa:** o README é a primeira coisa que o professor ou
   avaliador vai ler e usar para rodar o projeto.
 

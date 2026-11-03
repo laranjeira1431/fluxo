@@ -6,7 +6,9 @@ CAMADA: Models (entidade de domínio + persistência).
 Representa uma empresa que patrocina um Evento (F19/D01, usada na F10).
 Herda `db.Model` (tabela `patrocinador`) e `CRUDMixin` (CRUD padrão).
 
-Ainda sem endpoints próprios na API: a rota e a tela vêm na F10.
+A listagem por evento está em `GET /api/patrocinadores?id_evento=`
+(F10). O cadastro pelo organizador usa as mesmas rotas (F14). `logo`
+guarda o nome do arquivo enviado por `POST /api/uploads`.
 """
 
 from backend.extensions import db

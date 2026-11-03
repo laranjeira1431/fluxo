@@ -8,14 +8,18 @@ programação e agenda que já existiam no projeto original.
 
 Acesso (P01): consultar exige login; criar, atualizar e remover são só
 para organizadores; a agenda só pode ser vista pela própria pessoa.
+Desde a F08, o evento criado fica ligado a quem o criou, e só esse
+organizador (ou um administrador) altera ou remove o evento. Desde a
+F14, remover pede também a senha da pessoa logada.
 """
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, g, jsonify, request
 
 from backend.controllers.autenticacao import (
     login_obrigatorio,
     somente_organizador,
     verificar_acesso_ao_usuario,
+    verificar_dono_do_evento,
 )
 from backend.controllers.utils import tratar_erros
 from backend.services.evento.listar_eventos_service import ListarEventosService
@@ -47,13 +51,14 @@ class EventoController:
     @tratar_erros
     @somente_organizador
     def criar():
-        evento = CriarEventoService().execute(request.get_json() or {})
+        evento = CriarEventoService().execute(request.get_json() or {}, g.usuario)
         return jsonify(evento.to_dict()), 201
 
     @staticmethod
     @tratar_erros
     @somente_organizador
     def atualizar(id_evento):
+        verificar_dono_do_evento(id_evento)
         dados = request.get_json() or {}
         evento = AtualizarEventoService().execute(id_evento, dados)
         return jsonify(evento.to_dict())
@@ -62,7 +67,11 @@ class EventoController:
     @tratar_erros
     @somente_organizador
     def remover(id_evento):
-        RemoverEventoService().execute(id_evento)
+        verificar_dono_do_evento(id_evento)
+        # A senha vai no corpo da requisição (F14): confirma que é a
+        # própria pessoa que está apagando o evento.
+        senha = (request.get_json(silent=True) or {}).get("senha")
+        RemoverEventoService().execute(id_evento, g.usuario, senha)
         return jsonify({"mensagem": "Evento removido."})
 
     @staticmethod

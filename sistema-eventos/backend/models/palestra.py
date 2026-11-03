@@ -72,7 +72,7 @@ class Palestra(db.Model, CRUDMixin):
         return instancia
 
     def to_dict(self):
-        """Serializa a palestra, incluindo o nome do evento, o local e o status das vagas."""
+        """Serializa a palestra, incluindo o nome do evento, o local, o palestrante e o status das vagas."""
         return {
             "id_palestra": self.id_palestra,
             "titulo": self.titulo,
@@ -80,7 +80,11 @@ class Palestra(db.Model, CRUDMixin):
             "tema": self.tema,
             "sala": self.localizacao.nome_local if self.localizacao else None,
             "id_localizacao": self.id_localizacao,
+            # Passo a passo da entrada até a sala (F04, RF11), escrito pelo
+            # organizador no cadastro do local, um passo por linha.
+            "como_chegar": self.localizacao.descricao if self.localizacao else None,
             "id_palestrante": self.id_palestrante,
+            "palestrante": self.palestrante.nome if self.palestrante else None,
             "horario_inicio": (
                 self.horario_inicio.isoformat() if self.horario_inicio else None
             ),

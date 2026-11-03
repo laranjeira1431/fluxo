@@ -22,6 +22,55 @@ segundo projeto. O SQL final preserva as tabelas e os dados do banco oficial.
 10. Ativar e desativar lembretes de palestras.
 11. Alternar entre modo claro e modo escuro (Perfil → Modo escuro); a
     escolha fica salva no celular.
+12. Criar uma conta pelo app (Login → "Criar conta"): nome, e-mail e
+    senha de 8 a 16 caracteres. Depois do cadastro, a pessoa já
+    entra no app.
+13. Avaliar uma palestra com 1 a 5 estrelas e um comentário opcional
+    (Detalhes → "Avaliar"), além de editar ou excluir a própria
+    avaliação. Só quem está inscrito pode avaliar, e só depois que a
+    palestra começa. A média aparece nos cards da Programação e nos
+    Detalhes, com a lista de comentários.
+14. Área do organizador (Perfil → Área do organizador, só para
+    organizadores): painel do evento (palestras, inscrições, esgotadas,
+    ocupação das vagas e média das avaliações), ranking das palestras e
+    gerenciamento das inscrições (ver os inscritos e remover uma
+    inscrição, que devolve a vaga e avisa a pessoa). Cada evento tem um
+    só organizador responsável, que vê só os próprios eventos; o
+    administrador vê todos.
+15. Sair da conta (Perfil → Sair).
+16. Ver os patrocinadores do evento (Programação → "Patrocinadores"):
+    logo, nome, descrição e site de cada empresa. Sem logo cadastrado,
+    aparecem as iniciais da empresa.
+17. Cadastros do organizador (Área do organizador → "Cadastros do
+    evento"): criar e editar o evento com a imagem da planta, os locais
+    com o passo a passo de como chegar, os palestrantes (com foto), as
+    palestras (com local, palestrante e total de vagas) e os
+    patrocinadores (com logo). As imagens aceitas são PNG, JPG ou WEBP
+    de até 5 MB. Excluir um evento pede a senha de quem está logado.
+18. Ver e pesquisar os palestrantes do evento pelo nome (Início →
+    "Palestrantes"). Tocar num palestrante abre o perfil dele, e tocar
+    numa palestra do perfil abre os detalhes dela.
+19. Ver a planta do lugar do evento (Início → "Localização", ou
+    Detalhes → **Ver planta**): o nome do lugar e quantas salas ele tem, a
+    imagem enviada pelo organizador, com zoom, e a lista das salas com o
+    caminho até cada uma e quantas palestras ela recebe.
+20. Ver como chegar até a sala de uma palestra (Detalhes → seção "Como
+    chegar", que começa fechada e abre ao tocar): o passo a passo a partir da entrada, escrito pelo
+    organizador com um passo por linha. O botão **Ver planta**, na linha
+    "Onde", abre a planta do evento.
+21. Aviso de choque de horário (F16): ao se inscrever numa palestra que
+    bate no horário com outra em que a pessoa já está inscrita, o app
+    mostra as duas e pergunta se ela quer se inscrever mesmo assim. A
+    inscrição não é bloqueada. Depois que a palestra começa, não dá mais
+    para se inscrever nem cancelar a inscrição. No Início, o card do
+    evento mostra a situação (**ACONTECENDO AGORA**, **EM 14 DIAS** ou
+    **ENCERRADO**); o evento encerrado fica cinza, com o botão **Ver
+    avaliações** (as palestras com a média e o total de avaliações).
+22. Aviso de início das palestras no celular (F02, RF09): com o lembrete
+    ativo, o Android mostra uma notificação 10 minutos antes do início,
+    mesmo com o app fechado. Tocar nela abre os detalhes da palestra. Só
+    no Android (veja "Celular Android pelo cabo USB"); no Chrome, o
+    lembrete é gravado e aparece em Avisos, sem a notificação.
 
 Todas as funcionalidades principais percorrem:
 
@@ -60,12 +109,15 @@ demonstração. Em relação ao banco oficial, ele:
   `patrocinador` e `certificado`, e liga cada palestra ao seu local
   (`palestra.id_localizacao`, no lugar do texto `sala`);
 - deixa `usuario` preparado para o login com Google (`senha` opcional e
-  `google_id`), ainda não implementado.
+  `google_id`), ainda não implementado;
+- liga cada palestrante a um evento (`palestrante.id_evento`, F14): o
+  organizador cadastra o palestrante no evento e o indica nas palestras.
 
 Ao criar ou alterar uma palestra pela API, o local é informado por
 `id_localizacao` (e o palestrante por `id_palestrante`). O campo `sala`
 não é mais aceito na entrada, mas continua nas respostas, com o nome do
-local, para o app não precisar mudar.
+local, para o app não precisar mudar. As respostas trazem também
+`como_chegar`, com o passo a passo da entrada até a sala (F04).
 
 **Atenção:** o script começa com `DROP DATABASE`, ou seja, apaga e recria o
 banco inteiro. Quem já tinha o banco criado por uma versão anterior precisa
@@ -74,15 +126,71 @@ rodá-lo de novo, sabendo que os dados locais serão perdidos.
 A tabela oficial `notificacao` já tinha `id_palestra` e `tipo_notificacao`.
 Por isso ela também armazena os lembretes, sem criar uma tabela adicional.
 
-Os dados de teste do banco são:
+Os dados de teste do banco são (a senha é a mesma para os quatro):
 
 ```text
-Email: ana.silva@email.com
-Senha: hash123
+Participante:   ana.silva@email.com   / Senha@123
+Participante:   carla.souza@email.com / Senha@123
+Administrador:  bruno.costa@email.com / Senha@123  (responsável pela Semana de Tecnologia e pela Mostra de Projetos; vê todos os eventos)
+Organizadora:   elisa.prado@email.com / Senha@123  (responsável pela Feira de Ciências; vê só esse evento)
 ```
 
-O backend aceita esse formato legado para facilitar a demonstração. Usuários
-novos cadastrados devem usar senha protegida por hash.
+Cada evento tem um só organizador responsável (`evento.id_organizador`,
+desde a F08).
+
+### Dados de demonstração (S05)
+
+As datas dos eventos e das palestras são calculadas a partir do dia em
+que o script roda (`CURDATE()`), então o banco sempre tem um evento em
+cada situação:
+
+| Evento | Datas | Situação |
+|---|---|---|
+| 1. Semana de Tecnologia | de ontem até amanhã | acontecendo |
+| 2. Feira de Ciências | daqui a 14 e 15 dias | futuro |
+| 3. Mostra de Projetos | há 30 e 29 dias | encerrado |
+
+**Importante:** a palestra "Segurança da Informação" fica "acontecendo
+agora" por 2 a 3 horas depois de o script rodar. No dia de uma
+apresentação, recrie o banco pouco antes de usar o app (lembrando que o
+script apaga todos os dados). As datas usam o fuso do MySQL, que precisa
+ser o mesmo do computador (o padrão de uma instalação local).
+
+O que dá para testar com cada usuário:
+
+- **Ana (participante):**
+  - Início: a Semana de Tecnologia, com "Segurança da Informação" como
+    próxima palestra; "Outros eventos (2)" abre Escolher evento, com os três;
+  - "Banco de Dados na Prática" (ontem): inscrita e ainda sem avaliação,
+    para testar a tela **Avaliar** (a média, hoje 4 com a nota da Carla,
+    muda depois da avaliação);
+  - "Introdução à Inteligência Artificial": já avaliada pela Ana (5);
+  - "Robótica Educacional" (Mostra de Projetos): média 4,5 (duas
+    avaliações);
+  - "Apps com Flutter" (amanhã): **esgotada** (1 vaga, ocupada pela Carla);
+  - "APIs REST com Flask" (amanhã): **última vaga**; ao se inscrever, a
+    palestra esgota;
+  - "Design de Interfaces" (amanhã): inscrita, com vagas, sem
+    avaliações, favoritada e com lembrete ativo;
+  - "Acessibilidade em Aplicativos" (amanhã, 14:30): bate no horário
+    com "Design de Interfaces"; ao tocar em **Garantir vaga**, aparece o
+    **aviso de choque de horário** (F16);
+  - Agenda com palestras passadas, de agora e futuras; Favoritos com duas
+    palestras;
+  - Avisos: um de cada tipo (comunicado do evento, comunicado de uma
+    palestra, inscrição removida pela organização e lembrete).
+- **Bruno (administrador):** painel da Semana com uma palestra esgotada,
+  avaliações e inscrições para remover; a Mostra de Projetos não tem
+  patrocinadores e tem uma palestra sem palestrante.
+- **Elisa (organizadora):** vê só a Feira de Ciências.
+- **Agenda e Favoritos vazios:** crie uma conta nova pela tela de
+  cadastro.
+
+Fotos, logos e a planta baixa não vêm no script: são enviadas pelo app,
+na área do organizador (F14).
+
+O banco guarda só o hash das senhas, nunca o texto puro. O login recusa
+qualquer senha que não esteja guardada como hash.
 
 ## 4. Configurar e executar o backend
 
@@ -145,6 +253,14 @@ Resposta esperada:
 {"status": "ok"}
 ```
 
+### Imagens enviadas pelo app
+
+A planta, as fotos dos palestrantes e os logos enviados pelos
+organizadores ficam na pasta `backend/uploads/`, e o banco guarda só o
+nome do arquivo. A pasta fica fora do Git (`.gitignore`): cada
+computador tem as próprias imagens. Ao recriar o banco com o script, as
+imagens antigas continuam na pasta, mas deixam de ser usadas.
+
 ## 5. Executar o Flutter
 
 Em outro terminal, também a partir da raiz do repositório:
@@ -171,16 +287,94 @@ Para um celular físico, use o IP do computador na rede local:
 flutter run --dart-define=API_URL=http://192.168.0.10:5000
 ```
 
+### Celular Android pelo cabo USB
+
+É o jeito mais simples de ver os avisos de início das palestras (F02),
+que só aparecem no Android:
+
+1. No celular: **Configurações → Sobre o telefone**, tocar 7 vezes em
+   **Número da versão**; depois, em **Opções do desenvolvedor**, ligar a
+   **Depuração USB**. Conectar o cabo e aceitar "Permitir depuração USB".
+2. Conferir se o celular aparece em `flutter devices`.
+3. Fazer o celular enxergar a API do computador pelo cabo (repetir
+   sempre que reconectar o celular):
+
+```bash
+adb reverse tcp:5000 tcp:5000
+```
+
+4. Rodar o app no celular, sem mudar o endereço da API (o `adb reverse`
+   faz o `127.0.0.1:5000` do celular chegar ao computador):
+
+```bash
+flutter run -d <id do celular em flutter devices>
+```
+
+Na primeira vez, o app pede permissão para mostrar notificações:
+toque em **Permitir**. O `adb` fica em
+`%LOCALAPPDATA%\Android\Sdk\platform-tools` no Windows.
+
 O endereço fica em `lib/services/api_service.dart` e pode ser configurado
 sem alterar as telas.
 
 ### Navegação e visual
 
+O app abre com a tela de abertura (logo, slogan e o rio da marca, por
+5 segundos) e segue para o login. Quem ainda não tem conta toca em
+**Criar conta**, preenche o cadastro e entra direto no app.
+
 Depois do login, a barra de baixo tem cinco abas: **Início**,
-**Programação** (do primeiro evento cadastrado), **Agenda**, **Avisos** e
-**Perfil**. Os **Favoritos** ficam dentro do Perfil, junto com o
-interruptor de **Modo escuro**. A escolha do tema é salva no próprio
-aparelho com o pacote `shared_preferences` (não vai para o banco).
+**Programação** (do mesmo evento mostrado no Início), **Agenda**, **Avisos** e
+**Perfil**. O **Início** mostra o próximo evento: o cartão **Você está no
+evento**, datas, nome, local, quantas palestras e salas ele tem, o botão
+**Ver programação**, os atalhos (**Localização**, **Palestrantes** e **Patrocínio** já
+abrem; **Onde comer** aparece como "Em breve"), a descrição e a próxima palestra
+da agenda da pessoa nesse evento. Com mais de um evento, tocar no
+cartão (**Outros eventos**) abre a tela **Escolher evento**, com as datas,
+o lugar e as palestras de cada evento; tocar em um deles troca o evento
+mostrado. Nos detalhes
+da palestra, **Ver planta** (na linha "Onde") abre a planta do evento,
+a seção **Como chegar** (fechada, abre ao tocar) mostra o caminho até a sala e tocar no
+palestrante (**Ver perfil**) abre o perfil dele,
+com a descrição, a rede social e as palestras dele no evento. O **Perfil**
+mostra o nome, o e-mail, quantas inscrições e favoritas a pessoa tem e o
+link **Editar perfil** (troca o nome e o e-mail da conta). Os
+**Favoritos** ficam dentro do Perfil, junto com **Certificados** ("Em
+breve"), o interruptor de **Modo escuro** e o botão **Sair**, que volta
+para o login. A escolha do tema é salva no próprio aparelho com o pacote
+`shared_preferences` (não vai para o banco).
+
+- **Programação:** uma aba para cada dia do evento (os dias que já
+  passaram ficam acinzentados, mas abrem), filtros por tema, a lupa para
+  buscar e o botão de **Patrocinadores** no topo. Cada palestra mostra um
+  selo: `ENCERRADA`, `EM ANDAMENTO`, `INSCRITA`, `ESGOTADA` ou as vagas.
+- **Agenda:** as palestras em que a pessoa está inscrita, um dia por vez,
+  em linha do tempo; as setas do topo pulam entre os dias com inscrição.
+  No dia de hoje, a palestra em andamento (ou a próxima) aparece em
+  destaque. Entre duas palestras aparece o intervalo livre ou o almoço;
+  as que já terminaram ficam acinzentadas.
+- **Favoritos:** tocar na estrela de uma palestra tira ela dos
+  favoritos; tocar no resto da linha abre os detalhes.
+
+Quem entra como organizador (ex.: `elisa.prado@email.com`) vê também a
+**Área do organizador** no Perfil. Ela abre o painel do evento dessa
+pessoa (o administrador, `bruno.costa@email.com`, vê todos, com o
+seletor **Trocar evento**); tocar numa palestra (ou em **Inscrições**)
+abre a lista de inscritos, com busca e o botão **Remover**.
+
+Em **Cadastros do evento**, o organizador abre, nesta ordem: **Evento e
+planta**, **Locais e rotas**, **Palestrantes**, **Palestras** e
+**Patrocinadores** (cada um com a lista e o formulário), além de **Novo
+evento**. Quem ainda não tem evento vê o botão **Criar meu primeiro
+evento**. A imagem é escolhida com o pacote `image_picker` (galeria no
+celular, janela de arquivos na web).
+
+Em **Participantes**, o **Enviar comunicado** (F09) manda um aviso para
+todos os inscritos em pelo menos uma palestra do evento ou, escolhendo
+uma palestra na lista **Para**, só para os inscritos nela (até 500
+caracteres, com confirmação antes de enviar). O comunicado aparece na
+aba **Avisos** de cada pessoa com o selo **ORGANIZAÇÃO** e, embaixo, o
+nome do evento (e o da palestra, quando foi para uma palestra).
 
 O visual segue a identidade do projeto (ver `CLAUDE.md`, na raiz do
 repositório):
@@ -190,7 +384,9 @@ repositório):
   então todas acompanham o modo escuro;
 - controle do tema (ler e salvar a escolha): `lib/theme/controle_tema.dart`;
 - componentes usados em mais de uma tela: `lib/widgets/` (barra de
-  navegação, marca-texto, rótulo de seção, selo e cabeçalho);
+  navegação, marca-texto, rótulo de seção, selo, cabeçalho, avatar com
+  iniciais, o fundo das telas de login e cadastro e, na área do
+  organizador, o formulário, a lista e o campo de imagem dos cadastros);
 - fontes (Bricolage Grotesque, Figtree e JetBrains Mono): arquivos em
   `assets/fonts/`, já incluídos no app, então não precisam de internet.
 
@@ -217,7 +413,9 @@ Os Services estão em `backend/services/` e contêm as regras:
 - `PalestraService`: detalha e pesquisa palestras;
 - `InscricaoService`: valida usuário, duplicidade, vagas e cancelamento;
 - `FavoritoService`: valida e gerencia favoritos;
-- `NotificacaoService`: ativa, desativa e lista lembretes.
+- `NotificacaoService`: ativa, desativa e lista lembretes;
+- `EnviarComunicadoService`: valida o comunicado e grava uma cópia para
+  cada participante do evento (F09).
 
 ### Models
 
@@ -257,9 +455,24 @@ mesmo que dois pedidos cheguem ao backend, o banco não permite duplicação.
 ### Lembretes e notificações
 
 Ativar lembrete cria um registro em `notificacao` com
-`tipo_notificacao = 'lembrete'`. Desativar remove esse registro. Ao abrir
+`tipo_notificacao = 'lembrete'`. Desativar remove esse registro.
+
+O aviso de início (F02) é uma **notificação local**: o próprio celular
+agenda e mostra o aviso 10 minutos antes (`lib/services/lembrete_service.dart`,
+pacote `flutter_local_notifications`), sem o servidor mandar nada na
+hora. Ao entrar no app, os avisos são refeitos a partir dos lembretes do
+backend, para acompanhar mudanças de horário. Cancelar a inscrição
+desliga o lembrete. Ao abrir
 Avisos, o Flutter consulta a API; portanto o conteúdo não é uma lista fixa
 dentro do aplicativo.
+
+Os comunicados do organizador (F09) também ficam em `notificacao`, com
+`tipo_notificacao = 'comunicado'` e o `id_evento` preenchido (e o
+`id_palestra`, quando o comunicado é só para os inscritos de uma
+palestra): cada destinatário recebe uma cópia. A lista de avisos traz
+`nome_evento` e `titulo_palestra` para a tela mostrar de onde veio. Na aba Avisos, o selo muda conforme o tipo
+(`ORGANIZAÇÃO`, `ATENÇÃO`, `LEMBRETE` ou `INFO`), e puxar a lista para
+baixo busca de novo.
 
 ## 7. Rotas principais
 
@@ -279,13 +492,16 @@ enviado no corpo ou na URL, que a API sabe quem fez o pedido.
 - Todo cadastro cria um **participante**. Organizadores são criados
   direto no banco. A API confere a coluna `usuario.tipo_usuario`, e a
   tabela `organizador` guarda o nível de acesso. Os dois precisam ficar
-  iguais:
+  iguais. O nível `organizador` gerencia só os próprios eventos; o
+  `administrador` gerencia todos:
 
   ```sql
   UPDATE usuario SET tipo_usuario = 'organizador' WHERE email = 'email@da.pessoa';
   INSERT INTO organizador (id_usuario, nivel_acesso)
-  SELECT id_usuario, 'administrador' FROM usuario WHERE email = 'email@da.pessoa';
+  SELECT id_usuario, 'organizador' FROM usuario WHERE email = 'email@da.pessoa';
   ```
+
+  Depois disso, os eventos que a pessoa criar ficam ligados a ela.
 
 Testando com `curl`:
 
@@ -293,7 +509,7 @@ Testando com `curl`:
 # 1. Login: copie o valor de "token" da resposta
 curl -X POST http://127.0.0.1:5000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"ana.silva@email.com","senha":"hash123"}'
+  -d '{"email":"ana.silva@email.com","senha":"Senha@123"}'
 
 # 2. Use o token nas outras rotas
 curl http://127.0.0.1:5000/api/palestras -H "Authorization: Bearer <TOKEN>"
@@ -302,29 +518,34 @@ curl http://127.0.0.1:5000/api/palestras -H "Authorization: Bearer <TOKEN>"
 ### Rotas
 
 Acesso: **pública** (sem token), **login** (qualquer usuário logado),
-**própria** (só a pessoa dona do `id` da URL), **organizador**.
+**própria** (só a pessoa dona do `id` da URL), **organizador**,
+**dono do evento** (só o organizador responsável pelo evento, ou um
+administrador; os outros recebem 403).
 
 | Método | Rota | Uso | Acesso |
 |---|---|---|---|
 | POST | `/api/auth/login` | Login (devolve o token) | pública |
 | GET | `/api/auth/me` | Dados do usuário do token | login |
 | POST | `/api/auth/logout` | Logout (o app apaga o token) | pública |
-| POST | `/api/usuarios` | Cadastro (sempre como participante) | pública |
-| GET | `/api/usuarios` | Lista usuários | organizador |
-| GET, DELETE | `/api/usuarios/<id>` | Ver ou remover conta | própria ou organizador |
-| PUT/PATCH | `/api/usuarios/<id>` | Alterar `nome`, `email` ou `senha` (outros campos são ignorados) | própria |
+| POST | `/api/usuarios` | Cadastro (sempre como participante; nome preenchido, e-mail em formato válido e senha de 8 a 16 caracteres) | pública |
+| GET | `/api/usuarios` | Lista usuários | administrador |
+| GET, DELETE | `/api/usuarios/<id>` | Ver ou remover conta (quem é responsável por eventos não pode ser removido) | própria ou administrador |
+| PUT/PATCH | `/api/usuarios/<id>` | Alterar `nome`, `email` ou `senha` (outros campos são ignorados; mesmas regras do cadastro) | própria |
 | GET | `/api/eventos` | Lista eventos | login |
 | GET | `/api/eventos/<id>` | Detalhes do evento | login |
-| POST | `/api/eventos` | Cria evento | organizador |
-| PUT/PATCH, DELETE | `/api/eventos/<id>` | Altera ou remove evento | organizador |
+| POST | `/api/eventos` | Cria evento (fica ligado a quem criou; `id_organizador` no corpo é ignorado) | organizador |
+| PUT/PATCH | `/api/eventos/<id>` | Altera evento (o responsável não muda) | dono do evento |
+| DELETE | `/api/eventos/<id>` | Remove o evento com tudo o que é dele (corpo: `senha` de quem está logado) | dono do evento |
+| GET | `/api/eventos/<id>/planta` | Planta do evento (`null` se ainda não tem) | login |
+| PUT | `/api/eventos/<id>/planta` | Cria ou atualiza a planta (`imagem_mapa`, `descricao`) | dono do evento |
 | GET | `/api/eventos/<id>/programacao` | Programação do evento | login |
 | GET | `/api/eventos/<id_usuario>/agenda` | Agenda personalizada | própria |
-| GET | `/api/palestras?id_evento=&tema=` | Lista e pesquisa | login |
-| GET | `/api/palestras/<id>` | Detalhes e status (inscrito, favorita, lembrete) do usuário do token | login |
-| POST | `/api/palestras` | Cria palestra | organizador |
-| PUT/PATCH, DELETE | `/api/palestras/<id>` | Altera ou remove palestra | organizador |
-| POST | `/api/inscricoes` | Inscrever (corpo: `id_palestra`) | login |
-| DELETE | `/api/inscricoes` | Cancelar inscrição (corpo: `id_palestra`) | login |
+| GET | `/api/palestras?id_evento=&tema=` | Lista e pesquisa, com `media_estrelas` e `total_avaliacoes` | login |
+| GET | `/api/palestras/<id>` | Detalhes, média das avaliações e status do usuário do token (`inscrito`, `favorita`, `lembrete_ativo`, `minha_avaliacao`, `pode_avaliar`) | login |
+| POST | `/api/palestras` | Cria palestra | dono do evento |
+| PUT/PATCH, DELETE | `/api/palestras/<id>` | Altera ou remove palestra (um novo `vagas_total` recalcula as vagas livres e não pode ser menor que o número de inscritos) | dono do evento |
+| POST | `/api/inscricoes` | Inscrever (corpo: `id_palestra` e, opcional, `confirmar_choque: true`). Com choque de horário e sem a confirmação, responde **409** com `choque_horario: true` e `palestra_conflitante` (F16). Palestra que já começou: **400**, inscrições encerradas | login |
+| DELETE | `/api/inscricoes` | Cancelar inscrição (corpo: `id_palestra`). Depois que a palestra começa, responde **400**: a inscrição vira o registro de participação (F16) | login |
 | GET | `/api/favoritos/usuario/<id_usuario>` | Meus favoritos | própria |
 | POST | `/api/favoritos` | Adicionar favorito (corpo: `id_palestra`) | login |
 | DELETE | `/api/favoritos` | Remover favorito (corpo: `id_palestra`) | login |
@@ -332,19 +553,44 @@ Acesso: **pública** (sem token), **login** (qualquer usuário logado),
 | POST | `/api/lembretes` | Ativar lembrete (corpo: `id_palestra`) | login |
 | DELETE | `/api/lembretes` | Desativar lembrete (corpo: `id_palestra`) | login |
 | GET | `/api/avaliacoes/palestra/<id>` | Avaliações de uma palestra | login |
-| POST | `/api/avaliacoes` | Avaliar palestra (1 a 5 estrelas e comentário opcional) | login |
+| POST | `/api/avaliacoes` | Avaliar palestra (1 a 5 estrelas e comentário opcional; só inscritos, depois do início da palestra) | login |
 | PUT/PATCH | `/api/avaliacoes/<id>` | Alterar nota ou comentário | só o autor |
-| DELETE | `/api/avaliacoes/<id>` | Remover avaliação | autor ou organizador |
+| DELETE | `/api/avaliacoes/<id>` | Remover avaliação | autor ou dono do evento |
+| GET | `/api/organizador/eventos` | Eventos que a pessoa gerencia (todos, para o administrador) | organizador |
+| GET | `/api/organizador/eventos/<id>/painel` | Números do evento e ranking das palestras | dono do evento |
+| GET | `/api/organizador/palestras/<id>/inscritos` | Inscritos de uma palestra (nome e e-mail) | dono do evento |
+| DELETE | `/api/organizador/palestras/<id>/inscritos/<id_usuario>` | Remove a inscrição, devolve a vaga e avisa a pessoa | dono do evento |
+| POST | `/api/organizador/eventos/<id>/comunicados` | Envia um comunicado a todos os inscritos no evento ou, com `id_palestra`, só aos inscritos dessa palestra (corpo: `mensagem`, até 500 caracteres, e `id_palestra` opcional); devolve `total_destinatarios` | dono do evento |
+| GET | `/api/patrocinadores?id_evento=` | Patrocinadores do evento, em ordem alfabética | login |
+| POST | `/api/patrocinadores` | Cria patrocinador (`id_evento`, `nome_empresa`, `logo`, `site`, `descricao`) | dono do evento |
+| PUT/PATCH, DELETE | `/api/patrocinadores/<id>` | Altera ou remove patrocinador | dono do evento |
+| GET | `/api/locais?id_evento=` | Locais do evento, com o passo a passo da rota em `descricao` | login |
+| POST | `/api/locais` | Cria local (`id_evento`, `nome_local`, `descricao`) | dono do evento |
+| PUT/PATCH, DELETE | `/api/locais/<id>` | Altera ou remove local (as palestras dele ficam sem local) | dono do evento |
+| GET | `/api/palestrantes?id_evento=&busca=` | Palestrantes do evento, com busca opcional por nome | login |
+| GET | `/api/palestrantes/<id>` | Dados de um palestrante | login |
+| POST | `/api/palestrantes` | Cria palestrante (`id_evento`, `nome`, `foto`, `descricao`, `rede_social`) | dono do evento |
+| PUT/PATCH, DELETE | `/api/palestrantes/<id>` | Altera ou remove palestrante (as palestras dele ficam sem palestrante) | dono do evento |
+| POST | `/api/uploads` | Envia uma imagem (multipart, campo `imagem`; PNG, JPG ou WEBP de até 5 MB) e devolve o nome do arquivo | organizador |
+| GET | `/uploads/<nome>` | Mostra uma imagem enviada | pública |
+
+Nos cadastros, `imagem_mapa`, `foto` e `logo` recebem o nome devolvido
+por `POST /api/uploads`. Qualquer outro valor (um caminho ou o endereço
+de outro site) é recusado. A palestra só aceita local e palestrante do
+mesmo evento.
 
 Nas rotas de inscrição, favorito, lembrete e avaliação, o usuário é
-sempre o do token: um `id_usuario` enviado no corpo é ignorado.
+sempre o do token: um `id_usuario` enviado no corpo é ignorado. Só nas
+rotas do organizador o `id_usuario` vem da URL, porque é ele quem
+escolhe de quem remover a inscrição.
 
 ## 8. Fluxos para demonstrar ao professor
 
 ### Fluxo 1 — programação
 
 ```text
-Login -> Início -> evento -> programação -> detalhes da palestra
+Login -> Início (Outros eventos, se houver mais de um) -> Ver programação
+  -> detalhes da palestra
 ```
 
 ### Fluxo 2 — inscrição
@@ -363,24 +609,91 @@ Detalhes -> Cancelar inscrição -> remove participacao -> devolve vaga
 
 ```text
 Detalhes -> Favoritar -> tabela favorito -> Perfil -> Favoritos
+  -> estrela da lista remove o favorito
 ```
 
 ### Fluxo 5 — agenda
 
 ```text
 Inscrições do usuário -> consulta participacao -> palestras ordenadas
+  -> Agenda: um dia por vez (setas), destaque da atual ou da próxima
 ```
 
 ### Fluxo 6 — lembrete
 
 ```text
 Detalhes -> Ativar lembrete -> notificacao -> aba Avisos
+         -> (Android) aviso agendado -> 10 min antes: notificação no celular
 ```
 
 ### Fluxo 7 — pesquisa
 
 ```text
 Pesquisa de tema -> GET /api/palestras?tema=Tecnologia -> MySQL -> resultados
+```
+
+### Fluxo 8 — cadastro
+
+```text
+Login -> Criar conta -> POST /api/usuarios -> POST /api/auth/login -> Início
+```
+
+### Fluxo 9 — avaliação
+
+```text
+Detalhes (inscrito, palestra já começou) -> Avaliar -> POST /api/avaliacoes
+  -> média nos Detalhes e na Programação
+```
+
+A palestra precisa já ter começado (`horario_inicio` no passado) e a
+pessoa precisa estar inscrita nela. Nos dados de exemplo, entre como Ana
+e abra "Banco de Dados na Prática".
+
+### Fluxo 10 — área do organizador
+
+```text
+Login (organizador) -> Perfil -> Área do organizador -> palestra
+  -> Inscrições -> Remover -> vaga devolvida + aviso na aba Avisos da pessoa
+```
+
+### Fluxo 11 — patrocinadores
+
+```text
+Programação -> Patrocinadores -> GET /api/patrocinadores?id_evento=1 -> cards
+```
+
+### Fluxo 12 — cadastros do organizador
+
+```text
+Login (organizador) -> Perfil -> Área do organizador -> Novo evento
+  -> Evento e planta (envia a imagem) -> Locais e rotas -> Palestrantes
+  -> Palestras (escolhe local e palestrante) -> Patrocinadores
+  -> Login (participante) -> Início -> Outros eventos (o novo) -> Ver programação
+```
+
+Exemplo do envio de imagem com `curl` (troque `<TOKEN>` pelo token de
+um organizador):
+
+```bash
+curl -H "Authorization: Bearer <TOKEN>" -F imagem=@planta.png \
+  http://127.0.0.1:5000/api/uploads
+# {"arquivo": "3f2a...e9.png"}
+```
+
+### Fluxo 13 — comunicado do organizador
+
+```text
+Login (organizador) -> Perfil -> Área do organizador -> Enviar comunicado
+  -> Para (todos ou uma palestra) -> mensagem -> Enviar -> confirmar
+  -> Login (participante inscrito) -> Avisos -> selo ORGANIZAÇÃO + evento
+```
+
+```bash
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Content-Type: application/json" \
+  -d '{"mensagem": "Credenciamento aberto no hall principal até as 10h."}' \
+  http://127.0.0.1:5000/api/organizador/eventos/1/comunicados
+# {"mensagem": "Comunicado enviado.", "total_destinatarios": 1}
+# Só para os inscritos da palestra 1: acrescente "id_palestra": 1 no corpo.
 ```
 
 ## 9. Tratamento de erros
@@ -393,6 +706,8 @@ O backend retorna mensagens simples para:
 - inscrição inexistente;
 - favorito duplicado ou inexistente;
 - lembrete duplicado ou inexistente;
+- comunicado vazio, longo demais, para um evento ou palestra sem
+  inscritos, ou para uma palestra de outro evento;
 - servidor indisponível;
 - requisição sem login ou com login vencido (401);
 - usuário sem permissão para a ação (403).

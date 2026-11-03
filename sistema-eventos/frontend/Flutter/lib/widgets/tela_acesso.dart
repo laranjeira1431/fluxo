@@ -1,0 +1,370 @@
+import 'dart:math';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
+
+/// Componentes compartilhados das telas de acesso: login e cadastro (F01).
+///
+/// As duas telas têm o mesmo visual no canvas ("Login" e "Cadastro
+/// (RF01)"): fundo Céu com a curva do rio, um cartão de vidro fosco no
+/// meio e, dentro dele, a logo e os campos. Este arquivo reúne essas
+/// partes para as duas telas não repetirem o mesmo código:
+///
+/// - `FundoAcesso`: o fundo, o rio e o cartão de vidro;
+/// - `FundoRio`: só o fundo Céu com o rio (usado também na abertura);
+/// - `LogoFluxo`: a logo (círculo com o rio) e o nome "fluxo";
+/// - `CampoAcesso`: um campo de texto com o rótulo em cima.
+///
+/// As cores vêm todas do tema (`theme/app_theme.dart`): no modo escuro o
+/// fundo, o rio e o cartão mudam junto com o resto do app.
+
+/// Fundo das telas de acesso, com o conteúdo dentro do cartão de vidro.
+///
+/// O "vidro fosco" é feito com um `BackdropFilter`: ele desfoca tudo o que
+/// está ATRÁS do cartão (o rio e o fundo), e por cima vai uma camada
+/// branca quase transparente. O `ClipRRect` limita o desfoque ao formato
+/// do cartão; sem ele, a tela inteira ficaria desfocada.
+class FundoAcesso extends StatelessWidget {
+  final Widget child;
+
+  const FundoAcesso({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final cores = Theme.of(context).colorScheme;
+    final cantos = BorderRadius.circular(26);
+
+    return Scaffold(
+      body: FundoRio(
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 24),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 380),
+                // A sombra fica fora do `ClipRRect`, senão seria cortada.
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: cantos,
+                    boxShadow: [
+                      BoxShadow(
+                        color: cores.primary.withValues(alpha: 0.14),
+                        blurRadius: 40,
+                        offset: const Offset(0, 12),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: cantos,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: cores.surface.withValues(alpha: 0.2),
+                          borderRadius: cantos,
+                          border: Border.all(
+                            color: cores.surface.withValues(alpha: 0.6),
+                            width: 1.5,
+                          ),
+                        ),
+                        // O grão é desenhado atrás do conteúdo. O
+                        // `RepaintBoundary` evita redesenhar os pontos a
+                        // cada letra digitada nos campos.
+                        child: CustomPaint(
+                          painter: _GraoPainter(cores.onSurface, cores.surface),
+                          child: RepaintBoundary(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(26, 28, 26, 22),
+                              child: child,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Fundo Céu com a curva larga do rio, usado nas telas de acesso e na
+/// abertura (splash). O `child` ocupa a tela inteira, por cima do rio.
+///
+/// O `CustomPaint` desenha o rio atrás do `child`; o `SizedBox.expand`
+/// faz o desenho ocupar todo o espaço disponível, e não só o tamanho do
+/// conteúdo.
+class FundoRio extends StatelessWidget {
+  final Widget child;
+
+  const FundoRio({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: Theme.of(context).colorScheme.tertiary,
+      child: CustomPaint(
+        painter: _RioPainter(Theme.of(context).scaffoldBackgroundColor),
+        child: SizedBox.expand(child: child),
+      ),
+    );
+  }
+}
+
+/// Desenha a curva larga do rio atravessando a tela, de cima para baixo.
+///
+/// O caminho foi copiado do canvas, que usa uma tela de 390 × 844. Para
+/// caber em qualquer tela sem deformar, todos os pontos (e a espessura)
+/// são multiplicados pela MESMA `escala`, tirada só da altura: assim o "S"
+/// mantém o formato do canvas, e a largura da tela não muda o rio. O
+/// desenho é então centralizado na horizontal (`dx`), alinhado com a logo
+/// e o cartão, que também ficam no centro.
+///
+/// Em telas largas sobra espaço dos lados, e as pontas do rio ficariam
+/// soltas no meio da tela. Por isso o caminho começa acima da tela e
+/// termina com uma reta que segue a direção da curva até bem fora dela:
+/// o rio sempre entra pela borda de cima e sai pela de baixo.
+class _RioPainter extends CustomPainter {
+  final Color cor;
+
+  _RioPainter(this.cor);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final escala = size.height / 844;
+    final dx = (size.width - 390 * escala) / 2;
+    Offset p(double x, double y) => Offset(dx + x * escala, y * escala);
+
+    // Ponta de cima: começa acima da tela e desce na vertical. No canvas o
+    // rio vinha da direita, quase na horizontal; em telas largas esse
+    // trecho aparecia como um "braço" solto no alto. A primeira curva
+    // termina no mesmo ponto (260, 130) e na mesma direção da original,
+    // então o resto do "S" continua igual e a emenda não faz "quina".
+    final inicio = p(340, -120);
+    final caminho = Path()..moveTo(inicio.dx, inicio.dy);
+    // Cada `cubicTo` é uma curva: dois pontos que "puxam" a linha e o
+    // ponto onde ela termina (o `C` do SVG do canvas).
+    void curva(double x1, double y1, double x2, double y2, double x, double y) {
+      final a = p(x1, y1), b = p(x2, y2), c = p(x, y);
+      caminho.cubicTo(a.dx, a.dy, b.dx, b.dy, c.dx, c.dy);
+    }
+
+    curva(340, -30, 350, 90, 260, 130);
+    curva(140, 185, 60, 230, 150, 330);
+    curva(240, 430, 380, 430, 330, 570);
+    curva(290, 690, 90, 720, -40, 830);
+    // Ponta de baixo: continua na direção da última curva até sair da tela.
+    final fim = p(-170, 940);
+    caminho.lineTo(fim.dx, fim.dy);
+
+    canvas.drawPath(
+      caminho,
+      Paint()
+        ..color = cor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 110 * escala
+        ..strokeCap = StrokeCap.round,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_RioPainter antigo) => antigo.cor != cor;
+}
+
+/// Desenha o "grão" do vidro: milhares de pontinhos quase transparentes,
+/// claros e escuros, que dão textura ao cartão (no canvas, um filtro de
+/// ruído).
+///
+/// Os pontos são sorteados com `Random(7)`: com o mesmo número inicial
+/// (a "semente"), o sorteio dá sempre o mesmo resultado, então os pontos
+/// não "pulam" de lugar quando o cartão é redesenhado.
+///
+/// Desempenho: são milhares de pontos, e o cartão é redesenhado a cada
+/// quadro enquanto o teclado abre. Por isso o sorteio é feito uma vez só
+/// e guardado nas listas `static` (que pertencem à classe, e não a cada
+/// `_GraoPainter`, já que um novo é criado a cada `build`). Só se sorteia
+/// de novo quando o tamanho do cartão muda.
+class _GraoPainter extends CustomPainter {
+  final Color escuro;
+  final Color claro;
+
+  _GraoPainter(this.escuro, this.claro);
+
+  static Size? _tamanhoSorteado;
+  static List<Offset> _pontosEscuros = [];
+  static List<Offset> _pontosClaros = [];
+
+  /// Sorteia os pontos para o tamanho `size`, se ainda não foram sorteados.
+  static void _sortearPontos(Size size) {
+    if (size == _tamanhoSorteado) return;
+    final sorteio = Random(7);
+    final quantidade = (size.width * size.height / 14).round();
+    _pontosEscuros = [];
+    _pontosClaros = [];
+    for (var i = 0; i < quantidade; i++) {
+      final ponto = Offset(
+        sorteio.nextDouble() * size.width,
+        sorteio.nextDouble() * size.height,
+      );
+      (i.isEven ? _pontosEscuros : _pontosClaros).add(ponto);
+    }
+    _tamanhoSorteado = size;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    _sortearPontos(size);
+    final pontosEscuros = _pontosEscuros;
+    final pontosClaros = _pontosClaros;
+
+    final pincel = Paint()..strokeWidth = 1;
+    canvas.drawPoints(
+      PointMode.points,
+      pontosEscuros,
+      pincel..color = escuro.withValues(alpha: 0.05),
+    );
+    canvas.drawPoints(
+      PointMode.points,
+      pontosClaros,
+      pincel..color = claro.withValues(alpha: 0.08),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_GraoPainter antigo) =>
+      antigo.escuro != escuro || antigo.claro != claro;
+}
+
+/// Logo do Fluxo: um círculo na cor principal cortado pelo rio, ao lado
+/// do nome "fluxo" em Bricolage Grotesque.
+///
+/// Com `vertical: true`, o nome fica embaixo do círculo, como na abertura
+/// do canvas (círculo de 96 e nome de 52).
+class LogoFluxo extends StatelessWidget {
+  /// Tamanho do círculo; o nome acompanha a proporção.
+  final double tamanho;
+  final bool vertical;
+
+  const LogoFluxo({super.key, this.tamanho = 36, this.vertical = false});
+
+  @override
+  Widget build(BuildContext context) {
+    final cores = Theme.of(context).colorScheme;
+    final circulo = CustomPaint(
+      size: Size.square(tamanho),
+      painter: _LogoPainter(
+        circulo: cores.primary,
+        rio: Theme.of(context).scaffoldBackgroundColor,
+      ),
+    );
+    final nome = Text(
+      'fluxo',
+      style: TextStyle(
+        fontFamily: AppFontes.titulo,
+        fontSize: tamanho * (vertical ? 0.54 : 0.94),
+        fontWeight: FontWeight.w600,
+        letterSpacing: vertical ? -1 : -0.5,
+        color: cores.primary,
+      ),
+    );
+
+    if (vertical) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [circulo, SizedBox(height: tamanho * 0.15), nome],
+      );
+    }
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [circulo, SizedBox(width: tamanho * 0.28), nome],
+    );
+  }
+}
+
+/// Desenha o círculo da logo e o rio dentro dele. O desenho do canvas usa
+/// uma área de 100 × 100; `escala` adapta para o tamanho pedido.
+class _LogoPainter extends CustomPainter {
+  final Color circulo;
+  final Color rio;
+
+  _LogoPainter({required this.circulo, required this.rio});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final escala = size.width / 100;
+    canvas.scale(escala);
+
+    final formaCirculo = Path()
+      ..addOval(Rect.fromCircle(center: const Offset(50, 50), radius: 48));
+    canvas.drawPath(formaCirculo, Paint()..color = circulo);
+
+    // O rio só aparece dentro do círculo (`clipPath`).
+    canvas.clipPath(formaCirculo);
+    final formaRio = Path()
+      ..moveTo(64, 0)
+      ..cubicTo(30, 10, 26, 34, 50, 46)
+      ..cubicTo(74, 58, 70, 82, 36, 100)
+      ..lineTo(62, 100)
+      ..cubicTo(92, 84, 94, 54, 68, 40)
+      ..cubicTo(50, 30, 52, 14, 86, 4)
+      ..close();
+    canvas.drawPath(formaRio, Paint()..color = rio);
+  }
+
+  @override
+  bool shouldRepaint(_LogoPainter antigo) =>
+      antigo.circulo != circulo || antigo.rio != rio;
+}
+
+/// Campo de texto das telas de acesso, com o rótulo em JetBrains Mono
+/// maiúsculo em cima (ex.: `E-MAIL`), como no canvas.
+///
+/// `sufixo` permite colocar um botão dentro do campo (ex.: o "olho" que
+/// mostra a senha no login).
+class CampoAcesso extends StatelessWidget {
+  final String rotulo;
+  final String dica;
+  final TextEditingController controller;
+  final TextInputType? teclado;
+  final bool esconderTexto;
+  final Widget? sufixo;
+
+  const CampoAcesso({
+    super.key,
+    required this.rotulo,
+    required this.dica,
+    required this.controller,
+    this.teclado,
+    this.esconderTexto = false,
+    this.sufixo,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final tema = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Sobre o fundo Céu, o rótulo usa a cor do texto principal: a cor
+        // apagada dos rótulos comuns ficaria com pouco contraste.
+        Text(
+          rotulo,
+          style: tema.textTheme.labelSmall?.copyWith(color: tema.colorScheme.onSurface),
+        ),
+        const SizedBox(height: 6),
+        TextField(
+          controller: controller,
+          keyboardType: teclado,
+          obscureText: esconderTexto,
+          decoration: InputDecoration(hintText: dica, suffixIcon: sufixo),
+        ),
+      ],
+    );
+  }
+}

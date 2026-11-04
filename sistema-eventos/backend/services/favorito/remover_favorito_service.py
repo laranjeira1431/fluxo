@@ -23,4 +23,4 @@ class RemoverFavoritoService:
         # delegamos à Model, que sabe como remover pelo próprio ID.
         from backend.models.favorito import Favorito
 
-        Favorito.remover(linha["id_favorito"])
+        Favorito.deletar(linha["id_favorito"])

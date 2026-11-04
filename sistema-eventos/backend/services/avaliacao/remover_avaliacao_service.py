@@ -31,7 +31,7 @@ class RemoverAvaliacaoService:
             raise PermissionError(
                 "Só quem fez a avaliação ou o organizador do evento pode removê-la."
             )
-        Avaliacao.remover(id_avaliacao)
+        Avaliacao.deletar(id_avaliacao)
 
     @staticmethod
     def _organizador_do_evento(usuario, avaliacao):

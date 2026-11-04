@@ -14,6 +14,6 @@ class RemoverPalestraService:
     """Caso de uso responsável pela remoção de uma palestra."""
 
     def execute(self, id_palestra):
-        removida = Palestra.remover(id_palestra)
+        removida = Palestra.deletar(id_palestra)
         if not removida:
             raise ValueError("Palestra não encontrada.")

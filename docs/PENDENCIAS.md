@@ -61,6 +61,10 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
   `buscar_por_id()`.
 - **Fora da semana:** F17, F31, F33, F34 e o bloco D só entram se sobrar
   tempo, na ordem da seção 0.2.
+- **Testes no app depois das tarefas (decidido em 03/11/2026):** as
+  tarefas da semana são feitas primeiro, e os testes no app ficam para
+  depois, todos juntos. Cada tarefa registra na seção 0.3 o que ficou
+  para testar. Eles precisam ser feitos antes da gravação do vídeo (F32).
 
 ### Cronograma original (20 a 23/10/2026)
 
@@ -240,6 +244,7 @@ teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
 
 | Tarefa | O que testar | Como testar | Onde | Status |
 |---|---|---|---|---|
+| F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
 
 ---
@@ -314,7 +319,7 @@ o nome indicado, que aparece acima de cada tela.
 | F26 | RF20 (prancha do Perfil) | 🟡 | Editar perfil: e-mail repetido, troca de senha, foto de perfil e revisão de segurança | Parcial |
 | F27 | — (S13) | 🔴 | Diagrama de classes do domínio | Pendente |
 | F28 | — (S14) | 🔴 | Fluxogramas dos casos de uso | Pendente |
-| F29 | — (S15) | 🔴 | Nomes dos métodos de CRUD iguais aos dos requisitos | Pendente |
+| F29 | — (S15) | 🔴 | Nomes dos métodos de CRUD iguais aos dos requisitos | Concluído |
 | F30 | — (S16) | 🔴 | Slides da apresentação | Pendente |
 | F31 | — (S17) | 🟢 | Termos de consentimento no cadastro | Pendente |
 | F32 | — (S18) | 🔴 | Vídeo de demonstração | Pendente |
@@ -1159,14 +1164,19 @@ o nome indicado, que aparece acima de cada tela.
   `buscar_por_id()`, `listar()`, `atualizar()` e `remover()`. Os
   requisitos pedem `salvar()`, `atualizar()`, `deletar()`,
   `listar_todos()` e `buscar_por_id()`.
-- **O que falta:** renomear no mixin e nas chamadas dos Services. Uma
-  busca em 03/11/2026 achou cerca de 21 chamadas de `criar`, `listar` e
-  `remover`, mas parte delas são métodos dos Repositories (ex.:
-  `PalestraRepository.listar`), que precisam ser separados na hora.
-- **Cuidado:** os requisitos só citam os nomes. Decidir no plano da
-  tarefa se `salvar()` continua criando o registro, como o `criar()`
-  faz hoje. Testar todas as telas, porque a mudança passa por vários
-  Services.
+- **Decidido (03/11/2026):** `salvar()` continua sendo um método de
+  classe que cria o registro, como o `criar()` fazia (ex.:
+  `Evento.salvar(nome=...)`). Assim ele é chamado do mesmo jeito que
+  `atualizar()` e `deletar()`, e a regra das vagas da Palestra fica como
+  está. Repositories, Controllers, rotas, app e banco não mudam.
+- **Feito em 03/11/2026 (branch `f29-nomes-crud`):** 24 arquivos
+  alterados: as Models (`crud_mixin.py`, `palestra.py` e comentários de
+  `evento.py` e `restaurante_evento.py`) e 20 chamadas nos Services.
+- **Testado em 03/11/2026:** as 15 Models têm os nomes novos e nenhuma
+  tem os antigos, e as 20 chamadas foram testadas pelas rotas da API,
+  em um banco SQLite temporário: 22 de 22 verificações passaram,
+  incluindo a regra das vagas da Palestra. O teste com o MySQL e no app
+  está na seção 0.3.
 
 ### F30 Slides da apresentação (S16)
 
@@ -1435,6 +1445,23 @@ qualquer alteração.
 - **Também encontrado na revisão da P01:** um corpo JSON que não é um
   objeto (ex.: `[1, 2]`) faz as rotas de inscrição, favorito, lembrete e
   avaliação responderem 500 em vez de 400.
+- **Também encontrado na revisão da F29 (03/11/2026), na ordem de
+  importância:**
+  - **Datas do evento:** cadastrar ou editar um evento aceita `data_fim`
+    antes de `data_inicio`, e uma data em outro formato (ex.:
+    `10/11/2026`) devolve a mensagem do Python, em inglês. Conferir nos
+    services de criar e atualizar evento e responder uma mensagem clara.
+  - **Favorito repetido:** dois toques rápidos podem enviar dois pedidos
+    ao mesmo tempo, e o segundo responde 500. O
+    `AdicionarFavoritoService` deve tratar o `IntegrityError`, como o
+    `CriarAvaliacaoService` já faz.
+  - **Planta e lembrete duplicados:** dois pedidos ao mesmo tempo podem
+    criar duas plantas para o mesmo evento ou dois lembretes iguais. Com
+    dois lembretes, desativar apaga só um, e o lembrete continua ativo.
+    A correção é uma restrição `UNIQUE` em `planta_baixa` e em
+    `notificacao`, no SQL e nas Models, o que obriga a recriar o banco.
+    Por isso é a última desta lista. Na `notificacao`, a restrição só
+    pode valer para os lembretes, porque os avisos podem se repetir.
 - **Por que importa:** o backend deve decidir quais campos podem ser
   alterados. Hoje quem decide é quem envia a requisição.
 

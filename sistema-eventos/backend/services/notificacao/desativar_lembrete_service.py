@@ -18,4 +18,4 @@ class DesativarLembreteService:
         linha = NotificacaoRepository.buscar_lembrete(id_usuario, id_palestra)
         if not linha:
             raise ValueError("Lembrete não encontrado.")
-        Notificacao.remover(linha["id_notificacao"])
+        Notificacao.deletar(linha["id_notificacao"])

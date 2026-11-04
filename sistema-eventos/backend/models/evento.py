@@ -8,8 +8,8 @@ reúne uma ou mais Palestras. É a entidade "raiz" a partir da qual a
 programação, a agenda do usuário e os locais do evento são derivados.
 
 Esta Model herda de `db.Model` (mapeamento SQLAlchemy da tabela `evento`)
-e de `CRUDMixin`, que fornece os métodos `criar`, `buscar_por_id`,
-`listar`, `atualizar` e `remover` sem duplicar código em cada Model
+e de `CRUDMixin`, que fornece os métodos `salvar`, `buscar_por_id`,
+`listar_todos`, `atualizar` e `deletar` sem duplicar código em cada Model
 (ver `backend/models/crud_mixin.py`).
 
 Relacionamento: um Evento possui várias Palestras (`palestras`), com

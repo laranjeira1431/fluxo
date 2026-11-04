@@ -30,6 +30,6 @@ class RemoverUsuarioService:
                 "Esta pessoa é responsável por eventos. Remova os eventos dela antes."
             )
 
-        removido = Usuario.remover(id_usuario)
+        removido = Usuario.deletar(id_usuario)
         if not removido:
             raise ValueError("Usuário não encontrado.")

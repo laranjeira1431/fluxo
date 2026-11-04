@@ -29,7 +29,7 @@ class CriarPatrocinadorService:
         if not dados.get("id_evento"):
             raise ValueError("id_evento é obrigatório.")
 
-        return Patrocinador.criar(
+        return Patrocinador.salvar(
             nome_empresa=texto_obrigatorio(
                 dados.get("nome_empresa"), "Digite o nome da empresa.", TAMANHO_NOME
             ),

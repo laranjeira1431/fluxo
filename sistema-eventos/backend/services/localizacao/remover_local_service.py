@@ -17,5 +17,5 @@ class RemoverLocalService:
     """Caso de uso responsável pela remoção de um local."""
 
     def execute(self, id_localizacao):
-        if not Localizacao.remover(id_localizacao):
+        if not Localizacao.deletar(id_localizacao):
             raise ValueError("Local não encontrado.")

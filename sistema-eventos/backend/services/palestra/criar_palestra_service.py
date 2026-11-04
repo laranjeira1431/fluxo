@@ -5,7 +5,7 @@ CAMADA: Services (regra de negócio do caso de uso "Criar Palestra").
 
 Valida os campos obrigatórios, confere se o evento (e, quando informados,
 o local e o palestrante) existem e converte as datas recebidas do Flutter (texto ISO) para `datetime` antes
-de delegar a criação para a Model (`Palestra.criar`, que já cuida de
+de delegar a criação para a Model (`Palestra.salvar`, que já cuida de
 inicializar `vagas_disponiveis`).
 
 Método principal:
@@ -74,7 +74,7 @@ class CriarPalestraService:
             raise ValueError("Evento não encontrado.")
         validar_local_e_palestrante(dados, dados["id_evento"])
 
-        return Palestra.criar(
+        return Palestra.salvar(
             titulo=dados["titulo"],
             resumo=dados.get("resumo"),
             tema=dados.get("tema"),

@@ -25,24 +25,47 @@ O registro de como cada tarefa foi resolvida (quando combinado) fica em
 
 # 0. Plano até a entrega
 
-**Entrega: sexta-feira, 23/10/2026**, com o código no GitHub e uma
-gravação de tela do app rodando. Prioridades definidas em 20/10/2026,
-seguindo as dependências entre as tarefas e o que a avaliação cobra
-(os 20 RFs do relatório):
+**Apresentação: terça 10/11/2026 ou quarta 11/11/2026. Prazo interno:
+segunda-feira, 09/11/2026.** A data de 23/10/2026 ficou para trás, e os
+20 RFs estão concluídos.
 
-- 🔴 entra na entrega: base (P11 e P14 juntas, para o primeiro commit
-  já sair limpo; depois F19, F20, P01, P02), as tarefas que completam os
-  RFs e o README (P09);
-- 🟡 e 🟢: só se sobrar tempo, na ordem da seção 0.2. O que não for
-  feito fica documentado como "próximos passos".
+As prioridades foram revistas em 03/11/2026 com base na rubrica
+(`arq_ref/rubrica_projeto_de_conclusao.docx`) e nos requisitos de entrega
+(`arq_ref/requisitos_entregas.pdf`). A ordem está na seção 0.2. O que não
+for feito fica documentado como "próximos passos".
 
 Cada tarefa segue o passo a passo de `FLUXO_DE_TRABALHO.md` (testar,
 commit, push, Pull Request, merge e testar de novo).
 
 ## 0.1 Cronograma
 
-Duas pessoas. Cada uma faz a tarefa completa, do backend à tela, em uma
-branch própria.
+### Semana final (04 a 09/11/2026)
+
+Desde 03/11/2026, só a Manuela trabalha no projeto, e todas as tarefas
+ficam com ela. A ordem segue os blocos da seção 0.2.
+
+| Dia | Tarefas |
+|---|---|
+| Qua 04/11 | F29 (nomes dos métodos de CRUD) |
+| Qui 05/11 | F27 (diagrama de classes) |
+| Sex 06/11 | F28 (fluxogramas) |
+| Sáb 07/11 | F30 (slides) |
+| Dom 08/11 | P04 e P06; P03 e F26 (só o erro do e-mail repetido) se der tempo |
+| Seg 09/11 | F32 (vídeo) e revisão final |
+
+- **Sem dia reservado para atrasos:** com uma pessoa só, o fim de semana
+  virou dia de trabalho. Se algo atrasar, o bloco B é o primeiro a ser
+  cortado, nesta ordem: F26, P03, P06 e P04. O bloco A não sai da lista.
+- **O bloco A usa os nomes novos:** a F27 e a F28 vêm depois da F29 e já
+  usam `salvar()`, `atualizar()`, `deletar()`, `listar_todos()` e
+  `buscar_por_id()`.
+- **Fora da semana:** F17, F31, F33, F34 e o bloco D só entram se sobrar
+  tempo, na ordem da seção 0.2.
+
+### Cronograma original (20 a 23/10/2026)
+
+Mantido como histórico. Duas pessoas, cada uma fazendo a tarefa
+completa, do backend à tela, em uma branch própria.
 
 | Dia | Manuela (Pessoa A): base, visual e organizador | Bianca (Pessoa B): telas do participante |
 |---|---|---|
@@ -150,32 +173,59 @@ branch própria.
   mudanças no banco com dados reais devem ser feitas com scripts de
   migração (`ALTER TABLE`), sem recriar o banco.
 
-## 0.2 Se sobrar tempo
+## 0.2 Ordem de prioridade (rubrica)
 
-Depois que todas as tarefas 🔴 estiverem na `main` e testadas, seguir
-esta ordem. Primeiro as que melhoram a gravação e a avaliação, depois as
-mais rápidas, por último as maiores.
+Definida em 03/11/2026. A rubrica soma 30 pontos, e a nota final é
+limitada a 30. "Arquitetura cliente servidor" e "Organização da API em
+camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
+
+### Bloco A: vale nota ou é obrigatório
+
+| Ordem | Tarefa | Peso | Por que nessa posição |
+|---|---|---|---|
+| 1 | F29 Nomes dos métodos de CRUD | Exigido nos requisitos | Ligada aos critérios de arquitetura. Vem antes porque o diagrama e os fluxogramas usam esses nomes |
+| 2 | F27 Diagrama de classes | 3 pontos | Exigido na entrega |
+| 3 | F28 Fluxogramas dos casos de uso | 4 pontos | O maior item que ainda não existe |
+| 4 | F30 Slides da apresentação | Ligados a 3 pontos | Exigidos pela rubrica |
+| 5 | F32 Vídeo de demonstração | 4 pontos | Sem a demonstração, o projeto não é avaliado. É gravado no último dia, com o que estiver pronto do bloco B |
+
+### Bloco B: protege a nota e o vídeo
 
 | Ordem | Tarefa | Prioridade | Por que nessa posição |
 |---|---|---|---|
-| 1 | F16 Regras de inscrição (choque de horário e palestra iniciada) | 🟡 | Regra de negócio visível na gravação |
-| 2 | F17 Logout e login lembrado | 🟡 | Melhora o uso do app na gravação |
-| 3 | P04 Configuração de desenvolvimento exposta | 🟡 | Rápida e importante para a segurança |
-| 4 | P03 Atualizações aceitam qualquer campo | 🟡 | Segurança no backend |
-| 5 | P06 Fuso horário inconsistente | 🟡 | Horários corretos nos avisos e na agenda |
-| 6 | P10 Comentário desatualizado na tela de favoritos | 🟢 | Poucos minutos |
-| 7 | P07 Método obsoleto do SQLAlchemy | 🟢 | Poucos minutos |
-| 8 | P05 Abas do app recarregam a cada troca | 🟢 | Pequena, no Flutter |
-| 9 | P08 Tipo de notificação "atencao" | 🟢 | Pequena |
-| 10 | F21 Marcar avisos como lidos (contador da barra) | 🟢 | Pequena; faz o contador de Avisos funcionar |
-| 11 | F13 Restaurantes próximos | 🟢 | Tabela já existe |
-| 12 | F12 Certificado de participação | 🟢 | Tabela criada na F19 |
-| 13 | F15 Aviso de alteração de palestra | 🟢 | Depende da F14 |
-| 14 | P12 Testes automatizados | 🟢 | Maior, mas protege as regras principais |
-| 15 | F18 Entrar com Google | 🟢 | A mais trabalhosa (OAuth e Google Cloud) |
-| 16 | F22 Perfil de administrador geral | 🟢 | Nenhum RF pede; tarefa de segurança, precisa de mais tempo |
-| 17 | F23 Área do palestrante | 🟢 | Nenhum RF pede; muda uma decisão da F05 (palestrante sem login) |
-| 18 | S09 Capa do evento e tela "Escolher evento" | 🟢 | Nenhum RF pede; muda o banco (`evento.imagem_capa`) e o Início. Incluída com autorização da Manuela (23/10/2026) |
+| 6 | P04 Configuração de desenvolvimento exposta | 🟡 | A chave fixa fere a regra de não publicar dados sensíveis. Vem antes da hospedagem |
+| 7 | P06 Fuso horário inconsistente | 🟡 | Horários errados apareceriam no vídeo |
+| 8 | P03 Atualizações aceitam qualquer campo | 🟡 | A F26 depende dela |
+| 9 | F26 Editar perfil | 🟡 | Hoje um e-mail repetido dá erro 500. Foto e troca de senha são extras |
+| 10 | F17 Logout e login lembrado | 🟡 | Melhora o uso do app, sem efeito direto na nota |
+| 11 | Teste da P08 (seção 0.3) | 🟢 | Necessário antes do vídeo só se o lembrete aparecer nele |
+
+### Bloco C: bônus
+
+| Ordem | Tarefa | Peso | Por que nessa posição |
+|---|---|---|---|
+| 12 | F31 Termos de consentimento | 1 ponto | A mudança é pequena |
+| 13 | F33 Hospedagem | 2 pontos | Depende da P04 |
+| 14 | F34 IA como serviço | 2 pontos | A maior do bloco: nada disso existe hoje |
+
+### Bloco D: sem efeito na rubrica
+
+| Ordem | Tarefa | Prioridade |
+|---|---|---|
+| 15 | P10 Comentário desatualizado na tela de favoritos | 🟢 |
+| 16 | P07 Método obsoleto do SQLAlchemy | 🟢 |
+| 17 | P16 Fim de linha diferente entre sistemas | 🟡 |
+| 18 | P05 Abas do app recarregam a cada troca | 🟢 |
+| 19 | F21 Marcar avisos como lidos | 🟢 |
+| 20 | F25 Total de palestras e salas na lista de eventos da API | 🟢 |
+| 21 | F13 Restaurantes próximos | 🟢 |
+| 22 | F12 Certificado de participação | 🟢 |
+| 23 | F15 Aviso de alteração de palestra | 🟢 |
+| 24 | P12 Testes automatizados | 🟢 |
+| 25 | F18 Entrar com Google | 🟢 |
+| 26 | F22 Perfil de administrador geral | 🟢 |
+| 27 | F23 Área do palestrante | 🟢 |
+| 28 | S09 Capa do evento e tela "Escolher evento" | 🟢 |
 
 A P13 não entra na lista: ela se resolve quando F03, F04, F08 e F13
 forem feitas.
@@ -262,6 +312,14 @@ o nome indicado, que aparece acima de cada tela.
 | F24 | — (S05) | 🔴 | Dados de demonstração: eventos encerrado, acontecendo e futuro | Concluído |
 | F25 | — (sugestão na F20) | 🟢 | Total de palestras e salas na lista de eventos da API | Pendente |
 | F26 | RF20 (prancha do Perfil) | 🟡 | Editar perfil: e-mail repetido, troca de senha, foto de perfil e revisão de segurança | Parcial |
+| F27 | — (S13) | 🔴 | Diagrama de classes do domínio | Pendente |
+| F28 | — (S14) | 🔴 | Fluxogramas dos casos de uso | Pendente |
+| F29 | — (S15) | 🔴 | Nomes dos métodos de CRUD iguais aos dos requisitos | Pendente |
+| F30 | — (S16) | 🔴 | Slides da apresentação | Pendente |
+| F31 | — (S17) | 🟢 | Termos de consentimento no cadastro | Pendente |
+| F32 | — (S18) | 🔴 | Vídeo de demonstração | Pendente |
+| F33 | — (S19) | 🟢 | Hospedagem do frontend e da API | Pendente |
+| F34 | — (S20) | 🟢 | IA como serviço em um caso de uso | Pendente |
 
 ### F01 Tela de cadastro de usuário (RF01)
 
@@ -1072,6 +1130,94 @@ o nome indicado, que aparece acima de cada tela.
   - `/security-review` antes do commit.
 - **Depende de:** P03.
 
+### F27 Diagrama de classes do domínio (S13)
+
+- **Telas no canvas:** não se aplica.
+- **O que falta:** um diagrama em `docs/` com as 15 classes de
+  `backend/models/`, seus atributos principais e relacionamentos,
+  indicando herança, composição e agregação quando houver.
+- **Rubrica:** 3 pontos (classes e atributos, relacionamentos e
+  correspondência com o sistema).
+- **Ao concluir:** trocar o texto do README da raiz, que diz que o
+  diagrama está sendo feito, pelo link do arquivo.
+- **Depende de:** F29, para o diagrama já usar os nomes novos.
+
+### F28 Fluxogramas dos casos de uso (S14)
+
+- **Telas no canvas:** não se aplica.
+- **O que falta:** um fluxograma de recuperação de dados e um de entrada
+  de dados, com o passo a passo pelas camadas, incluindo o Repository.
+  Bons candidatos: agenda (recuperação, passa pelo `AgendaRepository`) e
+  inscrição (entrada, com o controle de vagas).
+- **Rubrica:** 4 pontos (2 para cada fluxograma).
+- **Depende de:** F29.
+
+### F29 Nomes dos métodos de CRUD iguais aos dos requisitos (S15)
+
+- **Telas no canvas:** não se aplica.
+- **O que acontece hoje:** o `models/crud_mixin.py` usa `criar()`,
+  `buscar_por_id()`, `listar()`, `atualizar()` e `remover()`. Os
+  requisitos pedem `salvar()`, `atualizar()`, `deletar()`,
+  `listar_todos()` e `buscar_por_id()`.
+- **O que falta:** renomear no mixin e nas chamadas dos Services. Uma
+  busca em 03/11/2026 achou cerca de 21 chamadas de `criar`, `listar` e
+  `remover`, mas parte delas são métodos dos Repositories (ex.:
+  `PalestraRepository.listar`), que precisam ser separados na hora.
+- **Cuidado:** os requisitos só citam os nomes. Decidir no plano da
+  tarefa se `salvar()` continua criando o registro, como o `criar()`
+  faz hoje. Testar todas as telas, porque a mudança passa por vários
+  Services.
+
+### F30 Slides da apresentação (S16)
+
+- **Telas no canvas:** não se aplica.
+- **O que falta:** descrição, público-alvo e problema; cinco casos de
+  uso com as telas; figura da arquitetura e as pastas de Controllers,
+  Services, Repositories e Models; tecnologias; apresentação do README.
+- **Rubrica:** ligados a 3 dos 4 pontos de "Apresentação e
+  documentação".
+
+### F31 Termos de consentimento no cadastro (S17)
+
+- **Telas no [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt):** "Cadastro (RF01)".
+- **O que falta:** mostrar os termos no cadastro (F01) e guardar no banco
+  a decisão da pessoa (ex.: coluna com a data do aceite em `usuario`).
+- **Rubrica:** 1 ponto de bônus.
+
+### F32 Vídeo de demonstração (S18)
+
+- **Telas no canvas:** não se aplica.
+- **O que falta:** gravar o sistema funcionando de ponta a ponta, com
+  pelo menos quatro funcionalidades principais que não sejam CRUD, e
+  conferir se elas batem com o README.
+- **Atenção à duração:** os requisitos de entrega pedem no máximo 5
+  minutos, e a rubrica pede no máximo 2. Até 2 minutos atende aos dois.
+  Confirmar com o professor.
+- **Rubrica:** 4 pontos em "Fluxo do sistema". Sem a demonstração, o
+  projeto não é avaliado.
+- **Quando gravar:** no último dia do cronograma (seção 0.1), com o que
+  estiver pronto do bloco B. As tarefas que ficarem de fora não impedem
+  a gravação.
+
+### F33 Hospedagem do frontend e da API (S19)
+
+- **Telas no canvas:** não se aplica.
+- **O que falta:** publicar o frontend e a API, acessíveis e funcionando
+  durante a avaliação. A escolha do serviço fica para o plano da tarefa.
+- **Rubrica:** 2 pontos de bônus.
+- **Depende de:** P04, porque a `SECRET_KEY` fixa não pode ir para um
+  servidor público.
+- **Tarefa de segurança:** a API passa a ficar exposta na internet.
+  Fazer `/security-review` antes do commit.
+
+### F34 IA como serviço em um caso de uso (S20)
+
+- **Telas no canvas:** a definir no plano da tarefa.
+- **O que falta:** escolher um caso de uso e integrar uma IA de ponta a
+  ponta. A comunicação fica em um Service específico, e a chave de API
+  fica no `.env`, fora do repositório.
+- **Rubrica:** 2 pontos de bônus.
+
 ## 1.3 Itens do relatório fora da lista de requisitos (decidir)
 
 Estes itens aparecem na Seção 1 (tabela de observação), na análise das
@@ -1171,15 +1317,18 @@ Uma sugestão aprovada vira uma tarefa F; uma recusada é marcada como tal.
 | S06 | Nova proposta visual para o app ([canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | Corrige problemas do protótipo do Figma: contraste, fontes misturadas, menu duplicado, telas sem informações essenciais (vagas, botão de inscrição) e textos em inglês. Já inclui o modo escuro (RF20) | Aprovada: definida pela Manuela em outra conversa, aplicada na F20 |
 | S07 | Outros tipos de atividade além de palestra (workshop, mesa-redonda), com mais de um palestrante por atividade | Amplia o uso do app para eventos variados. Fica fora desta entrega porque nenhum RF pede e o diagrama não prevê | Melhoria futura: só registrar na documentação final |
 | S08 | Marcar avisos como lidos | Sem isso, o contador de avisos novos da barra de navegação (canvas) não tem o que contar | Aprovada: virou F21 |
-| S09 | Deixar claro que o app tem vários eventos, cada um em um lugar: imagem de capa do evento enviada pelo organizador (no card do Início e na lista de eventos) e tela "Escolher evento" no lugar da lista "Trocar evento" (página "Proposta · eventos, lugares e salas" do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | No teste da F03, a equipe não percebeu que "Trocar evento" leva a outro evento, em outro lugar, com outra planta. Decidido pela equipe (23/10/2026): a legibilidade do texto sobre a imagem fica a critério do organizador, e o cadastro avisa que a imagem deve ser horizontal. Precisa de `evento.imagem_capa` (o banco muda) e mexe no Início e no formulário do evento (trilha da Manuela) | Aprovada para "se sobrar tempo": item 18 da seção 0.2 |
+| S09 | Deixar claro que o app tem vários eventos, cada um em um lugar: imagem de capa do evento enviada pelo organizador (no card do Início e na lista de eventos) e tela "Escolher evento" no lugar da lista "Trocar evento" (página "Proposta · eventos, lugares e salas" do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | No teste da F03, a equipe não percebeu que "Trocar evento" leva a outro evento, em outro lugar, com outra planta. Decidido pela equipe (23/10/2026): a legibilidade do texto sobre a imagem fica a critério do organizador, e o cadastro avisa que a imagem deve ser horizontal. Precisa de `evento.imagem_capa` (o banco muda) e mexe no Início e no formulário do evento (trilha da Manuela) | Aprovada para "se sobrar tempo": item 28 da seção 0.2 |
 | S10 | Encerrar o token também no servidor ao sair | Testado em 23/10/2026: depois do logout, o mesmo token continua funcionando por até 8 horas. Quem copiou o token ainda acessa a conta | Aprovada em 23/10/2026: entra na F17 |
 | S11 | Explicar no README a rota da agenda (`/api/eventos/<id_usuario>/agenda`) | O caminho fica dentro de "eventos", mas recebe o id do usuário, o que confunde quem lê a API | Aprovada em 23/10/2026: feita na P09 (03/11/2026); trocar o caminho fica como "próximos passos" |
 | S12 | Escrever o `README.md` da raiz do repositório, hoje vazio, e corrigir o nome da pasta do projeto em `sistema-eventos/README.md` (linha "a partir da raiz do repositório") e no início do `docs/FLUXO_DE_TRABALHO.md` | O README da raiz é o que o GitHub mostra na página inicial do repositório, a primeira coisa que o professor vê. Depois da troca para `laranjeira1431/fluxo` (03/11/2026), quem clona recebe a pasta `fluxo/`, e quem já tinha o projeto continua com `ProjetoDeSoftware/` | Aprovada em 03/11/2026: feita junto com a P09 (03/11/2026). O README da raiz tem a descrição, a equipe, as "Funcionalidades Implementadas" e o link para o diagrama de classes; a instalação e as rotas continuam em `sistema-eventos/README.md` |
-| S13 | Diagrama de classes do domínio, em `docs/`, com o link no README da raiz | Exigido nos requisitos de entrega (`arq_ref/requisitos_entregas.pdf`) e vale 3 pontos na rubrica (`arq_ref/rubrica_projeto_de_conclusao.docx`): classes e atributos, relacionamentos (com herança, composição e agregação, quando houver) e correspondência com as 15 Models de `backend/models/`. Hoje o repositório não tem diagrama, e o README da raiz diz que ele ainda está sendo feito: ao concluir, trocar esse texto pelo link do arquivo | Aguardando aprovação |
-| S14 | Fluxogramas dos casos de uso: um de recuperação de dados e um de entrada de dados | Valem 4 pontos na rubrica. Cada fluxograma mostra o passo a passo pelas camadas (tela, Controller, Service, Repository, Model e banco). Bons candidatos: agenda (recuperação, passa pelo `AgendaRepository`) e inscrição (entrada, com o controle de vagas) | Aguardando aprovação |
-| S15 | Nomes dos métodos de CRUD das Models iguais aos dos requisitos | Os requisitos de entrega pedem `salvar()`, `atualizar()`, `deletar()`, `listar_todos()` e `buscar_por_id()` nas Models. O `models/crud_mixin.py` usa `criar()`, `buscar_por_id()`, `listar()`, `atualizar()` e `remover()`. O professor confere a coerência com a arquitetura da aula. Mexe em vários Services, então precisa ser uma tarefa própria, com teste de todas as telas | Aguardando aprovação |
-| S16 | Slides da apresentação | Exigidos pela rubrica: descrição, público-alvo e problema; cinco casos de uso com as telas; figura da arquitetura e as pastas de Controllers, Services, Repositories e Models; tecnologias; apresentação do README | Aguardando aprovação |
-| S17 | Termos de consentimento no cadastro | Bônus de 1 ponto na rubrica: mostrar os termos no cadastro (F01) e guardar no banco a decisão da pessoa (ex.: coluna com a data do aceite em `usuario`) | Aguardando aprovação |
+| S13 | Diagrama de classes do domínio, em `docs/`, com o link no README da raiz | Exigido nos requisitos de entrega (`arq_ref/requisitos_entregas.pdf`) e vale 3 pontos na rubrica (`arq_ref/rubrica_projeto_de_conclusao.docx`): classes e atributos, relacionamentos (com herança, composição e agregação, quando houver) e correspondência com as 15 Models de `backend/models/`. Hoje o repositório não tem diagrama, e o README da raiz diz que ele ainda está sendo feito: ao concluir, trocar esse texto pelo link do arquivo | Aprovada em 03/11/2026: virou F27 |
+| S14 | Fluxogramas dos casos de uso: um de recuperação de dados e um de entrada de dados | Valem 4 pontos na rubrica. Cada fluxograma mostra o passo a passo pelas camadas (tela, Controller, Service, Repository, Model e banco). Bons candidatos: agenda (recuperação, passa pelo `AgendaRepository`) e inscrição (entrada, com o controle de vagas) | Aprovada em 03/11/2026: virou F28 |
+| S15 | Nomes dos métodos de CRUD das Models iguais aos dos requisitos | Os requisitos de entrega pedem `salvar()`, `atualizar()`, `deletar()`, `listar_todos()` e `buscar_por_id()` nas Models. O `models/crud_mixin.py` usa `criar()`, `buscar_por_id()`, `listar()`, `atualizar()` e `remover()`. O professor confere a coerência com a arquitetura da aula. Mexe em vários Services, então precisa ser uma tarefa própria, com teste de todas as telas | Aprovada em 03/11/2026: virou F29 |
+| S16 | Slides da apresentação | Exigidos pela rubrica: descrição, público-alvo e problema; cinco casos de uso com as telas; figura da arquitetura e as pastas de Controllers, Services, Repositories e Models; tecnologias; apresentação do README | Aprovada em 03/11/2026: virou F30 |
+| S17 | Termos de consentimento no cadastro | Bônus de 1 ponto na rubrica: mostrar os termos no cadastro (F01) e guardar no banco a decisão da pessoa (ex.: coluna com a data do aceite em `usuario`) | Aprovada em 03/11/2026: virou F31 |
+| S18 | Vídeo de demonstração | A rubrica coloca a demonstração como condição para a avaliação e dá 4 pontos em "Fluxo do sistema", mas ela não tinha tarefa registrada | Aprovada em 03/11/2026: virou F32 |
+| S19 | Hospedagem do frontend e da API | Bônus de 2 pontos na rubrica | Aprovada em 03/11/2026: virou F33 |
+| S20 | IA como serviço em um caso de uso | Bônus de 2 pontos na rubrica | Aprovada em 03/11/2026: virou F34 |
 
 ---
 

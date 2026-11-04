@@ -26,12 +26,24 @@ Assim, senha vazia ou curta é recusada (gravá-la deixaria a conta fraca
 ou sem conseguir entrar), e o mesmo vale para email vazio ou fora do
 formato.
 
+Email repetido (F26): o banco não aceita dois usuários com o mesmo
+email (`unique`). Como no cadastro, há duas proteções:
+
+- antes de gravar, procuramos outra conta com o email pedido, para
+  responder com uma mensagem clara. A própria conta fica de fora da
+  busca, porque a tela de editar perfil sempre envia o email, mesmo
+  quando só o nome mudou;
+- o `IntegrityError` cobre dois pedidos ao mesmo tempo: os dois podem
+  passar pela busca, e só o banco barra o segundo.
+
 Método principal:
     execute(id_usuario, dados): retorna o Usuario atualizado.
 """
 
+from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash
 
+from backend.extensions import db
 from backend.models.usuario import Usuario
 from backend.services.usuario.validacoes_usuario import (
     validar_email,
@@ -51,10 +63,24 @@ class AtualizarUsuarioService:
             alteracoes["nome"] = validar_nome(alteracoes["nome"])
         if "email" in alteracoes:
             alteracoes["email"] = validar_email(alteracoes["email"])
+            self._garantir_email_livre(id_usuario, alteracoes["email"])
         if "senha" in alteracoes:
             alteracoes["senha"] = generate_password_hash(validar_senha(alteracoes["senha"]))
 
-        usuario = Usuario.atualizar(id_usuario, **alteracoes)
+        try:
+            usuario = Usuario.atualizar(id_usuario, **alteracoes)
+        except IntegrityError:
+            db.session.rollback()
+            raise ValueError("Já existe um usuário cadastrado com este email.")
         if not usuario:
             raise ValueError("Usuário não encontrado.")
         return usuario
+
+    @staticmethod
+    def _garantir_email_livre(id_usuario, email):
+        """Recusa o email se ele já for de outra conta (a própria não conta)."""
+        outra_conta = Usuario.query.filter(
+            Usuario.email == email, Usuario.id_usuario != id_usuario
+        ).first()
+        if outra_conta:
+            raise ValueError("Já existe um usuário cadastrado com este email.")

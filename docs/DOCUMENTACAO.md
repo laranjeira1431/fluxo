@@ -692,8 +692,39 @@ projeto · opção 1 refinada" do canvas.
 - **Contagem por requisição:** Escolher evento busca a programação de
   cada evento só para contar as palestras, e a Localização busca a lista
   de eventos para achar o lugar (F25).
-- **Editar perfil:** e-mail que já é de outra conta volta como erro
-  genérico (500), e não há troca de senha nem foto (F26).
+- **Editar perfil:** não há troca de senha nem foto (F26). O e-mail que
+  já é de outra conta voltava como erro genérico (500) e foi corrigido em
+  04/11/2026.
 - **"Lembrete ativo" no Início** e **"Começa em 10 min" nos Avisos**, que
   aparecem no canvas, ficaram como próximos passos.
 - **Certificados** aparecem como "Em breve" até a F12.
+
+## 13. P16: fim de linha igual em todos os sistemas
+
+Concluída em 04/11/2026, na branch `p16-gitattributes` (PR #9). Cada
+sistema marca o fim de linha de um jeito: o Windows usa CRLF, e o Linux e
+o macOS usam LF. Com sistemas diferentes na equipe, o Git mostrava
+arquivos inteiros como alterados, mesmo com o conteúdo igual (visto na
+F06/F07, nos arquivos que o Flutter gera no Windows).
+
+### 13.1 O que foi feito
+
+- **`.gitattributes` na raiz:** o Git guarda todos os arquivos de texto
+  com LF, em qualquer sistema, e não altera os binários.
+- **Arquivos existentes:** `git add --renormalize .` aplicou a regra aos
+  36 arquivos que estavam em CRLF, todos em `frontend/Flutter/` e nenhum
+  `.dart`. O conteúdo deles não mudou, só o fim de linha.
+
+### 13.2 Decisões e motivos
+
+| Decisão | Motivo |
+|---|---|
+| Regra no repositório (`.gitattributes`), e não uma configuração em cada máquina | O arquivo vale para todo mundo que clonar o projeto. A configuração `core.autocrlf` depende de cada pessoa lembrar de ativar |
+| Exceção `*.bat text eol=crlf` | Scripts `.bat` são do Windows e podem falhar com LF. O Git guarda o `gradlew.bat` com LF e o entrega com CRLF na pasta de trabalho |
+
+### 13.3 Limitações conhecidas
+
+- **Histórico:** o `git blame` dos 36 arquivos aponta para o commit da
+  P16.
+- **Testes pendentes:** a compilação no Android e o comportamento no
+  Windows ficaram na seção 0.3 do `PENDENCIAS.md`.

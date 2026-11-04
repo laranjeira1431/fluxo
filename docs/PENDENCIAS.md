@@ -46,16 +46,16 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
 
 | Dia | Tarefas |
 |---|---|
-| Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 (só o erro do e-mail repetido), P04 e F31; F27 se der tempo |
+| Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 e F31; F27 se der tempo |
 | Qui 05/11 | F27 (diagrama de classes) |
 | Sex 06/11 | F28 (fluxogramas) |
 | Sáb 07/11 | F30 (slides) |
-| Dom 08/11 | P04 e P06; P03 e F26 (só o erro do e-mail repetido) se der tempo |
+| Dom 08/11 | P04 (se não for feita em 04/11) e P06; P03 se der tempo |
 | Seg 09/11 | F32 (vídeo) e revisão final |
 
 - **Sem dia reservado para atrasos:** com uma pessoa só, o fim de semana
   virou dia de trabalho. Se algo atrasar, o bloco B é o primeiro a ser
-  cortado, nesta ordem: F26, P03, P06 e P04. O bloco A não sai da lista.
+  cortado, nesta ordem: P03, P06 e P04. O bloco A não sai da lista.
 - **O bloco A usa os nomes novos:** a F27 e a F28 vêm depois da F29 e já
   usam `salvar()`, `atualizar()`, `deletar()`, `listar_todos()` e
   `buscar_por_id()`.
@@ -204,8 +204,8 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 |---|---|---|---|
 | 6 | P04 Configuração de desenvolvimento exposta | 🟡 | A chave fixa fere a regra de não publicar dados sensíveis. Vem antes da hospedagem |
 | 7 | P06 Fuso horário inconsistente | 🟡 | Horários errados apareceriam no vídeo |
-| 8 | P03 Atualizações aceitam qualquer campo | 🟡 | A F26 depende dela |
-| 9 | F26 Editar perfil | 🟡 | Hoje um e-mail repetido dá erro 500. Foto e troca de senha são extras |
+| 8 | P03 Atualizações aceitam qualquer campo | 🟡 | Corrige erros 500 e campos que ainda não têm validação. O e-mail repetido já foi resolvido na F26 |
+| 9 | F26 Editar perfil | 🟡 | O erro do e-mail repetido foi corrigido (04/11/2026). Foto e troca de senha são extras |
 | 10 | F17 Logout e login lembrado | 🟡 | Melhora o uso do app, sem efeito direto na nota |
 | 11 | Teste da P08 (seção 0.3) | 🟢 | Necessário antes do vídeo só se o lembrete aparecer nele |
 
@@ -252,6 +252,7 @@ teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
 | F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
 | P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
+| F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
 
 ---
 
@@ -1118,11 +1119,15 @@ o nome indicado, que aparece acima de cada tela.
   conta (testado: outra conta → 403) e só `nome`, `email` e `senha` são
   aceitos, com as validações do cadastro.
 - **O que falta:**
-  - **E-mail que já é de outra conta:** hoje volta `500 Erro interno no
-    servidor` (testado em 23/10/2026). O `AtualizarUsuarioService` deve
-    conferir antes e tratar o `IntegrityError`, como o
-    `CriarUsuarioService` já faz, e devolver "Já existe um usuário
-    cadastrado com este email.". É o caso que a P03 cita.
+  - ~~**E-mail que já é de outra conta**~~ **(concluído em 04/11/2026):**
+    o `AtualizarUsuarioService` confere antes de gravar, ignorando a
+    própria conta, e trata o `IntegrityError`, como o
+    `CriarUsuarioService`. A API responde 400 com "Já existe um usuário
+    cadastrado com este email.". Testado com `curl` e MySQL: e-mail de
+    outra conta e o mesmo em maiúsculas → 400; o próprio e-mail mudando só
+    o nome e um e-mail livre → 200; conta de outra pessoa → 403. O caminho
+    do `IntegrityError` foi testado desligando a conferência. A mensagem
+    na tela ficou na seção 0.3.
   - **Trocar a senha:** a rota já aceita `senha`, mas a tela não tem o
     campo. Decidir se pede a senha atual antes (recomendado, como na
     remoção de evento).
@@ -1139,7 +1144,7 @@ o nome indicado, que aparece acima de cada tela.
       enviando arquivos ao servidor, então entra no `/security-review`;
     - o login e o `AppShell` guardarem a foto, como fazem com o nome.
   - `/security-review` antes do commit.
-- **Depende de:** P03.
+- **Depende de:** P03, para a foto e a troca de senha.
 
 ### F27 Diagrama de classes do domínio (S13)
 
@@ -1436,7 +1441,8 @@ qualquer alteração.
 - **O que acontece:** o JSON recebido é repassado inteiro para a Model.
   Isso permite, por exemplo, mudar o `tipo_usuario` de alguém ou alterar
   `vagas_disponiveis` de uma palestra manualmente. Trocar o email por um
-  que já existe gera erro 500 em vez de uma mensagem clara.
+  que já existe gerava erro 500 em vez de uma mensagem clara (corrigido
+  na F26, em 04/11/2026).
 - **Já corrigido em um caso:** desde a F19, a atualização de avaliação
   aceita só `nota_estrelas` e `comentario` (não dá para trocar o autor).
 - **Evento e palestra corrigidos na F08 (22/10/2026):** as duas
@@ -1446,8 +1452,8 @@ qualquer alteração.
   F14, recalculando o saldo).
 - **`tipo_usuario` corrigido na P01 (21/10/2026):** o cadastro e a
   atualização de usuário ignoram esse campo. O restante (como
-  `vagas_disponiveis` da palestra e o erro 500 com email repetido)
-  continua pendente.
+  `vagas_disponiveis` da palestra) continua pendente. O erro 500 com
+  e-mail repetido foi corrigido na F26 (04/11/2026).
 - **Também encontrado na revisão da P01:** um corpo JSON que não é um
   objeto (ex.: `[1, 2]`) faz as rotas de inscrição, favorito, lembrete e
   avaliação responderem 500 em vez de 400.

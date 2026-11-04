@@ -12,9 +12,8 @@ import '../widgets/formulario_organizador.dart';
 ///
 /// O backend confere tudo de novo: só a própria pessoa altera a conta, só
 /// nome, e-mail e senha são aceitos (P01) e cada campo passa pelas
-/// validações do cadastro. Ainda falta tratar o e-mail que já é de outra
-/// conta, que hoje volta como erro genérico (F26, junto da P03). Trocar a
-/// senha também fica para a F26.
+/// validações do cadastro. Um e-mail que já é de outra conta é recusado
+/// com uma mensagem clara (F26). Trocar a senha ainda fica para a F26.
 ///
 /// Ao salvar, chama `aoSalvar` com o nome e o e-mail que o backend devolveu
 /// (o `AppShell` troca os dois no app inteiro) e fecha a tela.

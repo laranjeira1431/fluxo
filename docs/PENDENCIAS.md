@@ -217,7 +217,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | Ordem | Tarefa | Prioridade |
 |---|---|---|
 | 15 | P10 Comentário desatualizado na tela de favoritos (concluída: resolvida na F20) | 🟢 |
-| 16 | P07 Método obsoleto do SQLAlchemy | 🟢 |
+| 16 | P07 Método obsoleto do SQLAlchemy (concluída) | 🟢 |
 | 17 | P16 Fim de linha diferente entre sistemas | 🟡 |
 | 18 | P05 Abas do app recarregam a cada troca | 🟢 |
 | 19 | F21 Marcar avisos como lidos | 🟢 |
@@ -1357,7 +1357,7 @@ qualquer alteração.
 | P04 | 🟡 | Configuração de desenvolvimento exposta | Pendente |
 | P05 | 🟢 | Abas do app recarregam a cada troca | Pendente |
 | P06 | 🟡 | Fuso horário inconsistente | Pendente |
-| P07 | 🟢 | Uso de método obsoleto do SQLAlchemy | Pendente |
+| P07 | 🟢 | Uso de método obsoleto do SQLAlchemy | Concluído |
 | P08 | 🟢 | Tipo de notificação "atencao" nunca é criado | Concluído |
 | P09 | 🔴 | README desatualizado | Concluído |
 | P10 | 🟢 | Comentário desatualizado na tela de favoritos | Concluído |
@@ -1520,6 +1520,12 @@ qualquer alteração.
   O `Query.get()` está obsoleto no SQLAlchemy 2.
 - **Por que importa:** gera aviso hoje e pode parar de funcionar numa
   atualização da biblioteca.
+- **Concluída (04/11/2026):** a busca passou a usar
+  `with_for_update().filter_by(id_palestra=id_palestra).first()`, como já
+  fazem o `CriarInscricaoService` e o `AtualizarPalestraService`. O
+  bloqueio da linha continua igual. Testado com `curl` e MySQL: cancelar
+  devolve a vaga, cancelar de novo responde "Inscrição não encontrada." e
+  palestra já iniciada responde 400. O `LegacyAPIWarning` não aparece mais.
 
 ### P08 🟢 Tipo de notificação "atencao" nunca é criado
 

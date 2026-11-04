@@ -33,7 +33,7 @@ class CancelarInscricaoService:
         if not inscricao:
             raise ValueError("Inscrição não encontrada.")
 
-        palestra = Palestra.query.with_for_update().get(id_palestra)
+        palestra = Palestra.query.with_for_update().filter_by(id_palestra=id_palestra).first()
         if palestra and palestra.horario_inicio and palestra.horario_inicio <= datetime.now():
             db.session.rollback()
             raise ValueError(

@@ -46,7 +46,7 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
 
 | Dia | Tarefas |
 |---|---|
-| Qua 04/11 | F29 (nomes dos métodos de CRUD) |
+| Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 (só o erro do e-mail repetido), P04 e F31; F27 se der tempo |
 | Qui 05/11 | F27 (diagrama de classes) |
 | Sex 06/11 | F28 (fluxogramas) |
 | Sáb 07/11 | F30 (slides) |
@@ -59,8 +59,13 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
 - **O bloco A usa os nomes novos:** a F27 e a F28 vêm depois da F29 e já
   usam `salvar()`, `atualizar()`, `deletar()`, `listar_todos()` e
   `buscar_por_id()`.
-- **Fora da semana:** F17, F31, F33, F34 e o bloco D só entram se sobrar
-  tempo, na ordem da seção 0.2.
+- **Ordem de 04/11 (decidida pela Manuela):** a F29 ficou pronta antes do
+  previsto, e o dia seguiu das tarefas menores para as maiores. A F26 (só
+  o e-mail) e a P04 foram adiantadas do domingo, a F31 e a P16 entraram no
+  dia, e a F27 pode ser adiantada da quinta. O que for concluído em 04/11
+  deixa de valer no dia original.
+- **Fora da semana:** F17, F33, F34 e o restante do bloco D só entram se
+  sobrar tempo, na ordem da seção 0.2.
 - **Testes no app depois das tarefas (decidido em 03/11/2026):** as
   tarefas da semana são feitas primeiro, e os testes no app ficam para
   depois, todos juntos. Cada tarefa registra na seção 0.3 o que ficou
@@ -218,7 +223,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 |---|---|---|
 | 15 | P10 Comentário desatualizado na tela de favoritos (concluída: resolvida na F20) | 🟢 |
 | 16 | P07 Método obsoleto do SQLAlchemy (concluída) | 🟢 |
-| 17 | P16 Fim de linha diferente entre sistemas | 🟡 |
+| 17 | P16 Fim de linha diferente entre sistemas (concluída) | 🟡 |
 | 18 | P05 Abas do app recarregam a cada troca | 🟢 |
 | 19 | F21 Marcar avisos como lidos | 🟢 |
 | 20 | F25 Total de palestras e salas na lista de eventos da API | 🟢 |
@@ -246,6 +251,7 @@ teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
 |---|---|---|---|---|
 | F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
+| P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
 
 ---
 
@@ -1366,7 +1372,7 @@ qualquer alteração.
 | P13 | 🟢 | Tabelas sem uso no app | Decidido: todas terão uso (F03, F04, F08, F13) |
 | P14 | 🔴 | Versão antiga e nova sem commit | Concluído |
 | P15 | 🟡 | Botão de inscrição não mostra o estado da inscrição | Concluído |
-| P16 | 🟡 | Fim de linha diferente entre sistemas (falta `.gitattributes`) | Pendente |
+| P16 | 🟡 | Fim de linha diferente entre sistemas (falta `.gitattributes`) | Concluído |
 | P17 | 🟡 | Versão do Flutter não definida (`pubspec.lock` muda em cada máquina) | Concluído |
 
 ---
@@ -1708,6 +1714,15 @@ qualquer alteração.
   uma vez `git add --renormalize .`, que aplica a regra nova aos
   arquivos que já estão no repositório, e conferir o resultado com
   `git status` antes do commit.
+- **Concluída (04/11/2026):** o `.gitattributes` foi criado na raiz com a
+  regra da proposta e uma exceção: `*.bat text eol=crlf`, porque scripts
+  `.bat` são do Windows e podem falhar com LF. Eram 36 arquivos em CRLF,
+  todos em `frontend/Flutter/`, nenhum `.dart`. Os 36 foram guardados com
+  LF, e o `gradlew.bat` volta para CRLF na pasta de trabalho. Conferido
+  com `git ls-files --eol`, com `git diff --cached --ignore-space-at-eol`
+  (fora o `.gitattributes`, nenhuma mudança além do fim de linha) e com
+  `flutter analyze` sem erros. O teste no Windows e a compilação ficaram
+  na seção 0.3.
 
 ### P17 🟡 Versão do Flutter não definida (`pubspec.lock` muda em cada máquina)
 

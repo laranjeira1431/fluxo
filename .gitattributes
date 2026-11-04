@@ -1,0 +1,12 @@
+# Regras de fim de linha do repositório (P16).
+#
+# Cada sistema marca o fim de linha de um jeito: Windows usa CRLF; Linux e
+# macOS usam LF. Sem uma regra comum, o Git mostra arquivos inteiros como
+# alterados mesmo quando o conteúdo é igual.
+
+# Todo arquivo de texto é guardado com LF, em qualquer sistema. O "auto"
+# deixa o Git detectar o que é texto: imagens e outros binários não mudam.
+* text=auto eol=lf
+
+# Exceção: scripts .bat são do Windows e podem falhar com LF.
+*.bat text eol=crlf

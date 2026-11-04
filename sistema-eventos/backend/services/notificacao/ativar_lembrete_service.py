@@ -38,7 +38,7 @@ class AtivarLembreteService:
         )
         mensagem = f"Lembrete ativado: {palestra.titulo} começa em {horario}."
 
-        return Notificacao.criar(
+        return Notificacao.salvar(
             mensagem=mensagem,
             tipo_notificacao="lembrete",
             id_usuario=id_usuario,

@@ -31,6 +31,6 @@ class RemoverEventoService:
         if AutenticarUsuarioService().execute(usuario.email, senha) is None:
             raise PermissionError("Senha incorreta.")
 
-        removido = Evento.remover(id_evento)
+        removido = Evento.deletar(id_evento)
         if not removido:
             raise ValueError("Evento não encontrado.")

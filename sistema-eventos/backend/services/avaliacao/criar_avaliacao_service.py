@@ -111,7 +111,7 @@ class CriarAvaliacaoService:
             raise ValueError("Você já avaliou esta palestra.")
 
         try:
-            return Avaliacao.criar(
+            return Avaliacao.salvar(
                 nota_estrelas=nota,
                 comentario=validar_comentario(dados.get("comentario")),
                 id_usuario=dados["id_usuario"],

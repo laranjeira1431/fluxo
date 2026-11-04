@@ -27,7 +27,7 @@ class CriarLocalService:
         if not dados.get("id_evento"):
             raise ValueError("id_evento é obrigatório.")
 
-        return Localizacao.criar(
+        return Localizacao.salvar(
             nome_local=texto_obrigatorio(dados.get("nome_local"), "Digite o nome do local.", TAMANHO_NOME),
             descricao=texto_opcional(dados.get("descricao"), "descrição", TAMANHO_DESCRICAO),
             id_evento=dados["id_evento"],

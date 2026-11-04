@@ -32,7 +32,7 @@ class CriarEventoService:
         if organizador is None:
             raise PermissionError("Seu cadastro de organizador está incompleto.")
 
-        return Evento.criar(
+        return Evento.salvar(
             nome=dados["nome"],
             descricao=dados.get("descricao"),
             data_inicio=date.fromisoformat(str(dados["data_inicio"])),

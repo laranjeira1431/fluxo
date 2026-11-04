@@ -5,7 +5,7 @@ CAMADA: Models (infraestrutura de persistência via SQLAlchemy).
 
 POR QUE ESTE ARQUIVO EXISTE:
 As instruções do projeto pedem que cada Model possua métodos de CRUD
-(criar, buscar_por_id, listar, atualizar, remover). Se esses métodos fossem
+(salvar, buscar_por_id, listar_todos, atualizar, deletar). Se esses métodos fossem
 escritos manualmente em cada uma das 12 Models, o código ficaria repetido
 (mesma lógica de "adicionar na sessão e commitar", "buscar pela chave
 primária", etc.) em todos os arquivos, o que fere a regra de "não duplicar
@@ -40,13 +40,13 @@ class CRUDMixin:
     """Implementação padrão das operações de CRUD para uma Model."""
 
     @classmethod
-    def criar(cls, **dados):
+    def salvar(cls, **dados):
         """Cria e persiste um novo registro a partir dos dados recebidos.
 
         Os `dados` são passados como palavras-chave e mapeados diretamente
         para as colunas da Model. Regras de negócio (validações, valores
         calculados, hashes de senha, etc.) não pertencem a este método —
-        elas devem ser resolvidas no Service antes de chamar `criar`.
+        elas devem ser resolvidas no Service antes de chamar `salvar`.
         """
         instancia = cls(**dados)
         db.session.add(instancia)
@@ -65,7 +65,7 @@ class CRUDMixin:
         return db.session.get(cls, id_registro)
 
     @classmethod
-    def listar(cls):
+    def listar_todos(cls):
         """Retorna todos os registros da tabela, sem filtros.
 
         Listagens que precisam de filtros, ordenação especial ou JOINs
@@ -95,7 +95,7 @@ class CRUDMixin:
         return instancia
 
     @classmethod
-    def remover(cls, id_registro):
+    def deletar(cls, id_registro):
         """Remove o registro pelo ID. Retorna True se removeu, False se não existia."""
         instancia = cls.buscar_por_id(id_registro)
         if instancia is None:

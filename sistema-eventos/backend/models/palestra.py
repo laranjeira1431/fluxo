@@ -15,7 +15,7 @@ são opcionais. Para o app não precisar mudar, o `to_dict` continua
 devolvendo o campo `sala`, agora com o nome do local.
 
 Herda `db.Model` (tabela `palestra`) e `CRUDMixin` (CRUD padrão). O método
-`criar` é sobrescrito porque a Palestra tem uma regra própria: ao ser
+`salvar` é sobrescrito porque a Palestra tem uma regra própria: ao ser
 criada, `vagas_disponiveis` deve começar igual a `vagas_total` (ninguém
 se inscreveu ainda). Essa é uma regra de dados simples o suficiente para
 viver na Model; regras que dependem de outras entidades (como verificar
@@ -55,10 +55,10 @@ class Palestra(db.Model, CRUDMixin):
     palestrante = db.relationship("Palestrante")
 
     @classmethod
-    def criar(cls, **dados):
+    def salvar(cls, **dados):
         """Cria a palestra garantindo que `vagas_disponiveis` comece cheia.
 
-        Sobrescreve o `criar` genérico do CRUDMixin porque esta Model tem
+        Sobrescreve o `salvar` genérico do CRUDMixin porque esta Model tem
         uma regra própria de inicialização de dados (não é uma regra de
         negócio entre entidades, por isso permanece aqui e não no Service).
         """

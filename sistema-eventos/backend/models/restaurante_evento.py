@@ -7,9 +7,9 @@ Tabela de junção N:N entre Restaurante e Evento (chave primária composta).
 Herda `db.Model` (tabela `restaurante_evento`) e `CRUDMixin`.
 
 Como a chave primária é composta (`id_restaurante` + `id_evento`), os
-métodos genéricos `buscar_por_id`/`atualizar`/`remover` do CRUDMixin (que
+métodos genéricos `buscar_por_id`/`atualizar`/`deletar` do CRUDMixin (que
 assumem uma única chave primária) não se aplicam diretamente a esta
-Model; ela é manipulada pelo `criar` genérico e por consultas específicas
+Model; ela é manipulada pelo `salvar` genérico e por consultas específicas
 quando necessário.
 """
 

@@ -6,7 +6,7 @@ CAMADA: Services (regra de negócio do caso de uso "Criar Usuário").
 O Controller chama este Service ao receber um POST de cadastro. O Service
 valida os campos obrigatórios, garante que o email ainda não está em uso
 e gera o hash da senha antes de delegar a persistência para a Model
-(`Usuario.criar`). Gerar o hash aqui, e não na Model, mantém a Model livre
+(`Usuario.salvar`). Gerar o hash aqui, e não na Model, mantém a Model livre
 de decisões de segurança e deixa essa responsabilidade no caso de uso que
 realmente sabe de onde a senha em texto puro está vindo.
 
@@ -53,7 +53,7 @@ class CriarUsuarioService:
             raise ValueError("Já existe um usuário cadastrado com este email.")
 
         try:
-            return Usuario.criar(
+            return Usuario.salvar(
                 nome=nome,
                 email=email,
                 senha=generate_password_hash(senha),

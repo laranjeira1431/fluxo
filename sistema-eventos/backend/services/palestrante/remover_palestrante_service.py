@@ -17,5 +17,5 @@ class RemoverPalestranteService:
     """Caso de uso responsável pela remoção de um palestrante."""
 
     def execute(self, id_palestrante):
-        if not Palestrante.remover(id_palestrante):
+        if not Palestrante.deletar(id_palestrante):
             raise ValueError("Palestrante não encontrado.")

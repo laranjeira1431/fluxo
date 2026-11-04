@@ -14,4 +14,4 @@ class ListarUsuariosService:
     """Caso de uso responsável por listar os usuários cadastrados."""
 
     def execute(self):
-        return Usuario.listar()
+        return Usuario.listar_todos()

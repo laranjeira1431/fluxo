@@ -14,5 +14,5 @@ class RemoverPatrocinadorService:
     """Caso de uso responsável pela remoção de um patrocinador."""
 
     def execute(self, id_patrocinador):
-        if not Patrocinador.remover(id_patrocinador):
+        if not Patrocinador.deletar(id_patrocinador):
             raise ValueError("Patrocinador não encontrado.")

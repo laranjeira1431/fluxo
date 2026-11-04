@@ -35,5 +35,5 @@ class SalvarPlantaService:
 
         planta = PlantaBaixa.query.filter_by(id_evento=id_evento).first()
         if planta is None:
-            return PlantaBaixa.criar(id_evento=id_evento, **alteracoes)
+            return PlantaBaixa.salvar(id_evento=id_evento, **alteracoes)
         return PlantaBaixa.atualizar(planta.id_planta, **alteracoes)

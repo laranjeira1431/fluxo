@@ -30,7 +30,7 @@ class CriarPalestranteService:
         if not dados.get("id_evento"):
             raise ValueError("id_evento é obrigatório.")
 
-        return Palestrante.criar(
+        return Palestrante.salvar(
             nome=texto_obrigatorio(dados.get("nome"), "Digite o nome do palestrante.", TAMANHO_NOME),
             foto=validar_nome_imagem(dados.get("foto")),
             descricao=texto_opcional(dados.get("descricao"), "descrição", TAMANHO_DESCRICAO),

@@ -29,4 +29,4 @@ class AdicionarFavoritoService:
         if FavoritoRepository.buscar(id_usuario, id_palestra):
             raise ValueError("Palestra já está nos favoritos.")
 
-        return Favorito.criar(id_usuario=id_usuario, id_palestra=id_palestra)
+        return Favorito.salvar(id_usuario=id_usuario, id_palestra=id_palestra)

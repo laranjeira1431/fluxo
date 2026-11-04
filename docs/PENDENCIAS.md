@@ -216,7 +216,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 
 | Ordem | Tarefa | Prioridade |
 |---|---|---|
-| 15 | P10 Comentário desatualizado na tela de favoritos | 🟢 |
+| 15 | P10 Comentário desatualizado na tela de favoritos (concluída: resolvida na F20) | 🟢 |
 | 16 | P07 Método obsoleto do SQLAlchemy | 🟢 |
 | 17 | P16 Fim de linha diferente entre sistemas | 🟡 |
 | 18 | P05 Abas do app recarregam a cada troca | 🟢 |
@@ -1360,7 +1360,7 @@ qualquer alteração.
 | P07 | 🟢 | Uso de método obsoleto do SQLAlchemy | Pendente |
 | P08 | 🟢 | Tipo de notificação "atencao" nunca é criado | Concluído |
 | P09 | 🔴 | README desatualizado | Concluído |
-| P10 | 🟢 | Comentário desatualizado na tela de favoritos | Pendente |
+| P10 | 🟢 | Comentário desatualizado na tela de favoritos | Concluído |
 | P11 | 🔴 **antes da P14** | Arquivos locais versionados e falta de `.gitignore` | Concluído |
 | P12 | 🟢 | Projeto sem testes automatizados | Pendente |
 | P13 | 🟢 | Tabelas sem uso no app | Decidido: todas terão uso (F03, F04, F08, F13) |
@@ -1599,6 +1599,10 @@ qualquer alteração.
   `item['palestra']`, mas a API devolve os campos sem esse aninhamento.
   O código está correto; só o comentário está errado.
 - **Por que importa:** comentários errados confundem quem está aprendendo.
+- **Concluída (03/11/2026):** a F20 reescreveu a tela (commit `e145869`),
+  e o comentário novo já está certo: os dados da palestra vêm no mesmo
+  item, lidos direto pelo `Palestra.fromJson`. Só faltava atualizar o
+  status aqui. Conferido: `['palestra']` não aparece mais em `lib/`.
 
 ### P11 🔴 Arquivos locais versionados e falta de `.gitignore`
 

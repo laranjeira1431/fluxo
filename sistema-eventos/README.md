@@ -355,8 +355,7 @@ caracteres, com confirmação antes de enviar). O comunicado aparece na
 aba **Avisos** de cada pessoa com o selo **ORGANIZAÇÃO** e, embaixo, o
 nome do evento (e o da palestra, quando foi para uma palestra).
 
-O visual segue a identidade do projeto (ver `CLAUDE.md`, na raiz do
-repositório):
+O visual segue a identidade do projeto:
 
 - cores, fontes e tema claro/escuro: `lib/theme/app_theme.dart`. As
   telas pegam as cores só pelo `Theme.of(context)`, nunca cores fixas,

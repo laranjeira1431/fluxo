@@ -55,3 +55,8 @@ flutter_export_environment.sh
 # O .gitkeep mantém a pasta vazia no repositório.
 sistema-eventos/backend/uploads/*
 !sistema-eventos/backend/uploads/.gitkeep
+
+# --- Ferramentas locais ------------------------------------------------
+
+# Regras do Claude Code: ficam só no computador de quem usa (P18).
+CLAUDE.md

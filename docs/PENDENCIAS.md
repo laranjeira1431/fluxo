@@ -903,8 +903,8 @@ o nome indicado, que aparece acima de cada tela.
 - **Responsável:** Pessoa A (Manuela).
 - **Referência visual:** a página "Telas do projeto · opção 1 refinada"
   do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt), com
-  todas as telas do projeto. O resumo da identidade (fontes, paleta,
-  estilo e navegação) está no `CLAUDE.md`, seção "Identidade visual".
+  todas as telas do projeto. As cores e fontes ficam em
+  `frontend/Flutter/lib/theme/app_theme.dart`.
 - **Parte 1 (terça, base):** cores, fontes, tema claro e tema escuro em
   `frontend/Flutter/lib/theme/app_theme.dart`, os componentes
   compartilhados em `lib/widgets/` e o botão para alternar o tema, com a
@@ -1381,6 +1381,7 @@ qualquer alteração.
 | P15 | 🟡 | Botão de inscrição não mostra o estado da inscrição | Concluído |
 | P16 | 🟡 | Fim de linha diferente entre sistemas (falta `.gitattributes`) | Concluído |
 | P17 | 🟡 | Versão do Flutter não definida (`pubspec.lock` muda em cada máquina) | Concluído |
+| P18 | 🟡 | Regras do Claude Code só no computador local | Concluído |
 
 ---
 
@@ -1762,3 +1763,18 @@ qualquer alteração.
   arquivo anterior tinha sido gerado na F02 com outra versão.
   `flutter analyze` sem problemas. **A Bianca precisa trocar para a
   3.47.7** (passo 0.3) antes da próxima tarefa.
+
+### P18 🟡 Regras do Claude Code só no computador local
+
+- **Onde:** `CLAUDE.md`, `.gitignore`, `sistema-eventos/README.md`,
+  `FLUXO_DE_TRABALHO.md` e este arquivo.
+- **O que acontece:** o arquivo de regras do Claude Code é de uso local
+  e estava versionado no repositório.
+- **Decidido (05/11/2026, pela Manuela):** o arquivo sai do repositório
+  e fica só no computador dela. Quem clonar o projeto não recebe o
+  arquivo.
+- **Concluído (05/11/2026):** o arquivo saiu do Git com
+  `git rm --cached`, que para de versionar sem apagar do disco, e entrou
+  no `.gitignore`. As citações que apontavam para ele no README, no
+  `FLUXO_DE_TRABALHO.md` e neste arquivo foram ajustadas. As citações
+  que registram decisões antigas ficaram como estavam.

@@ -51,8 +51,8 @@ exemplo, `/code-review`).
 
 | Etapa | O que usar | Para quê |
 |---|---|---|
-| Entrar no projeto (pessoa nova) | Conversa normal: "é minha primeira vez no projeto" | O Claude segue a apresentação do `CLAUDE.md`: resumo, arquivos para ler e cronograma |
-| 1. Preparar | **Modo de planejamento** (*plan mode*) | O Claude analisa o código e monta o plano da tarefa (regra 1 do `CLAUDE.md`) **sem alterar nenhum arquivo**. Só depois que você aprova o plano é que ele começa a mexer no código. No VS Code, escolha o modo no seletor da caixa de mensagem. No terminal, use `Shift+Tab` |
+| Entrar no projeto (pessoa nova) | Conversa normal: "é minha primeira vez no projeto" | O Claude apresenta o projeto: resumo, arquivos para ler e cronograma |
+| 1. Preparar | **Modo de planejamento** (*plan mode*) | O Claude analisa o código e monta o plano da tarefa **sem alterar nenhum arquivo**. Só depois que você aprova o plano é que ele começa a mexer no código. No VS Code, escolha o modo no seletor da caixa de mensagem. No terminal, use `Shift+Tab` |
 | 1. Preparar (dúvida sobre o código) | Pedir na conversa: "procure onde..." | Para perguntas como "onde fica a regra de vagas?", o Claude usa um agente de busca (*Explore*) que lê vários arquivos e devolve só a resposta |
 | 2. Desenvolver | Conversa normal | O Claude executa o plano aprovado, um passo de cada vez, explicando o que faz |
 | 3. Testar | `/run` | Sobe o sistema e verifica se a mudança funciona de verdade. Os testes com `curl` e no app também podem ser pedidos na conversa |
@@ -587,7 +587,7 @@ O celular e o computador precisam estar no mesmo Wi-Fi.
 
 ## 2. Desenvolver
 
-- Seguir as regras do `CLAUDE.md`: plano antes de executar, nomes em
+- Seguir as regras do projeto: plano antes de executar, nomes em
   português, docstrings explicando a camada, arquitetura
   Controller → Service → Model/Repository.
 - **Visual:** telas novas ou alteradas usam o tema de `app_theme.dart`.

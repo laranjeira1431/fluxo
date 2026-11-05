@@ -106,8 +106,9 @@ isso não entram na lista acima.
 
 ## Diagrama de classes
 
-O diagrama de classes do domínio ainda está sendo feito. O endereço
-dele no repositório vai aparecer aqui quando o arquivo for incluído.
+O diagrama de classes do domínio, com as 15 Models, seus atributos e
+relacionamentos, está em
+[`docs/DIAGRAMA_CLASSES.md`](docs/DIAGRAMA_CLASSES.md).
 
 ## Onde está cada parte
 

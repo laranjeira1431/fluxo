@@ -344,10 +344,17 @@ cp backend/.env.example backend/.env
 
 **Windows:** `copy backend\.env.example backend\.env`
 
-Abrir `backend/.env` no VS Code e deixar assim:
+Gerar uma chave só sua (o comando mostra um texto longo; copie-o):
+
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Abrir `backend/.env` no VS Code e deixar assim, trocando
+`COLE_A_CHAVE_GERADA` pelo texto copiado:
 
 ```
-SECRET_KEY=qualquer-texto-longo-e-dificil
+SECRET_KEY=COLE_A_CHAVE_GERADA
 DATABASE_URL=mysql+pymysql://fluxo:fluxo123@localhost:3306/sistema_eventos
 ```
 
@@ -356,6 +363,8 @@ DATABASE_URL=mysql+pymysql://fluxo:fluxo123@localhost:3306/sistema_eventos
   **nunca** vai para o GitHub (está no `.gitignore`). Para conferir:
   `git check-ignore -v backend/.env` deve mostrar uma linha citando o
   `.gitignore`.
+- **`SECRET_KEY`:** assina os tokens de login, e cada instalação precisa
+  ter a sua. Com menos de 32 caracteres, a API não sobe.
 - **`DATABASE_URL`:** o endereço do banco, no formato
   `mysql+pymysql://usuario:senha@computador:porta/banco`.
 
@@ -420,7 +429,9 @@ python -m backend.app
 - Deu certo quando aparece `Running on http://127.0.0.1:5000`. O
   terminal fica "preso" mostrando as requisições: isso é normal. Para
   desligar a API, `Ctrl+C`.
-- A API reinicia sozinha quando um arquivo `.py` é salvo (modo debug).
+- Depois de salvar um arquivo `.py`, reinicie a API com `Ctrl+C` e o
+  mesmo comando. Para ela reiniciar sozinha, coloque `API_DEBUG=1` no
+  `backend/.env` (modo debug, só no seu computador).
 
 Para conferir, num terceiro terminal (ou no navegador, abrindo o
 endereço):
@@ -506,8 +517,17 @@ não tem um, cria no Android Studio em *Device Manager* → *Create device*.
 **No celular Android (para a gravação e para a F02):** ativar as
 "Opções do desenvolvedor" e a "Depuração USB" no celular, conectar no
 computador pelo cabo e rodar `flutter devices` para ver se ele aparece.
-O celular não enxerga o `127.0.0.1` do computador, então é preciso
-passar o IP do computador na rede (descobrir com `hostname -I`):
+O celular não enxerga o `127.0.0.1` do computador. O jeito mais simples
+é ligar os dois pelo cabo (repetir sempre que reconectar o celular):
+
+```bash
+adb reverse tcp:5000 tcp:5000
+flutter run
+```
+
+Sem o cabo, use o IP do computador na rede (descobrir com `hostname -I`).
+Nesse caso, a API precisa estar aberta para a rede: coloque
+`API_HOST=0.0.0.0` no `backend/.env`, tire o `API_DEBUG` e reinicie a API.
 
 ```bash
 flutter run --dart-define=API_URL=http://IP_DO_COMPUTADOR:5000
@@ -523,6 +543,8 @@ O celular e o computador precisam estar no mesmo Wi-Fi.
 | `ModuleNotFoundError: No module named 'flask'` | Ambiente virtual desligado ou bibliotecas não instaladas | Ativar o `.venv` e rodar `pip install -r backend/requirements.txt` |
 | `ModuleNotFoundError: No module named 'backend'` | Comando rodado dentro de `backend/` | Voltar para `sistema-eventos/` (`cd ..`) |
 | `Access denied for user` | Usuário ou senha errados no `.env` | Conferir o `DATABASE_URL` com o usuário criado no passo 0.2 |
+| `RuntimeError: Defina em backend/.env uma SECRET_KEY` | O `.env` não tem chave ou ela é curta (o exemplo antigo deste passo a passo tinha 30 caracteres) | Gerar uma chave com o comando da mensagem e colocá-la no `.env` |
+| `RuntimeError: API_DEBUG=1 só funciona` | O `.env` tem `API_DEBUG=1` e `API_HOST=0.0.0.0` | Tirar o `API_DEBUG`, ou o `API_HOST` se estiver usando o cabo |
 | `Unknown database 'sistema_eventos'` | O banco não foi criado | Rodar o passo 0.6 |
 | `Can't connect to MySQL server` | MySQL desligado | **Linux:** `sudo systemctl start mysql` · **Windows:** abrir "Serviços" e iniciar o serviço `MySQL` |
 | `Address already in use` (porta 5000) | Já existe uma API rodando em outro terminal | Fechar a outra com `Ctrl+C`, ou procurar o terminal esquecido |

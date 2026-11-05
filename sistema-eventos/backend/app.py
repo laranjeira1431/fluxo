@@ -1,16 +1,17 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 
-from backend.config import Config
+from backend.config import Config, validar_configuracao
 from backend.extensions import db
 from backend.routes import registrar_rotas
 from backend import models  # noqa: F401 - registra os Models no SQLAlchemy
 
 
 def criar_app():
+    validar_configuracao()
     app = Flask(__name__)
     app.config.from_object(Config)
-    CORS(app, supports_credentials=True)
+    CORS(app, origins=Config.CORS_ORIGENS)
     db.init_app(app)
     registrar_rotas(app)
 
@@ -36,4 +37,4 @@ app = criar_app()
 if __name__ == "__main__":
     # Execute database/sistema_eventos_atualizado.sql antes de iniciar a API.
     # O SQL mantém também as tabelas que não são usadas diretamente pelo app.
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host=Config.API_HOST, port=5000, debug=Config.API_DEBUG)

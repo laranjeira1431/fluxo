@@ -204,9 +204,10 @@ participante e organizador.
 
 ### 4.3 Limitações conhecidas
 
-- **`SECRET_KEY` padrão:** quem conhece a chave consegue fabricar tokens.
-  O `config.py` tem um valor padrão fixo, que está no repositório. Cada
-  instalação precisa de uma chave própria no `.env` (P04).
+- **`SECRET_KEY` padrão (resolvida na P04, 04/11/2026):** quem conhece a
+  chave consegue fabricar tokens, e o `config.py` tinha um valor padrão
+  fixo. Agora cada instalação precisa de uma chave própria no `.env`
+  (seção 14).
 - **O logout não invalida o token:** o app só apaga o token da memória.
   Um token copiado antes continua valendo até vencer, mesmo se a pessoa
   trocar a senha, porque a API não guarda uma lista de tokens.
@@ -728,3 +729,53 @@ F06/F07, nos arquivos que o Flutter gera no Windows).
   P16.
 - **Testes pendentes:** a compilação no Android e o comportamento no
   Windows ficaram na seção 0.3 do `PENDENCIAS.md`.
+
+## 14. P04: configuração segura da API
+
+Concluída em 04/11/2026, na branch `p04-configuracao-segura`. A API ainda
+estava configurada para desenvolvimento: a `SECRET_KEY` tinha um valor
+padrão escrito no código, o modo debug ficava sempre ligado, a API aceitava
+conexões de toda a rede e qualquer site podia chamá-la pelo navegador. O
+ponto mais grave era a chave: ela assina os tokens de login (P01) e estava
+no repositório, então qualquer pessoa poderia fabricar um token válido de
+qualquer usuário, inclusive de um organizador.
+
+### 14.1 O que foi feito
+
+- **`SECRET_KEY`:** saiu o valor padrão. Sem uma chave de pelo menos 32
+  caracteres no `.env`, a API não sobe e mostra o comando que gera uma.
+- **`API_DEBUG` e `API_HOST`:** passaram a vir do `.env`. O padrão é debug
+  desligado e acesso só pelo próprio computador. A API não sobe com os dois
+  abertos ao mesmo tempo, porque o console do modo debug roda código no
+  servidor.
+- **`CORS_ORIGENS`:** por padrão, o navegador só aceita sites em `localhost`
+  ou `127.0.0.1`, em qualquer porta. Na hospedagem, a variável informa o
+  endereço do site. O `supports_credentials` saiu, porque a API não usa
+  cookie desde a P01.
+- **Instalação:** `.env.example`, `README.md` e `FLUXO_DE_TRABALHO.md`
+  explicam como gerar a chave e quando usar cada opção.
+
+### 14.2 Decisões e motivos
+
+| Decisão | Motivo |
+|---|---|
+| O código é igual em todas as máquinas, e o `.env` diz como cada uma funciona | O mesmo código serve para o computador e para a hospedagem, e nada sensível vai para o GitHub |
+| A API para ao subir se a chave for ruim | Falhar logo, com uma mensagem clara, é melhor do que funcionar com uma chave conhecida e parecer seguro |
+| Só uma regra de tamanho, sem lista de valores proibidos | Os 32 caracteres barram os textos de exemplo, como `troque-esta-chave`, e o valor antigo, com uma única condição |
+| As conferências ficam em `validar_configuracao()`, chamada em `criar_app()` | Importar um arquivo do backend não exige o `.env`, mas nenhuma API sobe sem passar por elas |
+| Sem configuração, vale a opção mais segura | Esquecer uma variável não abre nada: quem quiser mais acesso precisa pedir por escrito no `.env` |
+| Expressão regular para as origens locais | O Flutter no Chrome muda de porta a cada execução, então uma lista fixa de endereços não funcionaria |
+
+### 14.3 Limitações conhecidas
+
+- **Histórico do Git:** o valor antigo da chave continua nos commits
+  anteriores, mas não vale mais nada, porque a API o recusa.
+- **Qualidade da chave:** a regra olha só o tamanho, então uma chave longa
+  e previsível também passa. Por isso o passo a passo sempre gera a chave
+  com o comando do `secrets`, que sorteia os caracteres.
+- **Validade da chave:** trocar a `SECRET_KEY` encerra os logins abertos, e
+  todo mundo precisa entrar de novo.
+- **Servidor de produção:** `app.run` é o servidor de desenvolvimento do
+  Flask. A escolha do servidor da hospedagem fica para a F33.
+- **Teste pendente:** o acesso pelo celular depois da mudança ficou na seção
+  0.3 do `PENDENCIAS.md`.

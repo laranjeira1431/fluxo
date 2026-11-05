@@ -6,7 +6,7 @@ CAMADA: Models (infraestrutura de persistência via SQLAlchemy).
 POR QUE ESTE ARQUIVO EXISTE:
 As instruções do projeto pedem que cada Model possua métodos de CRUD
 (salvar, buscar_por_id, listar_todos, atualizar, deletar). Se esses métodos fossem
-escritos manualmente em cada uma das 12 Models, o código ficaria repetido
+escritos manualmente em cada uma das 15 Models, o código ficaria repetido
 (mesma lógica de "adicionar na sessão e commitar", "buscar pela chave
 primária", etc.) em todos os arquivos, o que fere a regra de "não duplicar
 lógica desnecessariamente".

@@ -46,16 +46,16 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
 
 | Dia | Tarefas |
 |---|---|
-| Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 e F31; F27 se der tempo |
+| Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 (concluída) e F31; F27 se der tempo |
 | Qui 05/11 | F27 (diagrama de classes) |
 | Sex 06/11 | F28 (fluxogramas) |
 | Sáb 07/11 | F30 (slides) |
-| Dom 08/11 | P04 (se não for feita em 04/11) e P06; P03 se der tempo |
+| Dom 08/11 | P06; P03 se der tempo |
 | Seg 09/11 | F32 (vídeo) e revisão final |
 
 - **Sem dia reservado para atrasos:** com uma pessoa só, o fim de semana
   virou dia de trabalho. Se algo atrasar, o bloco B é o primeiro a ser
-  cortado, nesta ordem: P03, P06 e P04. O bloco A não sai da lista.
+  cortado, nesta ordem: P03 e P06. O bloco A não sai da lista.
 - **O bloco A usa os nomes novos:** a F27 e a F28 vêm depois da F29 e já
   usam `salvar()`, `atualizar()`, `deletar()`, `listar_todos()` e
   `buscar_por_id()`.
@@ -202,7 +202,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 
 | Ordem | Tarefa | Prioridade | Por que nessa posição |
 |---|---|---|---|
-| 6 | P04 Configuração de desenvolvimento exposta | 🟡 | A chave fixa fere a regra de não publicar dados sensíveis. Vem antes da hospedagem |
+| 6 | P04 Configuração de desenvolvimento exposta (concluída) | 🟡 | A chave fixa fere a regra de não publicar dados sensíveis. Vem antes da hospedagem |
 | 7 | P06 Fuso horário inconsistente | 🟡 | Horários errados apareceriam no vídeo |
 | 8 | P03 Atualizações aceitam qualquer campo | 🟡 | Corrige erros 500 e campos que ainda não têm validação. O e-mail repetido já foi resolvido na F26 |
 | 9 | F26 Editar perfil | 🟡 | O erro do e-mail repetido foi corrigido (04/11/2026). Foto e troca de senha são extras |
@@ -214,7 +214,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | Ordem | Tarefa | Peso | Por que nessa posição |
 |---|---|---|---|
 | 12 | F31 Termos de consentimento | 1 ponto | A mudança é pequena |
-| 13 | F33 Hospedagem | 2 pontos | Depende da P04 |
+| 13 | F33 Hospedagem | 2 pontos | A P04, de que dependia, foi concluída |
 | 14 | F34 IA como serviço | 2 pontos | A maior do bloco: nada disso existe hoje |
 
 ### Bloco D: sem efeito na rubrica
@@ -253,6 +253,7 @@ teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
 | P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
 | F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
+| P04 | O app no celular continua falando com a API depois da mudança de endereço | Pelo cabo: rodar `adb reverse tcp:5000 tcp:5000`, abrir o app, entrar e ver a programação. Pelo IP: colocar `API_HOST=0.0.0.0` no `backend/.env` antes de ligar a API e repetir | Android (celular) | Pendente |
 
 ---
 
@@ -1226,8 +1227,9 @@ o nome indicado, que aparece acima de cada tela.
 - **O que falta:** publicar o frontend e a API, acessíveis e funcionando
   durante a avaliação. A escolha do serviço fica para o plano da tarefa.
 - **Rubrica:** 2 pontos de bônus.
-- **Depende de:** P04, porque a `SECRET_KEY` fixa não pode ir para um
-  servidor público.
+- **Dependia de:** P04 (concluída em 04/11/2026), porque a `SECRET_KEY`
+  fixa não podia ir para um servidor público. Na hospedagem, definir no
+  servidor a `SECRET_KEY` e o `CORS_ORIGENS`, sem `API_DEBUG`.
 - **Tarefa de segurança:** a API passa a ficar exposta na internet.
   Fazer `/security-review` antes do commit.
 
@@ -1365,7 +1367,7 @@ qualquer alteração.
 | P01 | 🔴 | Rotas da API sem autenticação | Concluído |
 | P02 | 🔴 | Login aceita senha em texto puro | Concluído |
 | P03 | 🟡 | Atualizações aceitam qualquer campo | Pendente |
-| P04 | 🟡 | Configuração de desenvolvimento exposta | Pendente |
+| P04 | 🟡 | Configuração de desenvolvimento exposta | Concluído |
 | P05 | 🟢 | Abas do app recarregam a cada troca | Pendente |
 | P06 | 🟡 | Fuso horário inconsistente | Pendente |
 | P07 | 🟢 | Uso de método obsoleto do SQLAlchemy | Concluído |
@@ -1494,6 +1496,10 @@ qualquer alteração.
   (`troque-esta-chave`) que não pode ser usado como chave real.
 - **CORS (21/10/2026):** desde a P01 a API não usa mais cookie, então o
   `supports_credentials=True` do `app.py` ficou sem uso e pode sair.
+- **Concluída em 04/11/2026:** a API não sobe sem uma `SECRET_KEY` de pelo
+  menos 32 caracteres, e `API_DEBUG`, `API_HOST` e `CORS_ORIGENS` vêm do
+  `.env`, com o valor mais seguro como padrão. Ver a seção 14 do
+  `DOCUMENTACAO.md`.
 
 ## Bugs e inconsistências
 

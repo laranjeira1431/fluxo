@@ -182,6 +182,22 @@ pip install -r backend/requirements.txt
 Crie `backend/.env` a partir de `backend/.env.example` e ajuste a senha do
 MySQL. No Ubuntu, o `root` do MySQL não aceita login com senha: crie um
 usuário próprio para o projeto (ver o passo 0.2 do fluxo de trabalho).
+
+Gere uma `SECRET_KEY` só sua e coloque no `.env`. Ela assina os tokens de
+login, e **a API não sobe** sem uma chave de pelo menos 32 caracteres:
+
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Outras opções do `.env` (sem elas, vale o valor mais seguro):
+
+| Variável | Padrão | Para que serve |
+|---|---|---|
+| `API_DEBUG` | desligado | `API_DEBUG=1` liga o modo debug e a recarga automática. Só no seu computador: a API não sobe com ele e a rede aberta ao mesmo tempo |
+| `API_HOST` | `127.0.0.1` (só este computador) | `API_HOST=0.0.0.0` abre a API para a rede, para o celular acessar pelo IP |
+| `CORS_ORIGENS` | `localhost` e `127.0.0.1`, em qualquer porta | Sites que podem chamar a API pelo navegador, separados por vírgula. O app no celular não depende disso |
+
 Depois execute:
 
 ```bash
@@ -241,6 +257,10 @@ Para um celular físico, use o IP do computador na rede local:
 ```bash
 flutter run --dart-define=API_URL=http://192.168.0.10:5000
 ```
+
+Nesse caso, coloque `API_HOST=0.0.0.0` no `backend/.env` e tire o
+`API_DEBUG`: a API não sobe com o modo debug aberto para a rede.
+Pelo cabo USB (abaixo), nada disso é necessário.
 
 ### Celular Android pelo cabo USB
 

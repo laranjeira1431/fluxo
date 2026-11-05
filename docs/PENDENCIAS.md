@@ -47,7 +47,7 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
 | Dia | Tarefas |
 |---|---|
 | Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 (concluída) e F31; F27 se der tempo |
-| Qui 05/11 | F27 (diagrama de classes) |
+| Qui 05/11 | F27 (concluída) |
 | Sex 06/11 | F28 (fluxogramas) |
 | Sáb 07/11 | F30 (slides) |
 | Dom 08/11 | P06; P03 se der tempo |
@@ -193,7 +193,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | Ordem | Tarefa | Peso | Por que nessa posição |
 |---|---|---|---|
 | 1 | F29 Nomes dos métodos de CRUD | Exigido nos requisitos | Ligada aos critérios de arquitetura. Vem antes porque o diagrama e os fluxogramas usam esses nomes |
-| 2 | F27 Diagrama de classes | 3 pontos | Exigido na entrega |
+| 2 | F27 Diagrama de classes (concluída) | 3 pontos | Exigido na entrega |
 | 3 | F28 Fluxogramas dos casos de uso | 4 pontos | O maior item que ainda não existe |
 | 4 | F30 Slides da apresentação | Ligados a 3 pontos | Exigidos pela rubrica |
 | 5 | F32 Vídeo de demonstração | 4 pontos | Sem a demonstração, o projeto não é avaliado. É gravado no último dia, com o que estiver pronto do bloco B |
@@ -252,6 +252,7 @@ teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
 | F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
 | P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
+| F27 | Os dois diagramas aparecem desenhados | Depois do push, abrir `docs/DIAGRAMA_CLASSES.md` no GitHub e conferir os dois diagramas | GitHub | Pendente |
 | F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
 | P04 | O app no celular continua falando com a API depois da mudança de endereço | Pelo cabo: rodar `adb reverse tcp:5000 tcp:5000`, abrir o app, entrar e ver a programação. Pelo IP: colocar `API_HOST=0.0.0.0` no `backend/.env` antes de ligar a API e repetir | Android (celular) | Pendente |
 
@@ -325,7 +326,7 @@ o nome indicado, que aparece acima de cada tela.
 | F24 | — (S05) | 🔴 | Dados de demonstração: eventos encerrado, acontecendo e futuro | Concluído |
 | F25 | — (sugestão na F20) | 🟢 | Total de palestras e salas na lista de eventos da API | Pendente |
 | F26 | RF20 (prancha do Perfil) | 🟡 | Editar perfil: e-mail repetido, troca de senha, foto de perfil e revisão de segurança | Parcial |
-| F27 | — (S13) | 🔴 | Diagrama de classes do domínio | Pendente |
+| F27 | — (S13) | 🔴 | Diagrama de classes do domínio | Concluído |
 | F28 | — (S14) | 🔴 | Fluxogramas dos casos de uso | Pendente |
 | F29 | — (S15) | 🔴 | Nomes dos métodos de CRUD iguais aos dos requisitos | Concluído |
 | F30 | — (S16) | 🔴 | Slides da apresentação | Pendente |
@@ -1158,6 +1159,10 @@ o nome indicado, que aparece acima de cada tela.
 - **Ao concluir:** trocar o texto do README da raiz, que diz que o
   diagrama está sendo feito, pelo link do arquivo.
 - **Depende de:** F29, para o diagrama já usar os nomes novos.
+- **Concluído (05/11/2026):** `docs/DIAGRAMA_CLASSES.md`, em Mermaid, com
+  a herança de `db.Model` e `CRUDMixin`, as 15 classes, os atributos e os
+  relacionamentos. O critério de composição e de agregação segue as
+  regras de `ON DELETE` do banco. O README da raiz aponta para o arquivo.
 
 ### F28 Fluxogramas dos casos de uso (S14)
 

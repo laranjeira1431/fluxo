@@ -10,10 +10,12 @@ import 'programacao_aba_page.dart';
 
 /// Casca (shell) do app após o login: contém a barra de navegação inferior
 /// e alterna entre as cinco telas principais — Início, Programação,
-/// Agenda, Avisos e Perfil — sem perder o estado de cada uma (elas ficam
-/// todas construídas, apenas escondidas via índice, o que é suficiente para
-/// o tamanho deste app). Os Favoritos saíram da barra na F20 e agora são
-/// abertos pelo Perfil, como no canvas.
+/// Agenda, Avisos e Perfil. As telas não ficam guardadas: `telas[aba]`
+/// monta a tela de novo a cada troca de aba, e o estado dela se perde. É de
+/// propósito: como cada tela busca os dados no `initState`, ela sempre abre
+/// atualizada. O que precisa sobreviver à troca (aba atual, evento
+/// escolhido, nome e e-mail) fica aqui no `AppShell`. Os Favoritos saíram
+/// da barra na F20 e agora são abertos pelo Perfil, como no canvas.
 ///
 /// Recebe `usuarioId`/`nomeUsuario`/`ehOrganizador` uma única vez (vindos
 /// do login) e os repassa para cada tela filha, evitando que cada tela

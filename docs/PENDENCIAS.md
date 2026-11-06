@@ -233,7 +233,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 15 | P10 Comentário desatualizado na tela de favoritos (concluída: resolvida na F20) | 🟢 |
 | 16 | P07 Método obsoleto do SQLAlchemy (concluída) | 🟢 |
 | 17 | P16 Fim de linha diferente entre sistemas (concluída) | 🟡 |
-| 18 | P05 Abas do app recarregam a cada troca | 🟢 |
+| 18 | P05 Abas do app recarregam a cada troca (concluída) | 🟢 |
 | 19 | F21 Marcar avisos como lidos | 🟢 |
 | 20 | F25 Total de palestras e salas na lista de eventos da API | 🟢 |
 | 21 | F13 Restaurantes próximos | 🟢 |
@@ -275,35 +275,34 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2.
 
 | # | Tarefa | Prioridade | Tempo estimado | Situação |
 |---|---|---|---|---|
-| 1 | P05 Abas recarregam a cada troca | 🟢 | Cerca de 20 min | Bloco D |
-| 2 | P19 Consultas da inscrição no Repository | 🔴 | 45 min a 1 h | Sex 06/11 |
-| 3 | Testes da seção 0.3 (F29, F26, P04, P06 e P08) | 🔴 | Cerca de 1 h | Dom 08/11 |
-| 4 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
-| 5 | F28 Fluxogramas dos casos de uso | 🔴 | 1 a 2 h | Sex 06/11 |
-| 6 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
-| 7 | F31 Termos de consentimento | 🟢 | Cerca de 2 h | Dom 08/11, se der tempo |
-| 8 | F21 Marcar avisos como lidos | 🟢 | 2 a 3 h | Bloco D |
-| 9 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
-| 10 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
-| 11 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
-| 12 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
-| 13 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Sáb 07/11 |
-| 14 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
-| 15 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
-| 16 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
-| 17 | F13 Restaurantes próximos | 🟢 | 4 a 6 h | Bloco D |
-| 18 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
-| 19 | F34 IA como serviço | 🟢 | 6 a 8 h | Bônus, 2 pontos |
-| 20 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
-| 21 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
-| 22 | P12 Testes automatizados | 🟢 | 1 dia ou mais | Bloco D |
-| 23 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
+| 1 | P19 Consultas da inscrição no Repository | 🔴 | 45 min a 1 h | Sex 06/11 |
+| 2 | Testes da seção 0.3 (F29, F26, P04, P06 e P08) | 🔴 | Cerca de 1 h | Dom 08/11 |
+| 3 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
+| 4 | F28 Fluxogramas dos casos de uso | 🔴 | 1 a 2 h | Sex 06/11 |
+| 5 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
+| 6 | F31 Termos de consentimento | 🟢 | Cerca de 2 h | Dom 08/11, se der tempo |
+| 7 | F21 Marcar avisos como lidos | 🟢 | 2 a 3 h | Bloco D |
+| 8 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
+| 9 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
+| 10 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
+| 11 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
+| 12 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Sáb 07/11 |
+| 13 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
+| 14 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
+| 15 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
+| 16 | F13 Restaurantes próximos | 🟢 | 4 a 6 h | Bloco D |
+| 17 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
+| 18 | F34 IA como serviço | 🟢 | 6 a 8 h | Bônus, 2 pontos |
+| 19 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
+| 20 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
+| 21 | P12 Testes automatizados | 🟢 | 1 dia ou mais | Bloco D |
+| 22 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
 
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
   porque a tela "Escolher evento" já foi feita na F20 e falta só a imagem
   de capa. A P05 caiu de cerca de 1 h para cerca de 20 min, porque a
   tarefa ficou só em corrigir o comentário do `app_shell.dart`.
-- **Total, sem a linha 3:** cerca de 75 a 100 horas, contando 8 horas
+- **Total, sem a linha 2:** cerca de 75 a 100 horas, contando 8 horas
   para cada tarefa de "1 dia ou mais".
 - **Só o essencial (P19, F28, F30 e F32):** cerca de 7 a 10 horas.
 
@@ -1426,7 +1425,7 @@ qualquer alteração.
 | P02 | 🔴 | Login aceita senha em texto puro | Concluído |
 | P03 | 🟡 | Validações que faltam nos dados recebidos | Pendente |
 | P04 | 🟡 | Configuração de desenvolvimento exposta | Concluído |
-| P05 | 🟢 | Abas do app recarregam a cada troca | Pendente |
+| P05 | 🟢 | Abas do app recarregam a cada troca | Concluído |
 | P06 | 🟡 | Fuso horário inconsistente | Pendente |
 | P07 | 🟢 | Uso de método obsoleto do SQLAlchemy | Concluído |
 | P08 | 🟢 | Tipo de notificação "atencao" nunca é criado | Concluído |
@@ -1583,6 +1582,9 @@ qualquer alteração.
   aba é o funcionamento desejado, porque a tela sempre abre atualizada.
   Início, Programação, Agenda e Avisos continuam assim, e a tarefa é só
   corrigir o comentário, na branch `p05-comentario-abas`.
+- **Resolvido (06/11/2026):** o comentário do `AppShell` agora diz que as
+  telas são montadas de novo a cada troca de aba, e por quê. O código não
+  mudou.
 
 ### P06 🟡 Fuso horário inconsistente
 

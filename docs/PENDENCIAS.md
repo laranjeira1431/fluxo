@@ -99,8 +99,8 @@ testa e relata: quem corrige é a Manuela. Novos testes entram na seção
 | Dom 08/11 | Refazer o que falhou e testar o que for concluído até lá |
 | Seg 09/11 | Conferir as correções antes da gravação do vídeo |
 
-- **Ficam com a Manuela:** a F28, que só pode ser vista no GitHub depois
-  do push, e a P04, que o João não consegue testar pelo cabo nem pelo IP. A parte do Windows da P16 continua valendo só se o projeto
+- **Fica com a Manuela:** a P04, que o João não consegue testar pelo cabo
+  nem pelo IP. A parte do Windows da P16 continua valendo só se o projeto
   voltar a ser usado no Windows.
 
 ### Cronograma original (20 a 23/10/2026)
@@ -294,7 +294,7 @@ Manuela resolver. Ele não altera o código nem este arquivo.
 | F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
 | P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
-| F28 | Os dois fluxogramas aparecem desenhados, com as cores das camadas | Depois do push, abrir `docs/FLUXOGRAMAS.md` no GitHub e conferir os dois fluxogramas | GitHub | Pendente |
+| F28 | Os dois fluxogramas aparecem desenhados, com as cores das camadas | Depois do push, abrir `docs/FLUXOGRAMAS.md` no GitHub e conferir os dois fluxogramas | GitHub | Testado |
 | F27 | Os dois diagramas aparecem desenhados | Depois do push, abrir `docs/DIAGRAMA_CLASSES.md` no GitHub e conferir os dois diagramas | GitHub | Testado |
 | F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
 | P04 | O app no celular continua falando com a API depois da mudança de endereço | Pelo cabo: rodar `adb reverse tcp:5000 tcp:5000`, abrir o app, entrar e ver a programação. Pelo IP: colocar `API_HOST=0.0.0.0` no `backend/.env` antes de ligar a API e repetir | Android (celular) | Pendente |
@@ -320,7 +320,7 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 
 | # | Tarefa | Prioridade | Tempo estimado | Situação |
 |---|---|---|---|---|
-| 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João; P04 e F28 com a Manuela) | 🔴 | Cerca de 1 h | 06 a 09/11 |
+| 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João; P04 com a Manuela) | 🔴 | Cerca de 1 h | 06 a 09/11 |
 | 2 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
 | 3 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
 | 4 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |

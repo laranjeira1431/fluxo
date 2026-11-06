@@ -287,7 +287,8 @@ flutter run -d <id do celular em flutter devices>
 
 Na primeira vez, o app pede permissão para mostrar notificações:
 toque em **Permitir**. O `adb` fica em
-`%LOCALAPPDATA%\Android\Sdk\platform-tools` no Windows.
+`%LOCALAPPDATA%\Android\Sdk\platform-tools` no Windows e em
+`~/Library/Android/sdk/platform-tools` no Mac.
 
 O endereço fica em `lib/services/api_service.dart` e pode ser configurado
 sem alterar as telas.

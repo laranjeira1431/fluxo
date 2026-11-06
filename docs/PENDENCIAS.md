@@ -41,8 +41,9 @@ commit, push, Pull Request, merge e testar de novo).
 
 ### Semana final (04 a 09/11/2026)
 
-Desde 03/11/2026, só a Manuela trabalha no projeto, e todas as tarefas
-ficam com ela. A ordem segue os blocos da seção 0.2.
+Desde 03/11/2026, só a Manuela desenvolve o projeto, e todas as tarefas
+ficam com ela. Desde 06/11/2026, o João testa as tarefas concluídas
+(cronograma abaixo). A ordem segue os blocos da seção 0.2.
 
 | Dia | Tarefas |
 |---|---|
@@ -50,10 +51,10 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
 | Qui 05/11 | F27 (concluída) |
 | Sex 06/11 | P19 (`ParticipacaoRepository`, concluída) e F28 (fluxogramas) |
 | Sáb 07/11 | F30 (slides) |
-| Dom 08/11 | Testes da seção 0.3 e roteiro do vídeo; depois F31 ou P03, se der tempo |
+| Dom 08/11 | Corrigir os erros encontrados pelo João, testar a P04 no celular e fazer o roteiro do vídeo; depois F31 ou P03, se der tempo |
 | Seg 09/11 | F32 (vídeo) e revisão final; P06 só se os testes mostrarem horário errado |
 
-- **Sem dia reservado para atrasos:** com uma pessoa só, o fim de semana
+- **Sem dia reservado para atrasos:** com uma pessoa só no desenvolvimento, o fim de semana
   virou dia de trabalho. Se algo atrasar, o primeiro corte é o que está
   marcado como "se der tempo": F31 e P03. O bloco A não sai da lista.
 - **Ordem revista em 05/11/2026 (decidida pela Manuela):** a nova
@@ -77,7 +78,26 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
   tarefas da semana são feitas primeiro, e os testes no app ficam para
   depois, todos juntos. Cada tarefa registra na seção 0.3 o que ficou
   para testar. Eles são feitos no domingo, 08/11, antes da gravação do
-  vídeo (F32), para sobrar tempo de corrigir o que falhar.
+  vídeo (F32), para sobrar tempo de corrigir o que falhar. Revisto em
+  06/11/2026: os testes passam a ser feitos pelo João, a partir desse dia
+  (ver abaixo).
+
+### Cronograma do João (testes, 06 a 09/11/2026)
+
+O João usa Mac e testa no emulador Android, sem celular físico. Ele só
+testa e relata: quem corrige é a Manuela. Novos testes entram na seção
+0.3 conforme as tarefas forem concluídas, então a lista dele vai crescer.
+
+| Dia | Testes |
+|---|---|
+| Sex 06/11 | Preparar o ambiente, depois F29, F26 e P19. Depois das 21h, P06 |
+| Sáb 07/11 | P08 e P16 (parte do Android) |
+| Dom 08/11 | Refazer o que falhou e testar o que for concluído até lá |
+| Seg 09/11 | Conferir as correções antes da gravação do vídeo |
+
+- **Ficam com a Manuela:** a P04, que o João não consegue testar pelo cabo
+  nem pelo IP. A parte do Windows da P16 continua valendo só se o projeto
+  voltar a ser usado no Windows.
 
 ### Cronograma original (20 a 23/10/2026)
 
@@ -255,7 +275,15 @@ Testes que não puderam ser feitos na hora em que a tarefa foi concluída
 (no celular, no emulador ou no app). O que dá para testar com `curl` é
 testado durante a tarefa e registrado no próprio item dela. Cada tarefa
 concluída acrescenta aqui os testes que ficaram para depois. Depois do
-teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
+teste, o status vira "Testado" ou "Falhou: ..." (com o resumo do que
+aconteceu).
+
+**Como o João testa e registra:** o João faz os testes com status Pendente
+e, a cada teste, informa se deu algum erro ou mau funcionamento. Ele
+envia o relato à Manuela (teste, data, resultado, o que aconteceu, passos
+e aparelho), e ela registra o resultado aqui. Todo erro entra também na
+tabela "Erros encontrados" abaixo, com a situação "Pendente", até a
+Manuela resolver. Ele não altera o código nem este arquivo.
 
 | Tarefa | O que testar | Como testar | Onde | Status |
 |---|---|---|---|---|
@@ -266,6 +294,16 @@ teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
 | F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
 | P04 | O app no celular continua falando com a API depois da mudança de endereço | Pelo cabo: rodar `adb reverse tcp:5000 tcp:5000`, abrir o app, entrar e ver a programação. Pelo IP: colocar `API_HOST=0.0.0.0` no `backend/.env` antes de ligar a API e repetir | Android (celular) | Pendente |
 | P06 | A data de uma avaliação feita depois das 21h aparece certa | Depois das 21h, avaliar uma palestra já iniciada em que a pessoa está inscrita e olhar a data do comentário nos detalhes da palestra. Com o erro, aparece o dia seguinte | App (celular ou emulador) | Pendente |
+| P19 | Inscrição, cancelamento e choque de horário continuam funcionando no app | Inscrever-se em uma palestra futura com vaga: as vagas caem 1. Cancelar: as vagas voltam. Inscrever-se em duas palestras no mesmo horário (se os dados não tiverem, criar uma como organizador): deve aparecer o aviso de choque, e a inscrição só é feita depois de confirmar | App (celular ou emulador) | Pendente |
+
+### Erros encontrados
+
+Erros relatados nos testes e fora deles, para a Manuela resolver. Depois
+de corrigir, a situação vira "Resolvido" e o teste volta para Pendente,
+para ser refeito.
+
+| Data | Tarefa | O que aconteceu | Passos | Aparelho | Situação |
+|---|---|---|---|---|---|
 
 ## 0.4 Tarefas pendentes por tempo de execução
 
@@ -276,7 +314,7 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2.
 
 | # | Tarefa | Prioridade | Tempo estimado | Situação |
 |---|---|---|---|---|
-| 1 | Testes da seção 0.3 (F29, F26, P04, P06 e P08) | 🔴 | Cerca de 1 h | Dom 08/11 |
+| 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João; P04 com a Manuela) | 🔴 | Cerca de 1 h | 06 a 09/11 |
 | 2 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
 | 3 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
 | 4 | F28 Fluxogramas dos casos de uso | 🔴 | 1 a 2 h | Sex 06/11 |
@@ -1443,6 +1481,7 @@ qualquer alteração.
 | P18 | 🟡 | Regras do Claude Code só no computador local | Concluído |
 | P19 | 🔴 | Consultas da inscrição fora do Repository | Concluído |
 | P20 | 🟢 | Cancelamento lê a inscrição antes do bloqueio | Pendente |
+| P21 | 🟡 | Incluir o João como testador e o Mac no passo a passo | Concluído |
 
 ---
 
@@ -1913,3 +1952,15 @@ qualquer alteração.
   dos dados daquele momento em um SELECT comum.
 - **Por que não entrou na P19:** a P19 só move consultas e não muda o
   comportamento da API.
+
+### P21 🟡 Incluir o João como testador e o Mac no passo a passo
+
+- **Origem:** pedido da Manuela (06/11/2026), para os testes não ficarem
+  todos para a véspera da gravação.
+- **O que foi feito:** o João entrou no plano (seção 0.1), com um
+  cronograma próprio. A seção 0.3 ganhou a forma de testar e registrar, o
+  teste da P19 no app e a tabela "Erros encontrados". O
+  `FLUXO_DE_TRABALHO.md` e o README passaram a cobrir o Mac.
+- **Decidido (06/11/2026, pela Manuela):** a P04 fica com ela, e o João
+  envia os relatos para ela, que os registra aqui. A rotina do Claude com
+  o João fica no `CLAUDE.md`, que ela envia a ele e não vai para o Git.

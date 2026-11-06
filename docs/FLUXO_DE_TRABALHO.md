@@ -174,8 +174,8 @@ App Flutter (Chrome ou celular)  →  API Flask (Python, porta 5000)  →  Banco
   computador".
 
 Cada comando que muda de um sistema para o outro está marcado com
-**Linux:** (Ubuntu) ou **Windows:**. Siga só o do seu sistema. Os blocos
-sem marcação valem para os dois. No Linux, comandos com `sudo` pedem a
+**Linux:** (Ubuntu), **Mac:** ou **Windows:**. Siga só o do seu sistema.
+Os blocos sem marcação valem para todos. No Linux, comandos com `sudo` pedem a
 senha do seu usuário do computador (ao digitar, nada aparece na tela; é
 normal).
 
@@ -194,6 +194,20 @@ sudo apt install git python3-venv mysql-server
   ligado e liga sozinho junto com o computador. Para conferir:
   `systemctl status mysql` (deve aparecer `active (running)`; aperte `q`
   para sair).
+
+**Mac:** instalar o [Homebrew](https://brew.sh), seguindo as instruções da
+página dele, e depois rodar:
+
+```bash
+brew install git python mysql
+brew services start mysql
+```
+
+- **Homebrew (`brew`):** o instalador de programas mais usado no Mac,
+  parecido com o `apt` do Ubuntu.
+- **`brew services start mysql`:** liga o MySQL e faz ele ligar sozinho
+  quando você entrar no Mac. Para conferir: `brew services list` (deve
+  aparecer `started` na linha do `mysql`).
 
 **Windows:** instalar o [Python](https://www.python.org/downloads/)
 (marcar "Add python.exe to PATH" na instalação), o
@@ -231,6 +245,10 @@ EXIT;
 - A senha `fluxo123` é só para desenvolvimento, no seu computador. Ela
   vai para o `.env`, que o `.gitignore` impede de ir para o GitHub.
 
+**Mac:** no lugar de `sudo mysql`, entrar com `mysql -u root`. O MySQL
+instalado pelo Homebrew vem com o `root` sem senha. Os comandos `CREATE
+USER`, `GRANT` e `EXIT` são os mesmos.
+
 **Windows:** pular este passo e usar o `root` com a senha escolhida na
 instalação.
 
@@ -249,6 +267,24 @@ flutter doctor
   ele baixa o restante do Flutter (demora alguns minutos). Para rodar no
   Chrome, basta aparecer `[✓] Chrome`. Os avisos de Android Studio e
   Linux toolchain podem ser ignorados por enquanto.
+
+**Mac:** baixar o Flutter já na versão da equipe e colocá-lo no terminal:
+
+```bash
+git clone https://github.com/flutter/flutter.git -b 3.47.7 ~/flutter
+echo 'export PATH="$HOME/flutter/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+flutter doctor
+```
+
+- **`-b 3.47.7`:** baixa direto a versão usada pela equipe (P17).
+- **`~/.zshrc`:** arquivo lido por todo terminal novo do Mac. A linha
+  adicionada faz o comando `flutter` funcionar em qualquer pasta.
+- Para usar o emulador, instalar o
+  [Android Studio](https://developer.android.com/studio), abrir o programa
+  uma vez para ele baixar o Android SDK e rodar
+  `flutter doctor --android-licenses`, aceitando as licenças. Os avisos
+  de Xcode e iOS podem ser ignorados: o projeto não testa no iPhone.
 
 **Windows:** seguir o guia oficial
 (<https://docs.flutter.dev/get-started/install/windows>) e rodar
@@ -313,7 +349,7 @@ git config user.email "seu@email.com"
 
 ### 0.5 Preparar o backend
 
-**Linux:**
+**Linux e Mac:**
 
 ```bash
 cd sistema-eventos
@@ -336,7 +372,7 @@ pip install -r backend/requirements.txt
 
 Criar o arquivo de configuração `.env` a partir do modelo:
 
-**Linux:**
+**Linux e Mac:**
 
 ```bash
 cp backend/.env.example backend/.env
@@ -375,7 +411,7 @@ DATABASE_URL=mysql+pymysql://fluxo:fluxo123@localhost:3306/sistema_eventos
 
 Ainda dentro de `sistema-eventos/`:
 
-**Linux:**
+**Linux e Mac:**
 
 ```bash
 mysql -u fluxo -p < database/sistema_eventos_atualizado.sql
@@ -411,7 +447,7 @@ O MySQL não precisa ser ligado: ele já fica ligado sozinho.
 
 **Terminal 1: API (backend)**
 
-**Linux:**
+**Linux e Mac:**
 
 ```bash
 cd sistema-eventos
@@ -422,7 +458,7 @@ python -m backend.app
 **Windows:** trocar a segunda linha por `.venv\Scripts\activate`.
 
 - Com o ambiente virtual ativo, `python` já aponta para o Python do
-  `.venv` (fora dele, no Linux, o comando é `python3`).
+  `.venv` (fora dele, no Linux e no Mac, o comando é `python3`).
 - O `-m backend.app` roda o arquivo `backend/app.py` como parte do
   pacote `backend`. Por isso o comando é dado de dentro de
   `sistema-eventos/`, e não de dentro de `backend/`.
@@ -511,6 +547,11 @@ não tem um, cria no Android Studio em *Device Manager* → *Create device*.
    - A primeira vez demora alguns minutos (o app é compilado para
      Android). As teclas `r`, `R` e `q` funcionam como no Chrome.
 
+**Mac:** o emulador fica em `~/Library/Android/sdk/emulator/emulator`,
+e não em `~/Android/Sdk/`. Ligar sem o `-gpu swiftshader_indirect` e só
+tentar essa opção se ele fechar sozinho. No Mac com chip Apple, o nome
+do aparelho no `flutter devices` traz `arm64` no lugar de `x86 64`.
+
 **Windows:** o emulador fica em
 `%LOCALAPPDATA%\Android\Sdk\emulator\emulator.exe` (mesmas opções).
 
@@ -525,7 +566,8 @@ adb reverse tcp:5000 tcp:5000
 flutter run
 ```
 
-Sem o cabo, use o IP do computador na rede (descobrir com `hostname -I`).
+Sem o cabo, use o IP do computador na rede (descobrir com `hostname -I`;
+no Mac, `ipconfig getifaddr en0`).
 Nesse caso, a API precisa estar aberta para a rede: coloque
 `API_HOST=0.0.0.0` no `backend/.env`, tire o `API_DEBUG` e reinicie a API.
 
@@ -539,15 +581,16 @@ O celular e o computador precisam estar no mesmo Wi-Fi.
 
 | Erro | Causa | Solução |
 |---|---|---|
-| `python: command not found` | Ambiente virtual desligado (no Linux, fora dele é `python3`) | Dentro de `sistema-eventos/`: **Linux:** `source .venv/bin/activate` · **Windows:** `.venv\Scripts\activate` |
+| `python: command not found` | Ambiente virtual desligado (no Linux e no Mac, fora dele é `python3`) | Dentro de `sistema-eventos/`: **Linux e Mac:** `source .venv/bin/activate` · **Windows:** `.venv\Scripts\activate` |
 | `ModuleNotFoundError: No module named 'flask'` | Ambiente virtual desligado ou bibliotecas não instaladas | Ativar o `.venv` e rodar `pip install -r backend/requirements.txt` |
 | `ModuleNotFoundError: No module named 'backend'` | Comando rodado dentro de `backend/` | Voltar para `sistema-eventos/` (`cd ..`) |
 | `Access denied for user` | Usuário ou senha errados no `.env` | Conferir o `DATABASE_URL` com o usuário criado no passo 0.2 |
 | `RuntimeError: Defina em backend/.env uma SECRET_KEY` | O `.env` não tem chave ou ela é curta (o exemplo antigo deste passo a passo tinha 30 caracteres) | Gerar uma chave com o comando da mensagem e colocá-la no `.env` |
 | `RuntimeError: API_DEBUG=1 só funciona` | O `.env` tem `API_DEBUG=1` e `API_HOST=0.0.0.0` | Tirar o `API_DEBUG`, ou o `API_HOST` se estiver usando o cabo |
 | `Unknown database 'sistema_eventos'` | O banco não foi criado | Rodar o passo 0.6 |
-| `Can't connect to MySQL server` | MySQL desligado | **Linux:** `sudo systemctl start mysql` · **Windows:** abrir "Serviços" e iniciar o serviço `MySQL` |
+| `Can't connect to MySQL server` | MySQL desligado | **Linux:** `sudo systemctl start mysql` · **Mac:** `brew services start mysql` · **Windows:** abrir "Serviços" e iniciar o serviço `MySQL` |
 | `Address already in use` (porta 5000) | Já existe uma API rodando em outro terminal | Fechar a outra com `Ctrl+C`, ou procurar o terminal esquecido |
+| No Mac, a porta 5000 aparece ocupada, ou o `curl` do health responde `403` | O Receptor AirPlay do macOS usa essa porta | Em **Ajustes do Sistema → Geral → AirDrop e Handoff**, desligar o Receptor AirPlay e ligar a API de novo |
 | App mostra "servidor indisponível" | A API não está rodando ou o endereço está errado | Conferir o terminal 1 e o `curl` do health |
 | `adb: device 'emulator-5554' not found` | O emulador fechou durante o `flutter run` (a placa de vídeo não foi aceita) | Ligar de novo com `-gpu swiftshader_indirect` (ver "No emulador Android") |
 | App no emulador mostra "servidor indisponível" | Rodado sem o `--dart-define`, então o app procura a API em `127.0.0.1`, que é o próprio emulador | Rodar com `--dart-define=API_URL=http://10.0.2.2:5000` |
@@ -579,7 +622,7 @@ O celular e o computador precisam estar no mesmo Wi-Fi.
    mysql -u fluxo -p < database/sistema_eventos_atualizado.sql
    ```
 
-   **Linux:** o comando acima. **Windows:** `-u root` no lugar de
+   **Linux e Mac:** o comando acima. **Windows:** `-u root` no lugar de
    `-u fluxo` (ver o passo 0.6).
 
    ⚠️ O script **apaga e recria** o banco `sistema_eventos`. Tudo o que

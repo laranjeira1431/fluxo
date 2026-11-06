@@ -48,14 +48,20 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
 |---|---|
 | Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 (concluída) e F31; F27 se der tempo |
 | Qui 05/11 | F27 (concluída) |
-| Sex 06/11 | F28 (fluxogramas) |
+| Sex 06/11 | P19 (`ParticipacaoRepository`) e F28 (fluxogramas) |
 | Sáb 07/11 | F30 (slides) |
-| Dom 08/11 | P06; P03 se der tempo |
-| Seg 09/11 | F32 (vídeo) e revisão final |
+| Dom 08/11 | Testes da seção 0.3 e roteiro do vídeo; depois F31 ou P03, se der tempo |
+| Seg 09/11 | F32 (vídeo) e revisão final; P06 só se os testes mostrarem horário errado |
 
 - **Sem dia reservado para atrasos:** com uma pessoa só, o fim de semana
-  virou dia de trabalho. Se algo atrasar, o bloco B é o primeiro a ser
-  cortado, nesta ordem: P03 e P06. O bloco A não sai da lista.
+  virou dia de trabalho. Se algo atrasar, o primeiro corte é o que está
+  marcado como "se der tempo": F31 e P03. O bloco A não sai da lista.
+- **Ordem revista em 05/11/2026 (decidida pela Manuela):** a nova
+  análise da rubrica mostrou que a inscrição não passa por um Repository,
+  e por isso a P19 entrou antes da F28. Os testes da seção 0.3 ganharam
+  um dia, a F31, que não foi feita em 04/11, foi para domingo, e a P06
+  deixou de ser obrigatória, porque a aba Avisos já tem um contorno e
+  mexer nos horários na véspera da gravação pode criar um erro novo.
 - **O bloco A usa os nomes novos:** a F27 e a F28 vêm depois da F29 e já
   usam `salvar()`, `atualizar()`, `deletar()`, `listar_todos()` e
   `buscar_por_id()`.
@@ -63,13 +69,15 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
   previsto, e o dia seguiu das tarefas menores para as maiores. A F26 (só
   o e-mail) e a P04 foram adiantadas do domingo, a F31 e a P16 entraram no
   dia, e a F27 pode ser adiantada da quinta. O que for concluído em 04/11
-  deixa de valer no dia original.
+  deixa de valer no dia original. A F31 não foi feita nesse dia: ver a
+  ordem revista em 05/11/2026.
 - **Fora da semana:** F17, F33, F34 e o restante do bloco D só entram se
   sobrar tempo, na ordem da seção 0.2.
 - **Testes no app depois das tarefas (decidido em 03/11/2026):** as
   tarefas da semana são feitas primeiro, e os testes no app ficam para
   depois, todos juntos. Cada tarefa registra na seção 0.3 o que ficou
-  para testar. Eles precisam ser feitos antes da gravação do vídeo (F32).
+  para testar. Eles são feitos no domingo, 08/11, antes da gravação do
+  vídeo (F32), para sobrar tempo de corrigir o que falhar.
 
 ### Cronograma original (20 a 23/10/2026)
 
@@ -194,6 +202,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 |---|---|---|---|
 | 1 | F29 Nomes dos métodos de CRUD | Exigido nos requisitos | Ligada aos critérios de arquitetura. Vem antes porque o diagrama e os fluxogramas usam esses nomes |
 | 2 | F27 Diagrama de classes (concluída) | 3 pontos | Exigido na entrega |
+| 2a | P19 Consultas da inscrição no Repository | Critério obrigatório e fluxogramas | Vem antes da F28, para o fluxograma de entrada de dados já mostrar o Repository |
 | 3 | F28 Fluxogramas dos casos de uso | 4 pontos | O maior item que ainda não existe |
 | 4 | F30 Slides da apresentação | Ligados a 3 pontos | Exigidos pela rubrica |
 | 5 | F32 Vídeo de demonstração | 4 pontos | Sem a demonstração, o projeto não é avaliado. É gravado no último dia, com o que estiver pronto do bloco B |
@@ -203,8 +212,8 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | Ordem | Tarefa | Prioridade | Por que nessa posição |
 |---|---|---|---|
 | 6 | P04 Configuração de desenvolvimento exposta (concluída) | 🟡 | A chave fixa fere a regra de não publicar dados sensíveis. Vem antes da hospedagem |
-| 7 | P06 Fuso horário inconsistente | 🟡 | Horários errados apareceriam no vídeo |
-| 8 | P03 Atualizações aceitam qualquer campo | 🟡 | Corrige erros 500 e campos que ainda não têm validação. O e-mail repetido já foi resolvido na F26 |
+| 7 | P06 Fuso horário inconsistente | 🟡 | Só entra se os testes mostrarem horário errado. A aba Avisos já tem um contorno |
+| 8 | P03 Validações que faltam nos dados recebidos | 🟡 | Corrige erros 500 e campos que ainda não têm validação. O e-mail repetido já foi resolvido na F26 |
 | 9 | F26 Editar perfil | 🟡 | O erro do e-mail repetido foi corrigido (04/11/2026). Foto e troca de senha são extras |
 | 10 | F17 Logout e login lembrado | 🟡 | Melhora o uso do app, sem efeito direto na nota |
 | 11 | Teste da P08 (seção 0.3) | 🟢 | Necessário antes do vídeo só se o lembrete aparecer nele |
@@ -234,10 +243,10 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 25 | F18 Entrar com Google | 🟢 |
 | 26 | F22 Perfil de administrador geral | 🟢 |
 | 27 | F23 Área do palestrante | 🟢 |
-| 28 | S09 Capa do evento e tela "Escolher evento" | 🟢 |
+| 28 | S09 Imagem de capa do evento | 🟢 |
 
-A P13 não entra na lista: ela se resolve quando F03, F04, F08 e F13
-forem feitas.
+A P13 não entra na lista: ela se resolve quando a F13 for feita. A F03,
+a F04 e a F08 já foram concluídas.
 
 ## 0.3 Testes pendentes
 
@@ -252,9 +261,51 @@ teste, o status vira "Testado" ou "Falhou: ..." (com o que aconteceu).
 | F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
 | P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
-| F27 | Os dois diagramas aparecem desenhados | Depois do push, abrir `docs/DIAGRAMA_CLASSES.md` no GitHub e conferir os dois diagramas | GitHub | Pendente |
+| F27 | Os dois diagramas aparecem desenhados | Depois do push, abrir `docs/DIAGRAMA_CLASSES.md` no GitHub e conferir os dois diagramas | GitHub | Testado |
 | F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
 | P04 | O app no celular continua falando com a API depois da mudança de endereço | Pelo cabo: rodar `adb reverse tcp:5000 tcp:5000`, abrir o app, entrar e ver a programação. Pelo IP: colocar `API_HOST=0.0.0.0` no `backend/.env` antes de ligar a API e repetir | Android (celular) | Pendente |
+| P06 | A data de uma avaliação feita depois das 21h aparece certa | Depois das 21h, avaliar uma palestra já iniciada em que a pessoa está inscrita e olhar a data do comentário nos detalhes da palestra. Com o erro, aparece o dia seguinte | App (celular ou emulador) | Pendente |
+
+## 0.4 Tarefas pendentes por tempo de execução
+
+Lista feita em 05/11/2026, da tarefa mais rápida para a mais demorada.
+Os tempos são estimativas, não medições, e consideram desenvolver,
+testar, revisar e abrir o Pull Request. A ordem aqui **não** é a ordem de
+trabalho: quem define a ordem são as seções 0.1 e 0.2.
+
+| # | Tarefa | Prioridade | Tempo estimado | Situação |
+|---|---|---|---|---|
+| 1 | P05 Abas recarregam a cada troca | 🟢 | Cerca de 20 min | Bloco D |
+| 2 | P19 Consultas da inscrição no Repository | 🔴 | 45 min a 1 h | Sex 06/11 |
+| 3 | Testes da seção 0.3 (F29, F26, P04, P06 e P08) | 🔴 | Cerca de 1 h | Dom 08/11 |
+| 4 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
+| 5 | F28 Fluxogramas dos casos de uso | 🔴 | 1 a 2 h | Sex 06/11 |
+| 6 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
+| 7 | F31 Termos de consentimento | 🟢 | Cerca de 2 h | Dom 08/11, se der tempo |
+| 8 | F21 Marcar avisos como lidos | 🟢 | 2 a 3 h | Bloco D |
+| 9 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
+| 10 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
+| 11 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
+| 12 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
+| 13 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Sáb 07/11 |
+| 14 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
+| 15 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
+| 16 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
+| 17 | F13 Restaurantes próximos | 🟢 | 4 a 6 h | Bloco D |
+| 18 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
+| 19 | F34 IA como serviço | 🟢 | 6 a 8 h | Bônus, 2 pontos |
+| 20 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
+| 21 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
+| 22 | P12 Testes automatizados | 🟢 | 1 dia ou mais | Bloco D |
+| 23 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
+
+- **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
+  porque a tela "Escolher evento" já foi feita na F20 e falta só a imagem
+  de capa. A P05 caiu de cerca de 1 h para cerca de 20 min, porque a
+  tarefa ficou só em corrigir o comentário do `app_shell.dart`.
+- **Total, sem a linha 3:** cerca de 75 a 100 horas, contando 8 horas
+  para cada tarefa de "1 dia ou mais".
+- **Só o essencial (P19, F28, F30 e F32):** cerca de 7 a 10 horas.
 
 ---
 
@@ -798,10 +849,11 @@ o nome indicado, que aparece acima de cada tela.
 ### F17 Logout e login lembrado (S03)
 
 - **Telas no [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt):** "Login", "Perfil — participante (RF20, F17)".
-- **O que acontece hoje:** o app não tem botão de sair e pede o login
-  toda vez que é aberto.
-- **O que falta:** um botão "Sair" e manter a pessoa conectada ao
-  reabrir o app, até ela sair.
+- **O que acontece hoje:** o Perfil já tem o botão **Sair**, mas o app
+  pede o login toda vez que é aberto.
+- **O que falta:** manter a pessoa conectada ao reabrir o app, até ela
+  sair, voltar ao login no erro 401 e encerrar o token no servidor
+  (detalhes abaixo).
 - **Relacionado:** P01 (autenticação). Desde a P01, o login devolve um
   token que vale 8 horas e fica só na memória (`ApiService.token`).
   Manter o login é guardar esse token no aparelho e, no "Sair", apagá-lo.
@@ -1146,7 +1198,6 @@ o nome indicado, que aparece acima de cada tela.
       enviando arquivos ao servidor, então entra no `/security-review`;
     - o login e o `AppShell` guardarem a foto, como fazem com o nome.
   - `/security-review` antes do commit.
-- **Depende de:** P03, para a foto e a troca de senha.
 
 ### F27 Diagrama de classes do domínio (S13)
 
@@ -1169,10 +1220,12 @@ o nome indicado, que aparece acima de cada tela.
 - **Telas no canvas:** não se aplica.
 - **O que falta:** um fluxograma de recuperação de dados e um de entrada
   de dados, com o passo a passo pelas camadas, incluindo o Repository.
-  Bons candidatos: agenda (recuperação, passa pelo `AgendaRepository`) e
-  inscrição (entrada, com o controle de vagas).
+  Bons candidatos: agenda (recuperação, passa pelo `AgendaRepository`,
+  que fica em `backend/repositories/palestra_repository.py`) e inscrição
+  (entrada, com o controle de vagas).
 - **Rubrica:** 4 pontos (2 para cada fluxograma).
-- **Depende de:** F29.
+- **Depende de:** F29 e P19. A rubrica exige o Repository nos dois
+  fluxogramas, e a inscrição só passa por ele depois da P19.
 
 ### F29 Nomes dos métodos de CRUD iguais aos dos requisitos (S15)
 
@@ -1345,7 +1398,7 @@ Uma sugestão aprovada vira uma tarefa F; uma recusada é marcada como tal.
 | S06 | Nova proposta visual para o app ([canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | Corrige problemas do protótipo do Figma: contraste, fontes misturadas, menu duplicado, telas sem informações essenciais (vagas, botão de inscrição) e textos em inglês. Já inclui o modo escuro (RF20) | Aprovada: definida pela Manuela em outra conversa, aplicada na F20 |
 | S07 | Outros tipos de atividade além de palestra (workshop, mesa-redonda), com mais de um palestrante por atividade | Amplia o uso do app para eventos variados. Fica fora desta entrega porque nenhum RF pede e o diagrama não prevê | Melhoria futura: só registrar na documentação final |
 | S08 | Marcar avisos como lidos | Sem isso, o contador de avisos novos da barra de navegação (canvas) não tem o que contar | Aprovada: virou F21 |
-| S09 | Deixar claro que o app tem vários eventos, cada um em um lugar: imagem de capa do evento enviada pelo organizador (no card do Início e na lista de eventos) e tela "Escolher evento" no lugar da lista "Trocar evento" (página "Proposta · eventos, lugares e salas" do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | No teste da F03, a equipe não percebeu que "Trocar evento" leva a outro evento, em outro lugar, com outra planta. Decidido pela equipe (23/10/2026): a legibilidade do texto sobre a imagem fica a critério do organizador, e o cadastro avisa que a imagem deve ser horizontal. Precisa de `evento.imagem_capa` (o banco muda) e mexe no Início e no formulário do evento (trilha da Manuela) | Aprovada para "se sobrar tempo": item 28 da seção 0.2 |
+| S09 | Deixar claro que o app tem vários eventos, cada um em um lugar: imagem de capa do evento enviada pelo organizador (no card do Início e na lista de eventos) e tela "Escolher evento" no lugar da lista "Trocar evento" (página "Proposta · eventos, lugares e salas" do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | No teste da F03, a equipe não percebeu que "Trocar evento" leva a outro evento, em outro lugar, com outra planta. Decidido pela equipe (23/10/2026): a legibilidade do texto sobre a imagem fica a critério do organizador, e o cadastro avisa que a imagem deve ser horizontal. Precisa de `evento.imagem_capa` (o banco muda) e mexe no Início e no formulário do evento (trilha da Manuela) | Aprovada para "se sobrar tempo": item 28 da seção 0.2. A tela "Escolher evento" foi feita na F20 e falta só a imagem de capa |
 | S10 | Encerrar o token também no servidor ao sair | Testado em 23/10/2026: depois do logout, o mesmo token continua funcionando por até 8 horas. Quem copiou o token ainda acessa a conta | Aprovada em 23/10/2026: entra na F17 |
 | S11 | Explicar no README a rota da agenda (`/api/eventos/<id_usuario>/agenda`) | O caminho fica dentro de "eventos", mas recebe o id do usuário, o que confunde quem lê a API | Aprovada em 23/10/2026: feita na P09 (03/11/2026); trocar o caminho fica como "próximos passos" |
 | S12 | Escrever o `README.md` da raiz do repositório, hoje vazio, e corrigir o nome da pasta do projeto em `sistema-eventos/README.md` (linha "a partir da raiz do repositório") e no início do `docs/FLUXO_DE_TRABALHO.md` | O README da raiz é o que o GitHub mostra na página inicial do repositório, a primeira coisa que o professor vê. Depois da troca para `laranjeira1431/fluxo` (03/11/2026), quem clona recebe a pasta `fluxo/`, e quem já tinha o projeto continua com `ProjetoDeSoftware/` | Aprovada em 03/11/2026: feita junto com a P09 (03/11/2026). O README da raiz tem a descrição, a equipe, as "Funcionalidades Implementadas" e o link para o diagrama de classes; a instalação e as rotas continuam em `sistema-eventos/README.md` |
@@ -1371,7 +1424,7 @@ qualquer alteração.
 |---|---|---|---|
 | P01 | 🔴 | Rotas da API sem autenticação | Concluído |
 | P02 | 🔴 | Login aceita senha em texto puro | Concluído |
-| P03 | 🟡 | Atualizações aceitam qualquer campo | Pendente |
+| P03 | 🟡 | Validações que faltam nos dados recebidos | Pendente |
 | P04 | 🟡 | Configuração de desenvolvimento exposta | Concluído |
 | P05 | 🟢 | Abas do app recarregam a cada troca | Pendente |
 | P06 | 🟡 | Fuso horário inconsistente | Pendente |
@@ -1387,6 +1440,7 @@ qualquer alteração.
 | P16 | 🟡 | Fim de linha diferente entre sistemas (falta `.gitattributes`) | Concluído |
 | P17 | 🟡 | Versão do Flutter não definida (`pubspec.lock` muda em cada máquina) | Concluído |
 | P18 | 🟡 | Regras do Claude Code só no computador local | Concluído |
+| P19 | 🔴 | Consultas da inscrição fora do Repository | Em andamento |
 
 ---
 
@@ -1441,13 +1495,20 @@ qualquer alteração.
   banco vazar, todas as senhas ficam expostas. Credenciais preenchidas no
   app também não são aceitáveis numa versão final.
 
-### P03 🟡 Atualizações aceitam qualquer campo
+### P03 🟡 Validações que faltam nos dados recebidos
+
+- **Situação (05/11/2026):** o tema original, atualizações que aceitavam
+  qualquer campo, está resolvido: todos os Services de atualização usam
+  uma lista de campos permitidos. Por isso o título mudou (antes era
+  "Atualizações aceitam qualquer campo"). Faltam quatro itens: JSON que
+  não é um objeto, datas do evento, favorito repetido e planta e lembrete
+  duplicados, descritos abaixo.
 
 - **Onde:** `backend/services/usuario/atualizar_usuario_service.py`
   (e, em menor grau, os services de atualizar evento e palestra) e o
   método `atualizar` de `backend/models/crud_mixin.py`.
-- **O que acontece:** o JSON recebido é repassado inteiro para a Model.
-  Isso permite, por exemplo, mudar o `tipo_usuario` de alguém ou alterar
+- **O que acontecia:** o JSON recebido era repassado inteiro para a Model.
+  Isso permitia, por exemplo, mudar o `tipo_usuario` de alguém ou alterar
   `vagas_disponiveis` de uma palestra manualmente. Trocar o email por um
   que já existe gerava erro 500 em vez de uma mensagem clara (corrigido
   na F26, em 04/11/2026).
@@ -1459,9 +1520,10 @@ qualquer alteração.
   `vagas_total` nem `vagas_disponiveis` (mudar a capacidade fica para a
   F14, recalculando o saldo).
 - **`tipo_usuario` corrigido na P01 (21/10/2026):** o cadastro e a
-  atualização de usuário ignoram esse campo. O restante (como
-  `vagas_disponiveis` da palestra) continua pendente. O erro 500 com
-  e-mail repetido foi corrigido na F26 (04/11/2026).
+  atualização de usuário ignoram esse campo. As vagas foram
+  resolvidas na F14: `vagas_disponiveis` nunca vem da requisição e é
+  recalculado. O erro 500 com e-mail repetido foi corrigido na F26
+  (04/11/2026).
 - **Também encontrado na revisão da P01:** um corpo JSON que não é um
   objeto (ex.: `[1, 2]`) faz as rotas de inscrição, favorito, lembrete e
   avaliação responderem 500 em vez de 400.
@@ -1482,8 +1544,8 @@ qualquer alteração.
     `notificacao`, no SQL e nas Models, o que obriga a recriar o banco.
     Por isso é a última desta lista. Na `notificacao`, a restrição só
     pode valer para os lembretes, porque os avisos podem se repetir.
-- **Por que importa:** o backend deve decidir quais campos podem ser
-  alterados. Hoje quem decide é quem envia a requisição.
+- **Por que importa:** o backend deve conferir o que recebe e responder
+  com uma mensagem clara, em vez de erro 500 ou dados incoerentes.
 
 ### P04 🟡 Configuração de desenvolvimento exposta
 
@@ -1511,19 +1573,22 @@ qualquer alteração.
 
 ### P05 🟢 Abas do app recarregam a cada troca
 
-- **Onde:** `frontend/Flutter/lib/pages/app_shell.dart`,
-  `agenda_page.dart` e `notificacoes_page.dart`.
+- **Onde:** `frontend/Flutter/lib/pages/app_shell.dart`.
 - **O que acontece:** o comentário do `AppShell` diz que as telas mantêm
   o estado, mas `telas[aba]` recria a tela toda vez que a aba muda. A
-  Agenda e os Avisos chamam a API dentro do `build()`, então qualquer
-  redesenho da tela faz uma nova requisição.
-- **Por que importa:** gera requisições desnecessárias, e o comentário
-  ensina algo que o código não faz.
+  Agenda e os Avisos buscam os dados no `initState`, então a busca
+  acontece ao entrar na aba, e não a cada redesenho da tela.
+- **Por que importa:** o comentário ensina algo que o código não faz.
+- **Decidido (05/11/2026, pela Manuela):** buscar os dados ao entrar na
+  aba é o funcionamento desejado, porque a tela sempre abre atualizada.
+  Início, Programação, Agenda e Avisos continuam assim, e a tarefa é só
+  corrigir o comentário, na branch `p05-comentario-abas`.
 
 ### P06 🟡 Fuso horário inconsistente
 
-- **Onde:** `backend/models/favorito.py`, `notificacao.py` e
-  `comentario.py` (com `datetime.utcnow`), comparados com o SQL
+- **Onde:** `backend/models/avaliacao.py`, `certificado.py`,
+  `favorito.py` e `notificacao.py` (com `datetime.utcnow`), comparados
+  com o SQL
   (`CURRENT_TIMESTAMP`).
 - **O que acontece:** registros criados pela API ficam com a hora em UTC.
   Os registros criados direto no banco usam a hora local (diferença de
@@ -1536,6 +1601,10 @@ qualquer alteração.
   avisos de exemplo do script SQL passaram a ser gravados em UTC
   (`UTC_TIMESTAMP()`) pelo mesmo motivo. A correção de vez continua
   sendo desta tarefa.
+- **Avaliações sem contorno (encontrado em 05/11/2026):**
+  `dataCurta`, em `frontend/Flutter/lib/models/avaliacao.dart`, não
+  converte a hora. Pelo código, uma avaliação feita depois das 21h deve
+  aparecer com a data do dia seguinte. O teste está na seção 0.3.
 
 ### P07 🟢 Uso de método obsoleto do SQLAlchemy
 
@@ -1674,6 +1743,11 @@ qualquer alteração.
   de comentários também existem sem uso no app.
 - **Por que importa:** é preciso decidir se entram no escopo da entrega
   ou se ficam documentadas como "preparadas para o futuro".
+- **Situação (05/11/2026):** `organizador`, `localizacao` e `planta_baixa`
+  já são usadas pelo app (F03, F04 e F08), e a rota de programação
+  também. O CRUD de comentários saiu com a tabela `comentario`. Continuam
+  sem uso `restaurante` e `restaurante_evento`, que aguardam a F13. A
+  tarefa continua aberta.
 
 ### P14 🔴 Versão antiga e nova sem commit
 
@@ -1783,3 +1857,24 @@ qualquer alteração.
   no `.gitignore`. As citações que apontavam para ele no README, no
   `FLUXO_DE_TRABALHO.md` e neste arquivo foram ajustadas. As citações
   que registram decisões antigas ficaram como estavam.
+
+### P19 🔴 Consultas da inscrição fora do Repository
+
+- **Onde:** `backend/services/participacao/criar_inscricao_service.py` e
+  `cancelar_inscricao_service.py`. Não existe um
+  `ParticipacaoRepository`.
+- **O que acontece:** os dois Services fazem as consultas direto, com
+  `.query`, incluindo o filtro com JOIN que verifica o choque de horário.
+- **Por que importa:** os requisitos de entrega pedem Repository para
+  filtros específicos, e a rubrica exige o Repository nos fluxogramas
+  (F28) e avalia a comunicação entre as camadas, um critério obrigatório.
+  O bônus não recupera pontos perdidos nele.
+- **O que fazer:** criar `backend/repositories/participacao_repository.py`
+  e levar para ele as consultas desses dois Services, mantendo o bloqueio
+  da linha da palestra (`with_for_update`) na mesma transação. As regras
+  de negócio continuam nos Services.
+- **Fora desta tarefa:** cerca de 15 outros Services ainda usam `.query`
+  ou `db.session`. Ficam como "próximos passos", para não mexer em muitos
+  casos de uso perto da entrega.
+- **Decidido (05/11/2026, pela Manuela):** a inscrição continua como
+  fluxograma de entrada de dados da F28, e a P19 vem antes dela.

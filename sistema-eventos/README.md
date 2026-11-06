@@ -428,6 +428,8 @@ próprias Models, pelo `models/crud_mixin.py`):
 - `AgendaRepository` (em `palestra_repository.py`): agenda baseada em
   `participacao`;
 - `FavoritoRepository`: favoritos com a palestra relacionada;
+- `ParticipacaoRepository`: consultas da inscrição (palestra com a linha
+  bloqueada, inscrição do usuário e choque de horário);
 - `NotificacaoRepository`: avisos e lembretes filtrados por usuário e
   palestra;
 - `AvaliacaoRepository`: avaliações de uma palestra com o nome de quem

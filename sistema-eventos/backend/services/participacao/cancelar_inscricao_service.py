@@ -12,6 +12,9 @@ ser cancelada. Ela vira o registro de participação, usado para avaliar
 serviria a mais ninguém. Só esconder o botão no app não bastaria: quem
 chama a API direto ainda conseguiria cancelar.
 
+As consultas ficam no `ParticipacaoRepository` (P19). O Service decide o
+que fazer com o resultado, e o `commit` e o `rollback` ficam aqui.
+
 Método principal:
     execute(id_usuario, id_palestra): remove a Participacao e devolve a vaga.
 """
@@ -19,21 +22,18 @@ Método principal:
 from datetime import datetime
 
 from backend.extensions import db
-from backend.models.palestra import Palestra
-from backend.models.participacao import Participacao
+from backend.repositories.participacao_repository import ParticipacaoRepository
 
 
 class CancelarInscricaoService:
     """Caso de uso responsável por cancelar uma inscrição existente."""
 
     def execute(self, id_usuario, id_palestra):
-        inscricao = Participacao.query.filter_by(
-            id_usuario=id_usuario, id_palestra=id_palestra
-        ).first()
+        inscricao = ParticipacaoRepository.buscar_inscricao(id_usuario, id_palestra)
         if not inscricao:
             raise ValueError("Inscrição não encontrada.")
 
-        palestra = Palestra.query.with_for_update().filter_by(id_palestra=id_palestra).first()
+        palestra = ParticipacaoRepository.buscar_palestra_com_bloqueio(id_palestra)
         if palestra and palestra.horario_inicio and palestra.horario_inicio <= datetime.now():
             db.session.rollback()
             raise ValueError(

@@ -48,7 +48,7 @@ ficam com ela. A ordem segue os blocos da seção 0.2.
 |---|---|
 | Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 (concluída) e F31; F27 se der tempo |
 | Qui 05/11 | F27 (concluída) |
-| Sex 06/11 | P19 (`ParticipacaoRepository`) e F28 (fluxogramas) |
+| Sex 06/11 | P19 (`ParticipacaoRepository`, concluída) e F28 (fluxogramas) |
 | Sáb 07/11 | F30 (slides) |
 | Dom 08/11 | Testes da seção 0.3 e roteiro do vídeo; depois F31 ou P03, se der tempo |
 | Seg 09/11 | F32 (vídeo) e revisão final; P06 só se os testes mostrarem horário errado |
@@ -202,7 +202,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 |---|---|---|---|
 | 1 | F29 Nomes dos métodos de CRUD | Exigido nos requisitos | Ligada aos critérios de arquitetura. Vem antes porque o diagrama e os fluxogramas usam esses nomes |
 | 2 | F27 Diagrama de classes (concluída) | 3 pontos | Exigido na entrega |
-| 2a | P19 Consultas da inscrição no Repository | Critério obrigatório e fluxogramas | Vem antes da F28, para o fluxograma de entrada de dados já mostrar o Repository |
+| 2a | P19 Consultas da inscrição no Repository (concluída) | Critério obrigatório e fluxogramas | Vem antes da F28, para o fluxograma de entrada de dados já mostrar o Repository |
 | 3 | F28 Fluxogramas dos casos de uso | 4 pontos | O maior item que ainda não existe |
 | 4 | F30 Slides da apresentação | Ligados a 3 pontos | Exigidos pela rubrica |
 | 5 | F32 Vídeo de demonstração | 4 pontos | Sem a demonstração, o projeto não é avaliado. É gravado no último dia, com o que estiver pronto do bloco B |
@@ -244,6 +244,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 26 | F22 Perfil de administrador geral | 🟢 |
 | 27 | F23 Área do palestrante | 🟢 |
 | 28 | S09 Imagem de capa do evento | 🟢 |
+| 29 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 |
 
 A P13 não entra na lista: ela se resolve quando a F13 for feita. A F03,
 a F04 e a F08 já foram concluídas.
@@ -275,8 +276,8 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2.
 
 | # | Tarefa | Prioridade | Tempo estimado | Situação |
 |---|---|---|---|---|
-| 1 | P19 Consultas da inscrição no Repository | 🔴 | 45 min a 1 h | Sex 06/11 |
-| 2 | Testes da seção 0.3 (F29, F26, P04, P06 e P08) | 🔴 | Cerca de 1 h | Dom 08/11 |
+| 1 | Testes da seção 0.3 (F29, F26, P04, P06 e P08) | 🔴 | Cerca de 1 h | Dom 08/11 |
+| 2 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
 | 3 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
 | 4 | F28 Fluxogramas dos casos de uso | 🔴 | 1 a 2 h | Sex 06/11 |
 | 5 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
@@ -302,9 +303,9 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2.
   porque a tela "Escolher evento" já foi feita na F20 e falta só a imagem
   de capa. A P05 caiu de cerca de 1 h para cerca de 20 min, porque a
   tarefa ficou só em corrigir o comentário do `app_shell.dart`.
-- **Total, sem a linha 2:** cerca de 75 a 100 horas, contando 8 horas
+- **Total, sem a linha 1:** cerca de 75 a 100 horas, contando 8 horas
   para cada tarefa de "1 dia ou mais".
-- **Só o essencial (P19, F28, F30 e F32):** cerca de 7 a 10 horas.
+- **Só o essencial (F28, F30 e F32):** cerca de 6 a 9 horas.
 
 ---
 
@@ -1409,6 +1410,7 @@ Uma sugestão aprovada vira uma tarefa F; uma recusada é marcada como tal.
 | S18 | Vídeo de demonstração | A rubrica coloca a demonstração como condição para a avaliação e dá 4 pontos em "Fluxo do sistema", mas ela não tinha tarefa registrada | Aprovada em 03/11/2026: virou F32 |
 | S19 | Hospedagem do frontend e da API | Bônus de 2 pontos na rubrica | Aprovada em 03/11/2026: virou F33 |
 | S20 | IA como serviço em um caso de uso | Bônus de 2 pontos na rubrica | Aprovada em 03/11/2026: virou F34 |
+| S21 | Bloquear a palestra antes de ler a inscrição no cancelamento | Encontrada na análise da P19: dois cancelamentos simultâneos da mesma inscrição poderiam devolver a vaga duas vezes | Aprovada em 06/11/2026: virou P20 |
 
 ---
 
@@ -1439,7 +1441,8 @@ qualquer alteração.
 | P16 | 🟡 | Fim de linha diferente entre sistemas (falta `.gitattributes`) | Concluído |
 | P17 | 🟡 | Versão do Flutter não definida (`pubspec.lock` muda em cada máquina) | Concluído |
 | P18 | 🟡 | Regras do Claude Code só no computador local | Concluído |
-| P19 | 🔴 | Consultas da inscrição fora do Repository | Em andamento |
+| P19 | 🔴 | Consultas da inscrição fora do Repository | Concluído |
+| P20 | 🟢 | Cancelamento lê a inscrição antes do bloqueio | Pendente |
 
 ---
 
@@ -1880,3 +1883,33 @@ qualquer alteração.
   casos de uso perto da entrega.
 - **Decidido (05/11/2026, pela Manuela):** a inscrição continua como
   fluxograma de entrada de dados da F28, e a P19 vem antes dela.
+- **Concluída (06/11/2026):** o `ParticipacaoRepository` tem um método por
+  consulta (`buscar_palestra_com_bloqueio`, `buscar_inscricao` e
+  `buscar_palestra_no_mesmo_horario`), com SQL explícito. O
+  `from_statement` faz o SQL devolver objetos da Model, porque os Services
+  alteram as vagas e o Controller usa o `to_dict()`. O `add`, o `delete`,
+  o `commit` e o `rollback` continuam nos Services. O
+  `populate_existing` garante as vagas atuais depois do bloqueio, inclusive
+  na remoção pelo organizador, que carrega a palestra antes. Testado com a API e o
+  MySQL, em palestras temporárias: inscrição, repetida, sem vaga, já
+  iniciada, choque de horário (aviso e confirmação), palestra sem horário,
+  cancelamento e remoção pelo organizador. Na disputa pela última vaga, com 4 pessoas ao mesmo
+  tempo, só 1 entrou nas 5 rodadas; sem o `FOR UPDATE`, as 4 entraram.
+
+### P20 🟢 Cancelamento lê a inscrição antes do bloqueio
+
+- **Onde:** `backend/services/participacao/cancelar_inscricao_service.py`.
+- **O que acontece:** o Service busca a inscrição antes de bloquear a
+  palestra. Dois cancelamentos simultâneos da mesma inscrição poderiam
+  encontrar o mesmo registro, e cada um devolveria uma vaga. O limite de
+  `vagas_total` impede passar da capacidade, mas a palestra pode ficar
+  com uma vaga a mais do que deveria. Encontrado na P19 e reproduzido em
+  06/11/2026: com dois DELETE ao mesmo tempo, as vagas subiram 2 em vez de
+  1 nas 10 rodadas do teste.
+- **O que fazer:** bloquear também a inscrição (`FOR UPDATE` em
+  `buscar_inscricao`, que lê a versão mais recente) ou conferir quantas
+  linhas o DELETE apagou. Só trocar a ordem das buscas não resolve: a
+  transação já leu o usuário no login, e o MySQL segue mostrando a foto
+  dos dados daquele momento em um SELECT comum.
+- **Por que não entrou na P19:** a P19 só move consultas e não muda o
+  comportamento da API.

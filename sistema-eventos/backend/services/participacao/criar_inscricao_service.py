@@ -7,7 +7,7 @@ Regras preservadas da versão anterior do projeto:
 - o usuário precisa existir;
 - a palestra precisa existir e ter vaga disponível;
 - o mesmo usuário não pode se inscrever duas vezes na mesma palestra;
-- a linha da palestra é bloqueada (`with_for_update`) durante a operação,
+- a linha da palestra é bloqueada (`FOR UPDATE`) durante a operação,
   para que duas inscrições simultâneas não consumam a mesma última vaga.
 
 Regra da F16 (S02), palestra já iniciada: depois que a palestra começa
@@ -25,6 +25,9 @@ Este caso de uso mexe em DUAS entidades ao mesmo tempo (cria a
 Participacao e decrementa `vagas_disponiveis` da Palestra), por isso a
 regra fica no Service, e não em nenhuma das duas Models isoladamente.
 
+As consultas ficam no `ParticipacaoRepository` (P19). O Service decide o
+que fazer com o resultado, e o `commit` e o `rollback` ficam aqui.
+
 Método principal:
     execute(id_usuario, id_palestra, confirmar_choque=False): cria e
     retorna a Participacao.
@@ -33,9 +36,9 @@ Método principal:
 from datetime import datetime
 
 from backend.extensions import db
-from backend.models.palestra import Palestra
 from backend.models.participacao import Participacao
 from backend.models.usuario import Usuario
+from backend.repositories.participacao_repository import ParticipacaoRepository
 
 
 class ChoqueDeHorario(Exception):
@@ -61,26 +64,23 @@ class CriarInscricaoService:
         if not Usuario.buscar_por_id(id_usuario):
             raise ValueError("Usuário não encontrado.")
 
-        palestra = (
-            Palestra.query.with_for_update().filter_by(id_palestra=id_palestra).first()
-        )
+        palestra = ParticipacaoRepository.buscar_palestra_com_bloqueio(id_palestra)
         if not palestra:
             raise ValueError("Palestra não encontrada.")
 
         if palestra.horario_inicio and palestra.horario_inicio <= datetime.now():
             raise ValueError("As inscrições desta palestra estão encerradas.")
 
-        ja_inscrito = Participacao.query.filter_by(
-            id_usuario=id_usuario, id_palestra=id_palestra
-        ).first()
-        if ja_inscrito:
+        if ParticipacaoRepository.buscar_inscricao(id_usuario, id_palestra):
             raise ValueError("Usuário já está inscrito nesta palestra.")
 
         if palestra.vagas_disponiveis <= 0:
             raise ValueError("Não há vagas disponíveis para esta palestra.")
 
         if not confirmar_choque:
-            conflitante = self._palestra_no_mesmo_horario(id_usuario, palestra)
+            conflitante = ParticipacaoRepository.buscar_palestra_no_mesmo_horario(
+                id_usuario, palestra
+            )
             if conflitante:
                 # Libera o bloqueio da linha da palestra antes de avisar.
                 db.session.rollback()
@@ -91,23 +91,3 @@ class CriarInscricaoService:
         db.session.add(inscricao)
         db.session.commit()
         return inscricao
-
-    @staticmethod
-    def _palestra_no_mesmo_horario(id_usuario, palestra):
-        """Devolve uma palestra em que a pessoa já está inscrita e que bate
-        no horário com `palestra`, ou None. Palestra sem horário não
-        entra na conta."""
-        if not palestra.horario_inicio or not palestra.horario_fim:
-            return None
-        return (
-            Palestra.query.join(
-                Participacao, Participacao.id_palestra == Palestra.id_palestra
-            )
-            .filter(
-                Participacao.id_usuario == id_usuario,
-                Palestra.id_palestra != palestra.id_palestra,
-                Palestra.horario_inicio < palestra.horario_fim,
-                Palestra.horario_fim > palestra.horario_inicio,
-            )
-            .first()
-        )

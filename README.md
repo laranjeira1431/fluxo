@@ -110,6 +110,12 @@ O diagrama de classes do domínio, com as 15 Models, seus atributos e
 relacionamentos, está em
 [`docs/DIAGRAMA_CLASSES.md`](docs/DIAGRAMA_CLASSES.md).
 
+## Fluxogramas dos casos de uso
+
+Os fluxogramas de recuperação de dados (ver a agenda) e de entrada de
+dados (inscrever-se em uma palestra), com o passo a passo pelas camadas,
+estão em [`docs/FLUXOGRAMAS.md`](docs/FLUXOGRAMAS.md).
+
 ## Onde está cada parte
 
 | Pasta | Conteúdo |

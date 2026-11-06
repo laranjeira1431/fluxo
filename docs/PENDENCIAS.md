@@ -49,11 +49,15 @@ ficam com ela. Desde 06/11/2026, o João testa as tarefas concluídas
 |---|---|
 | Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 (concluída) e F31; F27 se der tempo |
 | Qui 05/11 | F27 (concluída) |
-| Sex 06/11 | P19 (`ParticipacaoRepository`, concluída) e F28 (fluxogramas) |
+| Sex 06/11 | P19 (`ParticipacaoRepository`, concluída) e, na ordem da seção 0.4: F28 (fluxogramas, concluída) |
 | Sáb 07/11 | F30 (slides) |
-| Dom 08/11 | Corrigir os erros encontrados pelo João, testar a P04 no celular e fazer o roteiro do vídeo; depois F31 ou P03, se der tempo |
+| Dom 08/11 | Corrigir os erros encontrados pelo João, fazer a P22 (refatoração da tela do organizador), testar a P04 no celular e fazer o roteiro do vídeo; depois F31 ou P03, se der tempo |
 | Seg 09/11 | F32 (vídeo) e revisão final; P06 só se os testes mostrarem horário errado |
 
+- **Ordem de 06/11/2026 (decidida pela Manuela):** neste dia, as tarefas
+  seguem a seção 0.4, da mais rápida para a mais demorada, e não a ordem
+  da seção 0.2. A P20 e a F25 foram puladas e continuam no bloco D, e a
+  parte da F25 sobre o painel do organizador foi para a P22.
 - **Sem dia reservado para atrasos:** com uma pessoa só no desenvolvimento, o fim de semana
   virou dia de trabalho. Se algo atrasar, o primeiro corte é o que está
   marcado como "se der tempo": F31 e P03. O bloco A não sai da lista.
@@ -72,7 +76,7 @@ ficam com ela. Desde 06/11/2026, o João testa as tarefas concluídas
   dia, e a F27 pode ser adiantada da quinta. O que for concluído em 04/11
   deixa de valer no dia original. A F31 não foi feita nesse dia: ver a
   ordem revista em 05/11/2026.
-- **Fora da semana:** F17, F33, F34 e o restante do bloco D só entram se
+- **Fora da semana:** F17, F33 e o restante do bloco D só entram se
   sobrar tempo, na ordem da seção 0.2.
 - **Testes no app depois das tarefas (decidido em 03/11/2026):** as
   tarefas da semana são feitas primeiro, e os testes no app ficam para
@@ -95,8 +99,8 @@ testa e relata: quem corrige é a Manuela. Novos testes entram na seção
 | Dom 08/11 | Refazer o que falhou e testar o que for concluído até lá |
 | Seg 09/11 | Conferir as correções antes da gravação do vídeo |
 
-- **Ficam com a Manuela:** a P04, que o João não consegue testar pelo cabo
-  nem pelo IP. A parte do Windows da P16 continua valendo só se o projeto
+- **Ficam com a Manuela:** a F28, que só pode ser vista no GitHub depois
+  do push, e a P04, que o João não consegue testar pelo cabo nem pelo IP. A parte do Windows da P16 continua valendo só se o projeto
   voltar a ser usado no Windows.
 
 ### Cronograma original (20 a 23/10/2026)
@@ -223,7 +227,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 1 | F29 Nomes dos métodos de CRUD | Exigido nos requisitos | Ligada aos critérios de arquitetura. Vem antes porque o diagrama e os fluxogramas usam esses nomes |
 | 2 | F27 Diagrama de classes (concluída) | 3 pontos | Exigido na entrega |
 | 2a | P19 Consultas da inscrição no Repository (concluída) | Critério obrigatório e fluxogramas | Vem antes da F28, para o fluxograma de entrada de dados já mostrar o Repository |
-| 3 | F28 Fluxogramas dos casos de uso | 4 pontos | O maior item que ainda não existe |
+| 3 | F28 Fluxogramas dos casos de uso (concluída) | 4 pontos | O maior item que ainda não existe |
 | 4 | F30 Slides da apresentação | Ligados a 3 pontos | Exigidos pela rubrica |
 | 5 | F32 Vídeo de demonstração | 4 pontos | Sem a demonstração, o projeto não é avaliado. É gravado no último dia, com o que estiver pronto do bloco B |
 
@@ -237,6 +241,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 9 | F26 Editar perfil | 🟡 | O erro do e-mail repetido foi corrigido (04/11/2026). Foto e troca de senha são extras |
 | 10 | F17 Logout e login lembrado | 🟡 | Melhora o uso do app, sem efeito direto na nota |
 | 11 | Teste da P08 (seção 0.3) | 🟢 | Necessário antes do vídeo só se o lembrete aparecer nele |
+| 11a | P22 Refatoração da tela do organizador | 🟡 | Precisa ficar pronta antes da gravação do vídeo (F32) |
 
 ### Bloco C: bônus
 
@@ -244,27 +249,26 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 |---|---|---|---|
 | 12 | F31 Termos de consentimento | 1 ponto | A mudança é pequena |
 | 13 | F33 Hospedagem | 2 pontos | A P04, de que dependia, foi concluída |
-| 14 | F34 IA como serviço | 2 pontos | A maior do bloco: nada disso existe hoje |
 
 ### Bloco D: sem efeito na rubrica
 
 | Ordem | Tarefa | Prioridade |
 |---|---|---|
-| 15 | P10 Comentário desatualizado na tela de favoritos (concluída: resolvida na F20) | 🟢 |
-| 16 | P07 Método obsoleto do SQLAlchemy (concluída) | 🟢 |
-| 17 | P16 Fim de linha diferente entre sistemas (concluída) | 🟡 |
-| 18 | P05 Abas do app recarregam a cada troca (concluída) | 🟢 |
-| 19 | F21 Marcar avisos como lidos | 🟢 |
-| 20 | F25 Total de palestras e salas na lista de eventos da API | 🟢 |
-| 21 | F13 Restaurantes próximos | 🟢 |
-| 22 | F12 Certificado de participação | 🟢 |
-| 23 | F15 Aviso de alteração de palestra | 🟢 |
-| 24 | P12 Testes automatizados | 🟢 |
-| 25 | F18 Entrar com Google | 🟢 |
-| 26 | F22 Perfil de administrador geral | 🟢 |
-| 27 | F23 Área do palestrante | 🟢 |
-| 28 | S09 Imagem de capa do evento | 🟢 |
-| 29 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 |
+| 14 | P10 Comentário desatualizado na tela de favoritos (concluída: resolvida na F20) | 🟢 |
+| 15 | P07 Método obsoleto do SQLAlchemy (concluída) | 🟢 |
+| 16 | P16 Fim de linha diferente entre sistemas (concluída) | 🟡 |
+| 17 | P05 Abas do app recarregam a cada troca (concluída) | 🟢 |
+| 18 | F21 Marcar avisos como lidos | 🟢 |
+| 19 | F25 Total de palestras e salas na lista de eventos da API | 🟢 |
+| 20 | F13 Restaurantes próximos | 🟢 |
+| 21 | F12 Certificado de participação | 🟢 |
+| 22 | F15 Aviso de alteração de palestra | 🟢 |
+| 23 | P12 Testes automatizados | 🟢 |
+| 24 | F18 Entrar com Google | 🟢 |
+| 25 | F22 Perfil de administrador geral | 🟢 |
+| 26 | F23 Área do palestrante | 🟢 |
+| 27 | S09 Imagem de capa do evento | 🟢 |
+| 28 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 |
 
 A P13 não entra na lista: ela se resolve quando a F13 for feita. A F03,
 a F04 e a F08 já foram concluídas.
@@ -290,6 +294,7 @@ Manuela resolver. Ele não altera o código nem este arquivo.
 | F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
 | P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
+| F28 | Os dois fluxogramas aparecem desenhados, com as cores das camadas | Depois do push, abrir `docs/FLUXOGRAMAS.md` no GitHub e conferir os dois fluxogramas | GitHub | Pendente |
 | F27 | Os dois diagramas aparecem desenhados | Depois do push, abrir `docs/DIAGRAMA_CLASSES.md` no GitHub e conferir os dois diagramas | GitHub | Testado |
 | F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
 | P04 | O app no celular continua falando com a API depois da mudança de endereço | Pelo cabo: rodar `adb reverse tcp:5000 tcp:5000`, abrir o app, entrar e ver a programação. Pelo IP: colocar `API_HOST=0.0.0.0` no `backend/.env` antes de ligar a API e repetir | Android (celular) | Pendente |
@@ -310,40 +315,41 @@ para ser refeito.
 Lista feita em 05/11/2026, da tarefa mais rápida para a mais demorada.
 Os tempos são estimativas, não medições, e consideram desenvolver,
 testar, revisar e abrir o Pull Request. A ordem aqui **não** é a ordem de
-trabalho: quem define a ordem são as seções 0.1 e 0.2.
+trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
+06/11/2026, que segue esta tabela (ver seção 0.1).
 
 | # | Tarefa | Prioridade | Tempo estimado | Situação |
 |---|---|---|---|---|
-| 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João; P04 com a Manuela) | 🔴 | Cerca de 1 h | 06 a 09/11 |
+| 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João; P04 e F28 com a Manuela) | 🔴 | Cerca de 1 h | 06 a 09/11 |
 | 2 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
 | 3 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
-| 4 | F28 Fluxogramas dos casos de uso | 🔴 | 1 a 2 h | Sex 06/11 |
-| 5 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
-| 6 | F31 Termos de consentimento | 🟢 | Cerca de 2 h | Dom 08/11, se der tempo |
-| 7 | F21 Marcar avisos como lidos | 🟢 | 2 a 3 h | Bloco D |
-| 8 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
-| 9 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
-| 10 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
-| 11 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
-| 12 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Sáb 07/11 |
-| 13 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
-| 14 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
-| 15 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
-| 16 | F13 Restaurantes próximos | 🟢 | 4 a 6 h | Bloco D |
-| 17 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
-| 18 | F34 IA como serviço | 🟢 | 6 a 8 h | Bônus, 2 pontos |
-| 19 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
-| 20 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
-| 21 | P12 Testes automatizados | 🟢 | 1 dia ou mais | Bloco D |
-| 22 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
+| 4 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
+| 5 | F31 Termos de consentimento | 🟢 | Cerca de 2 h | Dom 08/11, se der tempo |
+| 6 | F21 Marcar avisos como lidos | 🟢 | 2 a 3 h | Bloco D |
+| 7 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
+| 8 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
+| 9 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
+| 10 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
+| 11 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Sáb 07/11 |
+| 12 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
+| 13 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
+| 14 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
+| 15 | F13 Restaurantes próximos | 🟢 | 4 a 6 h | Bloco D |
+| 16 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
+| 17 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
+| 18 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
+| 19 | P12 Testes automatizados | 🟢 | 1 dia ou mais | Bloco D |
+| 20 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
+| 21 | P22 Refatoração da tela do organizador | 🟡 | A estimar | Dom 08/11, antes do vídeo |
 
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
   porque a tela "Escolher evento" já foi feita na F20 e falta só a imagem
   de capa. A P05 caiu de cerca de 1 h para cerca de 20 min, porque a
   tarefa ficou só em corrigir o comentário do `app_shell.dart`.
-- **Total, sem a linha 1:** cerca de 75 a 100 horas, contando 8 horas
+- **Total, sem a linha 1 e sem a P22 (ainda sem estimativa):** cerca de
+  68 a 90 horas, contando 8 horas
   para cada tarefa de "1 dia ou mais".
-- **Só o essencial (F28, F30 e F32):** cerca de 6 a 9 horas.
+- **Só o essencial (F30 e F32):** cerca de 5 a 7 horas.
 
 ---
 
@@ -416,13 +422,12 @@ o nome indicado, que aparece acima de cada tela.
 | F25 | — (sugestão na F20) | 🟢 | Total de palestras e salas na lista de eventos da API | Pendente |
 | F26 | RF20 (prancha do Perfil) | 🟡 | Editar perfil: e-mail repetido, troca de senha, foto de perfil e revisão de segurança | Parcial |
 | F27 | — (S13) | 🔴 | Diagrama de classes do domínio | Concluído |
-| F28 | — (S14) | 🔴 | Fluxogramas dos casos de uso | Pendente |
+| F28 | — (S14) | 🔴 | Fluxogramas dos casos de uso | Concluído |
 | F29 | — (S15) | 🔴 | Nomes dos métodos de CRUD iguais aos dos requisitos | Concluído |
 | F30 | — (S16) | 🔴 | Slides da apresentação | Pendente |
 | F31 | — (S17) | 🟢 | Termos de consentimento no cadastro | Pendente |
 | F32 | — (S18) | 🔴 | Vídeo de demonstração | Pendente |
 | F33 | — (S19) | 🟢 | Hospedagem do frontend e da API | Pendente |
-| F34 | — (S20) | 🟢 | IA como serviço em um caso de uso | Pendente |
 
 ### F01 Tela de cadastro de usuário (RF01)
 
@@ -1198,6 +1203,9 @@ o nome indicado, que aparece acima de cada tela.
   campos em vez de buscar a programação.
 - **Por que ficou para depois:** com poucos eventos a diferença não
   aparece. Só pesa quando houver muitos eventos.
+- **Painel do organizador (06/11/2026):** a Manuela pediu para mostrar lá
+  o total de palestras e as palestras por sala. Isso foi para a P22, porque
+  a tela já será modificada nessa tarefa.
 
 ### F26 Editar perfil: completar e revisar a segurança
 
@@ -1264,6 +1272,11 @@ o nome indicado, que aparece acima de cada tela.
 - **Rubrica:** 4 pontos (2 para cada fluxograma).
 - **Depende de:** F29 e P19. A rubrica exige o Repository nos dois
   fluxogramas, e a inscrição só passa por ele depois da P19.
+- **Concluído (06/11/2026):** `docs/FLUXOGRAMAS.md`, em Mermaid, com a
+  agenda (recuperação de dados) e a inscrição (entrada de dados). As
+  caixas ficam em linha vertical, com o nome e a cor da camada, porque
+  agrupadas por camada as setas se cruzavam. A consulta da agenda não
+  passa por Model. O README da raiz aponta para o arquivo.
 
 ### F29 Nomes dos métodos de CRUD iguais aos dos requisitos (S15)
 
@@ -1328,14 +1341,6 @@ o nome indicado, que aparece acima de cada tela.
   servidor a `SECRET_KEY` e o `CORS_ORIGENS`, sem `API_DEBUG`.
 - **Tarefa de segurança:** a API passa a ficar exposta na internet.
   Fazer `/security-review` antes do commit.
-
-### F34 IA como serviço em um caso de uso (S20)
-
-- **Telas no canvas:** a definir no plano da tarefa.
-- **O que falta:** escolher um caso de uso e integrar uma IA de ponta a
-  ponta. A comunicação fica em um Service específico, e a chave de API
-  fica no `.env`, fora do repositório.
-- **Rubrica:** 2 pontos de bônus.
 
 ## 1.3 Itens do relatório fora da lista de requisitos (decidir)
 
@@ -1436,7 +1441,7 @@ Uma sugestão aprovada vira uma tarefa F; uma recusada é marcada como tal.
 | S06 | Nova proposta visual para o app ([canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | Corrige problemas do protótipo do Figma: contraste, fontes misturadas, menu duplicado, telas sem informações essenciais (vagas, botão de inscrição) e textos em inglês. Já inclui o modo escuro (RF20) | Aprovada: definida pela Manuela em outra conversa, aplicada na F20 |
 | S07 | Outros tipos de atividade além de palestra (workshop, mesa-redonda), com mais de um palestrante por atividade | Amplia o uso do app para eventos variados. Fica fora desta entrega porque nenhum RF pede e o diagrama não prevê | Melhoria futura: só registrar na documentação final |
 | S08 | Marcar avisos como lidos | Sem isso, o contador de avisos novos da barra de navegação (canvas) não tem o que contar | Aprovada: virou F21 |
-| S09 | Deixar claro que o app tem vários eventos, cada um em um lugar: imagem de capa do evento enviada pelo organizador (no card do Início e na lista de eventos) e tela "Escolher evento" no lugar da lista "Trocar evento" (página "Proposta · eventos, lugares e salas" do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | No teste da F03, a equipe não percebeu que "Trocar evento" leva a outro evento, em outro lugar, com outra planta. Decidido pela equipe (23/10/2026): a legibilidade do texto sobre a imagem fica a critério do organizador, e o cadastro avisa que a imagem deve ser horizontal. Precisa de `evento.imagem_capa` (o banco muda) e mexe no Início e no formulário do evento (trilha da Manuela) | Aprovada para "se sobrar tempo": item 28 da seção 0.2. A tela "Escolher evento" foi feita na F20 e falta só a imagem de capa |
+| S09 | Deixar claro que o app tem vários eventos, cada um em um lugar: imagem de capa do evento enviada pelo organizador (no card do Início e na lista de eventos) e tela "Escolher evento" no lugar da lista "Trocar evento" (página "Proposta · eventos, lugares e salas" do [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt)) | No teste da F03, a equipe não percebeu que "Trocar evento" leva a outro evento, em outro lugar, com outra planta. Decidido pela equipe (23/10/2026): a legibilidade do texto sobre a imagem fica a critério do organizador, e o cadastro avisa que a imagem deve ser horizontal. Precisa de `evento.imagem_capa` (o banco muda) e mexe no Início e no formulário do evento (trilha da Manuela) | Aprovada para "se sobrar tempo": item 27 da seção 0.2. A tela "Escolher evento" foi feita na F20 e falta só a imagem de capa |
 | S10 | Encerrar o token também no servidor ao sair | Testado em 23/10/2026: depois do logout, o mesmo token continua funcionando por até 8 horas. Quem copiou o token ainda acessa a conta | Aprovada em 23/10/2026: entra na F17 |
 | S11 | Explicar no README a rota da agenda (`/api/eventos/<id_usuario>/agenda`) | O caminho fica dentro de "eventos", mas recebe o id do usuário, o que confunde quem lê a API | Aprovada em 23/10/2026: feita na P09 (03/11/2026); trocar o caminho fica como "próximos passos" |
 | S12 | Escrever o `README.md` da raiz do repositório, hoje vazio, e corrigir o nome da pasta do projeto em `sistema-eventos/README.md` (linha "a partir da raiz do repositório") e no início do `docs/FLUXO_DE_TRABALHO.md` | O README da raiz é o que o GitHub mostra na página inicial do repositório, a primeira coisa que o professor vê. Depois da troca para `laranjeira1431/fluxo` (03/11/2026), quem clona recebe a pasta `fluxo/`, e quem já tinha o projeto continua com `ProjetoDeSoftware/` | Aprovada em 03/11/2026: feita junto com a P09 (03/11/2026). O README da raiz tem a descrição, a equipe, as "Funcionalidades Implementadas" e o link para o diagrama de classes; a instalação e as rotas continuam em `sistema-eventos/README.md` |
@@ -1447,7 +1452,7 @@ Uma sugestão aprovada vira uma tarefa F; uma recusada é marcada como tal.
 | S17 | Termos de consentimento no cadastro | Bônus de 1 ponto na rubrica: mostrar os termos no cadastro (F01) e guardar no banco a decisão da pessoa (ex.: coluna com a data do aceite em `usuario`) | Aprovada em 03/11/2026: virou F31 |
 | S18 | Vídeo de demonstração | A rubrica coloca a demonstração como condição para a avaliação e dá 4 pontos em "Fluxo do sistema", mas ela não tinha tarefa registrada | Aprovada em 03/11/2026: virou F32 |
 | S19 | Hospedagem do frontend e da API | Bônus de 2 pontos na rubrica | Aprovada em 03/11/2026: virou F33 |
-| S20 | IA como serviço em um caso de uso | Bônus de 2 pontos na rubrica | Aprovada em 03/11/2026: virou F34 |
+| S20 | IA como serviço em um caso de uso | Bônus de 2 pontos na rubrica | Cancelada em 06/11/2026: não será feita |
 | S21 | Bloquear a palestra antes de ler a inscrição no cancelamento | Encontrada na análise da P19: dois cancelamentos simultâneos da mesma inscrição poderiam devolver a vaga duas vezes | Aprovada em 06/11/2026: virou P20 |
 
 ---
@@ -1482,6 +1487,7 @@ qualquer alteração.
 | P19 | 🔴 | Consultas da inscrição fora do Repository | Concluído |
 | P20 | 🟢 | Cancelamento lê a inscrição antes do bloqueio | Pendente |
 | P21 | 🟡 | Incluir o João como testador e o Mac no passo a passo | Concluído |
+| P22 | 🟡 | Refatoração da tela do organizador | Pendente |
 
 ---
 
@@ -1964,3 +1970,11 @@ qualquer alteração.
 - **Decidido (06/11/2026, pela Manuela):** a P04 fica com ela, e o João
   envia os relatos para ela, que os registra aqui. A rotina do Claude com
   o João fica no `CLAUDE.md`, que ela envia a ele e não vai para o Git.
+
+### P22 🟡 Refatoração da tela do organizador
+
+- **Origem:** pedido da Manuela (06/11/2026).
+- **Prazo:** antes da gravação do vídeo (F32).
+- **O que fazer:** mostrar no painel do organizador quantas palestras há
+  em cada sala, junto com o total de palestras, que já aparece. O restante
+  da refatoração será definido com a Manuela no plano da tarefa.

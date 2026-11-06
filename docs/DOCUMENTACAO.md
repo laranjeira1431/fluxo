@@ -779,3 +779,37 @@ qualquer usuário, inclusive de um organizador.
   Flask. A escolha do servidor da hospedagem fica para a F33.
 - **Teste pendente:** o acesso pelo celular depois da mudança ficou na seção
   0.3 do `PENDENCIAS.md`.
+
+## 15. F28: fluxogramas dos casos de uso
+
+Concluída em 06/11/2026, na branch `f28-fluxogramas`. A rubrica pede um
+fluxograma de recuperação de dados e um de entrada de dados, cada um com o
+passo a passo pelas camadas, incluindo o Repository. Os requisitos de
+entrega não falam de fluxogramas: a exigência vem só da rubrica.
+
+### 15.1 O que foi feito
+
+- **`docs/FLUXOGRAMAS.md`:** novo arquivo, com os dois fluxogramas em
+  Mermaid e um texto curto sobre cada um.
+- **Recuperação de dados:** ver a agenda, que passa pelo `AgendaRepository`.
+- **Entrada de dados:** inscrever-se em uma palestra, com todas as
+  regras do `CriarInscricaoService`, o controle de vagas e o aviso de
+  choque de horário.
+- **`README.md`:** ganhou a seção com o link para o arquivo.
+
+### 15.2 Decisões e motivos
+
+| Decisão | Motivo |
+|---|---|
+| Caixas em uma linha vertical, com o nome e a cor da camada | A primeira versão agrupava as caixas por camada, e as setas se cruzavam tanto que a inscrição ficava ilegível. Em linha, cada troca de camada aparece como um passo |
+| Consulta da agenda sem caixa de Model | O Repository devolve as linhas da consulta, e o Service só as transforma em dicionários. O fluxograma mostra o que o código faz |
+| Inscrição com todas as saídas de regra de negócio | As regras e o controle de vagas são a parte mais importante desse caso de uso |
+| Conferência do login em uma caixa só | Ela passa pelo `TokenService` e pela Model `Usuario`, mas é igual em todas as rotas protegidas. O texto do documento explica isso, e o erro 500 genérico também fica só no texto |
+
+## 16. Retirada da F34: IA como serviço
+
+Decisão da Manuela em 06/11/2026: a integração com IA não será feita. Ela
+era um bônus de 2 pontos na rubrica, não uma exigência, e os requisitos só
+pedem um Service próprio para a IA quando o projeto usa IA. A tarefa saiu do
+cronograma e da lista de pendências, e a sugestão de origem (S20) ficou
+marcada como cancelada.

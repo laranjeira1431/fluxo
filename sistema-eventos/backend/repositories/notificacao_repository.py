@@ -30,7 +30,7 @@ class NotificacaoRepository:
             """
             SELECT n.id_notificacao, n.mensagem, n.data_envio,
                    n.tipo_notificacao, n.id_usuario, n.id_palestra,
-                   n.id_evento, e.nome AS nome_evento,
+                   n.id_evento, n.lida, e.nome AS nome_evento,
                    p.titulo AS titulo_palestra
             FROM notificacao n
             LEFT JOIN evento e ON e.id_evento = n.id_evento
@@ -41,6 +41,23 @@ class NotificacaoRepository:
         )
         resultado = db.session.execute(sql, {"id_usuario": id_usuario})
         return resultado.mappings().all()
+
+    @staticmethod
+    def marcar_lidas(id_usuario):
+        """Marca como lidas todas as notificações de um usuário (F21).
+
+        O `WHERE` limita o `UPDATE` às notificações dessa pessoa: sem ele,
+        os avisos de todo mundo seriam marcados. O `commit` fica no Service.
+        """
+        sql = text(
+            """
+            UPDATE notificacao
+            SET lida = TRUE
+            WHERE id_usuario = :id_usuario
+              AND lida = FALSE
+            """
+        )
+        db.session.execute(sql, {"id_usuario": id_usuario})
 
     @staticmethod
     def buscar_lembrete(id_usuario, id_palestra):

@@ -461,6 +461,12 @@ palestra): cada destinatário recebe uma cópia. A lista de avisos traz
 (`ORGANIZAÇÃO`, `ATENÇÃO`, `LEMBRETE` ou `INFO`), e puxar a lista para
 baixo busca de novo.
 
+O campo `lida` (F21) alimenta o contador de avisos novos da barra de
+navegação. Abrir a aba Avisos marca todos os avisos da pessoa como lidos,
+inclusive os lembretes. Nessa abertura, os novos aparecem em destaque e o
+topo mostra quantos são (`2 NOVOS · ATUALIZADO 08:30`). O contador é
+atualizado ao entrar no app e a cada troca de aba.
+
 ## 7. Rotas principais
 
 ### Autenticação (token)
@@ -536,7 +542,8 @@ administrador; os outros recebem 403).
 | GET | `/api/favoritos/usuario/<id_usuario>` | Meus favoritos | própria |
 | POST | `/api/favoritos` | Adicionar favorito (corpo: `id_palestra`) | login |
 | DELETE | `/api/favoritos` | Remover favorito (corpo: `id_palestra`) | login |
-| GET | `/api/notificacoes/usuario/<id_usuario>` | Avisos | própria |
+| GET | `/api/notificacoes/usuario/<id_usuario>` | Avisos, com o campo `lida` | própria |
+| PUT | `/api/notificacoes/usuario/<id_usuario>/lidas` | Marcar todos os avisos como lidos (F21) | própria |
 | POST | `/api/lembretes` | Ativar lembrete (corpo: `id_palestra`) | login |
 | DELETE | `/api/lembretes` | Desativar lembrete (corpo: `id_palestra`) | login |
 | GET | `/api/avaliacoes/palestra/<id>` | Avaliações de uma palestra | login |

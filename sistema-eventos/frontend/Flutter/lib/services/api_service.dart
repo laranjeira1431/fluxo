@@ -180,6 +180,12 @@ class ApiService {
         await request('/api/notificacoes/usuario/$usuarioId'),
       );
 
+  /// Marca todos os avisos do usuário como lidos (F21)
+  /// (`PUT /api/notificacoes/usuario/<id>/lidas`).
+  static Future<void> marcarAvisosLidos(int usuarioId) async {
+    await request('/api/notificacoes/usuario/$usuarioId/lidas', method: 'PUT');
+  }
+
   /// Inscreve o usuário em uma palestra (`POST /api/inscricoes`).
   ///
   /// Se a pessoa já tem inscrição em outra palestra no mesmo horário, a

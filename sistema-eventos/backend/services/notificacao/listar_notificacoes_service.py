@@ -5,6 +5,10 @@ CAMADA: Services (regra de negócio do caso de uso "Listar Notificações").
 
 Método principal:
     execute(id_usuario): retorna a lista de notificações (dicts).
+
+O MySQL guarda `lida` (F21) como 0 ou 1, então o Service converte para
+`true` ou `false` antes de responder. Assim, o app recebe o mesmo tipo
+que `to_dict()` devolve no Model.
 """
 
 from backend.models.usuario import Usuario
@@ -19,4 +23,7 @@ class ListarNotificacoesService:
         if not Usuario.buscar_por_id(id_usuario):
             raise ValueError("Usuário não encontrado.")
         linhas = NotificacaoRepository.listar_por_usuario(id_usuario)
-        return [linha_para_dict(linha) for linha in linhas]
+        notificacoes = [linha_para_dict(linha) for linha in linhas]
+        for notificacao in notificacoes:
+            notificacao["lida"] = bool(notificacao["lida"])
+        return notificacoes

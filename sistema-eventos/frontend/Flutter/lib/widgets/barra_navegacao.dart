@@ -16,8 +16,8 @@ class BarraNavegacao extends StatelessWidget {
   final int abaAtual;
   final ValueChanged<int> aoTrocarAba;
 
-  /// Quantidade de avisos novos. Com 0, o contador não aparece. (A
-  /// contagem real depende da F21, que marca os avisos como lidos.)
+  /// Quantidade de avisos novos (F21), calculada pelo `AppShell`. Com 0, o
+  /// contador não aparece.
   final int avisosNovos;
 
   const BarraNavegacao({
@@ -28,7 +28,7 @@ class BarraNavegacao extends StatelessWidget {
   });
 
   /// Índice da aba Avisos, a única que tem contador.
-  static const _abaAvisos = 3;
+  static const abaAvisos = 3;
 
   static const _abas = [
     (icone: Icons.home_outlined, nome: 'Início'),
@@ -68,7 +68,7 @@ class BarraNavegacao extends StatelessWidget {
     final aba = _abas[indice];
     final selecionada = indice == abaAtual;
     final cor = selecionada ? cores.onSurface : cores.onSurfaceVariant;
-    final mostrarContador = indice == _abaAvisos && avisosNovos > 0;
+    final mostrarContador = indice == abaAvisos && avisosNovos > 0;
 
     Widget icone = Icon(aba.icone, size: 22, color: cor);
     if (mostrarContador) {
@@ -86,7 +86,9 @@ class BarraNavegacao extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selecionada,
-      label: mostrarContador ? '${aba.nome}, $avisosNovos novos' : aba.nome,
+      label: mostrarContador
+          ? '${aba.nome}, $avisosNovos ${avisosNovos == 1 ? 'novo' : 'novos'}'
+          : aba.nome,
       // Como `excludeSemantics` esconde o toque do `InkWell` abaixo, o
       // toque do leitor de tela é repassado aqui.
       onTap: () => aoTrocarAba(indice),

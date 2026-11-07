@@ -31,14 +31,25 @@ import '../widgets/selo.dart';
 /// Puxar a lista para baixo busca de novo (para ver um comunicado que
 /// acabou de chegar).
 ///
-/// O cabeçalho é o das abas (`CabecalhoAba`). No canvas o rótulo é
-/// `2 NOVOS · ATUALIZADO 08:30`; por enquanto só a hora da última busca
-/// aparece (`ATUALIZADO 08:30`), porque o banco ainda não guarda se o
-/// aviso foi lido. A contagem de novos entra na F21.
+/// O cabeçalho é o das abas (`CabecalhoAba`), com o rótulo do canvas:
+/// `2 NOVOS · ATUALIZADO 08:30`, ou só `ATUALIZADO 08:30` sem avisos novos.
+///
+/// Avisos lidos (F21): abrir esta aba marca todos os avisos como lidos.
+/// Nessa abertura, os novos ainda aparecem com o texto em destaque, porque
+/// a lista foi buscada antes de marcar. Na próxima abertura, já aparecem
+/// como lidos.
 class NotificacoesPage extends StatefulWidget {
   final int usuarioId;
 
-  const NotificacoesPage({super.key, required this.usuarioId});
+  /// Chamado quando não há mais avisos novos (a API marcou todos como
+  /// lidos ou não havia nenhum), para o `AppShell` zerar o contador da barra.
+  final VoidCallback aoLerAvisos;
+
+  const NotificacoesPage({
+    super.key,
+    required this.usuarioId,
+    required this.aoLerAvisos,
+  });
 
   @override
   State<NotificacoesPage> createState() => _NotificacoesPageState();
@@ -51,20 +62,46 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
   /// `ATUALIZADO 08:30`). Fica `null` até a primeira busca dar certo.
   DateTime? atualizadoEm;
 
+  /// Quantos avisos da última busca ainda não tinham sido lidos.
+  int novos = 0;
+
   @override
   void initState() {
     super.initState();
     futuro = buscar();
   }
 
-  /// Busca os avisos e guarda a hora em que eles chegaram. O `then` roda
-  /// antes de o `FutureBuilder` ser avisado, então quando a lista aparece
-  /// a hora já está certa, sem precisar de outro `setState`.
+  /// Busca os avisos e guarda a hora em que eles chegaram e quantos são
+  /// novos. O `then` roda antes de o `FutureBuilder` ser avisado, então
+  /// quando a lista aparece esses valores já estão certos, sem precisar de
+  /// outro `setState`.
   Future<List<dynamic>> buscar() {
     return ApiService.notificacoes(widget.usuarioId).then((lista) {
       atualizadoEm = DateTime.now();
+      novos = lista.where((aviso) => aviso['lida'] == false).length;
+      // Se a pessoa saiu da aba antes de a lista chegar, ela não viu os
+      // avisos, então eles continuam novos.
+      if (!mounted) return lista;
+      if (novos > 0) {
+        marcarComoLidos();
+      } else {
+        // Sem avisos novos, o contador da barra precisa ficar zerado também.
+        widget.aoLerAvisos();
+      }
       return lista;
     });
+  }
+
+  /// Marca os avisos como lidos (F21). Roda sem `await` em `buscar`, e o
+  /// erro é ignorado: se falhar, a lista aparece do mesmo jeito e os avisos
+  /// continuam novos até a próxima abertura.
+  Future<void> marcarComoLidos() async {
+    try {
+      await ApiService.marcarAvisosLidos(widget.usuarioId);
+      widget.aoLerAvisos();
+    } catch (_) {
+      // Tenta de novo na próxima vez que a aba abrir.
+    }
   }
 
   /// O `setState` usa chaves para não devolver o `Future` (veja o
@@ -78,12 +115,15 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
 
   /// Rótulo acima do título: `CARREGANDO…` durante a busca, `SEM CONEXÃO`
   /// se ela falhou (para a hora antiga não parecer atualizada) e, depois,
-  /// a hora da última busca que deu certo.
+  /// a hora da última busca que deu certo, depois de quantos são novos.
   String rotulo(bool carregando, bool falhou) {
     if (carregando) return 'Carregando…';
     if (falhou) return 'Sem conexão';
     final hora = atualizadoEm;
-    return hora == null ? 'Seus avisos' : 'Atualizado ${horaCurta(hora)}';
+    if (hora == null) return 'Seus avisos';
+    final atualizado = 'Atualizado ${horaCurta(hora)}';
+    if (novos == 0) return atualizado;
+    return '$novos ${novos == 1 ? 'novo' : 'novos'} · $atualizado';
   }
 
   @override
@@ -145,7 +185,8 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
   }
 }
 
-/// Um aviso da lista: horário, selo do tipo e texto.
+/// Um aviso da lista: horário, selo do tipo e texto. Como no canvas, o
+/// texto de um aviso novo aparece com peso 600, e o de um lido, com 400.
 class _ItemAviso extends StatelessWidget {
   final Map<String, dynamic> dados;
 
@@ -163,6 +204,7 @@ class _ItemAviso extends StatelessWidget {
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
     final (textoSelo, tipoSelo) = _selo(dados['tipo_notificacao']);
+    final novo = dados['lida'] == false;
     final origem = dados['tipo_notificacao'] == 'comunicado'
         ? [dados['nome_evento'], dados['titulo_palestra']].whereType<String>().join(' · ')
         : '';
@@ -198,7 +240,10 @@ class _ItemAviso extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   dados['mensagem'] ?? '',
-                  style: tema.textTheme.bodyLarge?.copyWith(height: 1.4),
+                  style: tema.textTheme.bodyLarge?.copyWith(
+                    height: 1.4,
+                    fontWeight: novo ? FontWeight.w600 : FontWeight.w400,
+                  ),
                 ),
                 if (origem.isNotEmpty) ...[
                   const SizedBox(height: 6),

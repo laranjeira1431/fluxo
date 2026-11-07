@@ -11,7 +11,9 @@ de palestra são armazenados aqui mesmo (com `tipo_notificacao =
 `id_palestra` é opcional (F19/D01): lembretes apontam para uma palestra,
 mas os comunicados gerais do organizador (F09) valem para o evento todo.
 `id_evento` (F09) é preenchido só nos comunicados, para a aba Avisos
-mostrar de qual evento eles vieram.
+mostrar de qual evento eles vieram. `lida` (F21) diz se a pessoa já abriu
+a aba Avisos depois de receber a notificação: é o que alimenta o contador
+de avisos novos da barra de navegação.
 
 Herda `db.Model` (tabela `notificacao`) e `CRUDMixin` (CRUD padrão).
 """
@@ -38,6 +40,7 @@ class Notificacao(db.Model, CRUDMixin):
         db.Integer, db.ForeignKey("palestra.id_palestra")
     )
     id_evento = db.Column(db.Integer, db.ForeignKey("evento.id_evento"))
+    lida = db.Column(db.Boolean, nullable=False, default=False)
 
     def to_dict(self):
         """Serializa a notificação/lembrete para JSON."""
@@ -49,4 +52,5 @@ class Notificacao(db.Model, CRUDMixin):
             "id_usuario": self.id_usuario,
             "id_palestra": self.id_palestra,
             "id_evento": self.id_evento,
+            "lida": self.lida,
         }

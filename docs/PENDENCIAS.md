@@ -42,18 +42,21 @@ commit, push, Pull Request, merge e testar de novo).
 ### Semana final (04 a 09/11/2026)
 
 Desde 03/11/2026, só a Manuela desenvolve o projeto, e todas as tarefas
-ficam com ela. Desde 06/11/2026, o João testa as tarefas concluídas
-(cronograma abaixo). A ordem segue os blocos da seção 0.2.
+ficam com ela. Desde 06/11/2026, o João e a Bianca testam as tarefas
+concluídas (cronograma abaixo). A ordem segue os blocos da seção 0.2.
 
 | Dia | Tarefas |
 |---|---|
 | Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 (concluída) e F31; F27 se der tempo |
 | Qui 05/11 | F27 (concluída) |
 | Sex 06/11 | P19 (`ParticipacaoRepository`, concluída) e, na ordem da seção 0.4: F28 (fluxogramas, concluída) e F31 (termos de uso, concluída) |
-| Sáb 07/11 | F30 (slides) |
-| Dom 08/11 | Corrigir os erros encontrados pelo João, fazer a P22 (refatoração da tela do organizador), testar a P04 no celular e fazer o roteiro do vídeo; depois P03, se der tempo |
-| Seg 09/11 | F32 (vídeo) e revisão final; P06 só se os testes mostrarem horário errado |
+| Sáb 07/11 | F21 (avisos lidos, concluída) |
+| Dom 08/11 | Corrigir os erros encontrados pelo João e pela Bianca, fazer a P22 (refatoração da tela do organizador) e fazer o roteiro do vídeo; depois P03, se der tempo |
+| Seg 09/11 | F30 (slides), F32 (vídeo) e revisão final; P06 só se os testes mostrarem horário errado |
 
+- **Ordem revista em 06/11/2026 (decidida pela Manuela):** a F21 entrou no
+  sábado, e a F30 foi para a segunda, junto com o vídeo. A F30 não pode
+  passar de 09/11, e as duas somam cerca de 5 a 7 horas nesse dia.
 - **Ordem de 06/11/2026 (decidida pela Manuela):** neste dia, as tarefas
   seguem a seção 0.4, da mais rápida para a mais demorada, e não a ordem
   da seção 0.2. A P20 e a F25 foram puladas e continuam no bloco D, e a
@@ -83,28 +86,33 @@ ficam com ela. Desde 06/11/2026, o João testa as tarefas concluídas
   depois, todos juntos. Cada tarefa registra na seção 0.3 o que ficou
   para testar. Eles são feitos no domingo, 08/11, antes da gravação do
   vídeo (F32), para sobrar tempo de corrigir o que falhar. Revisto em
-  06/11/2026: os testes passam a ser feitos pelo João, a partir desse dia
-  (ver abaixo).
+  06/11/2026: os testes passam a ser feitos pelo João e pela Bianca, a partir
+  desse dia (ver abaixo).
 
-### Cronograma do João (testes, 06 a 09/11/2026)
+### Cronograma dos testes: João e Bianca (06 a 09/11/2026)
 
-O João usa Mac e testa no emulador Android, sem celular físico. Ele só
-testa e relata: quem corrige é a Manuela. Novos testes entram na seção
-0.3 conforme as tarefas forem concluídas, então a lista dele vai crescer.
+O João e a Bianca têm a mesma função: só testam e relatam, e quem corrige
+é a Manuela. O João usa Mac e testa no emulador Android, sem celular
+físico. Novos testes entram na seção 0.3 conforme as tarefas forem
+concluídas, então a lista vai crescer.
 
 | Dia | Testes |
 |---|---|
 | Sex 06/11 | Preparar o ambiente, depois F29, F26 e P19. Depois das 21h, P06 |
-| Sáb 07/11 | P08 e P16 (parte do Android) |
+| Sáb 07/11 | P08 e P16 (parte do Android) e, depois do merge, F21 |
 | Dom 08/11 | Refazer o que falhou e testar o que for concluído até lá |
 | Seg 09/11 | Conferir as correções antes da gravação do vídeo |
 
 - **Recriar o banco depois da F31:** a F31 mudou a tabela `usuario`. Na
-  primeira rodada depois do merge dela, logo depois do `git pull`, o João
-  recria o banco (passo 1.4 do `FLUXO_DE_TRABALHO.md`). Sem isso, o login
+  primeira rodada depois do merge dela, logo depois do `git pull`, quem
+  testa recria o banco (passo 1.4 do `FLUXO_DE_TRABALHO.md`). Sem isso, o login
   e o cadastro dão erro, e os outros testes falham por esse motivo.
-- **Fica com a Manuela:** a P04, que o João não consegue testar pelo cabo
-  nem pelo IP. A parte do Windows da P16 continua valendo só se o projeto
+- **Recriar o banco depois da F21:** a F21 mudou a tabela `notificacao`. Na
+  primeira rodada depois do merge dela, quem testa recria o banco de novo
+  (passo 1.4 do `FLUXO_DE_TRABALHO.md`). Sem isso, a aba Avisos dá erro, e
+  ativar um lembrete, enviar um comunicado e remover uma inscrição também
+  falham. Os lembretes agendados no celular também podem sumir.
+- **Windows:** a parte do Windows da P16 continua valendo só se o projeto
   voltar a ser usado no Windows.
 
 ### Cronograma original (20 a 23/10/2026)
@@ -262,7 +270,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 15 | P07 Método obsoleto do SQLAlchemy (concluída) | 🟢 |
 | 16 | P16 Fim de linha diferente entre sistemas (concluída) | 🟡 |
 | 17 | P05 Abas do app recarregam a cada troca (concluída) | 🟢 |
-| 18 | F21 Marcar avisos como lidos | 🟢 |
+| 18 | F21 Marcar avisos como lidos (concluída) | 🟢 |
 | 19 | F25 Total de palestras e salas na lista de eventos da API | 🟢 |
 | 20 | F13 Restaurantes próximos | 🟢 |
 | 21 | F12 Certificado de participação | 🟢 |
@@ -273,6 +281,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 26 | F23 Área do palestrante | 🟢 |
 | 27 | S09 Imagem de capa do evento | 🟢 |
 | 28 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 |
+| 29 | P24 Atualizar o banco sem recriá-lo | 🟢 |
 
 A P13 não entra na lista: ela se resolve quando a F13 for feita. A F03,
 a F04 e a F08 já foram concluídas.
@@ -286,15 +295,16 @@ concluída acrescenta aqui os testes que ficaram para depois. Depois do
 teste, o status vira "Testado" ou "Falhou: ..." (com o resumo do que
 aconteceu).
 
-**Como o João testa e registra:** o João faz os testes com status Pendente
-e, a cada teste, informa se deu algum erro ou mau funcionamento. Ele
-envia o relato à Manuela (teste, data, resultado, o que aconteceu, passos
+**Como o João e a Bianca testam e registram:** eles fazem os testes com
+status Pendente e, a cada teste, informam se deu algum erro ou mau
+funcionamento. Quem testou envia o relato à Manuela (teste, data, resultado, o que aconteceu, passos
 e aparelho), e ela registra o resultado aqui. Todo erro entra também na
 tabela "Erros encontrados" abaixo, com a situação "Pendente", até a
-Manuela resolver. Ele não altera o código nem este arquivo.
+Manuela resolver. Quem testa não altera o código nem este arquivo.
 
 | Tarefa | O que testar | Como testar | Onde | Status |
 |---|---|---|---|---|
+| F21 | O contador da barra mostra os avisos novos, e abrir a aba Avisos os marca como lidos | Com o banco recriado, entrar com `ana.silva@email.com`: a aba Avisos mostra um contador. Abrir a aba: o topo mostra `4 NOVOS · ATUALIZADO` e a hora, os textos ficam em destaque e o contador some. Trocar de aba e voltar: nenhum aviso aparece como novo. Ativar um lembrete e trocar de aba: o contador volta a aparecer. Como organizador, enviar um comunicado: o contador aparece para quem recebeu | App (celular ou emulador) | Pendente |
 | F31 | O cadastro exige o aceite dos termos, e o Perfil mostra o mesmo texto | Com o banco recriado, tocar em "Criar conta" e preencher os campos. Tocar em "termos de uso": os termos abrem em uma janela. Tentar criar a conta sem marcar a caixa: deve aparecer "Aceite os termos de uso para criar a conta." e a conta não é criada. Marcar a caixa e criar a conta: deve entrar no app. Na aba Perfil, tocar em "Termos de uso", acima de "Sair": os mesmos termos abrem em uma tela própria, sem janela | App (celular ou emulador) | Testado |
 | F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
@@ -302,7 +312,6 @@ Manuela resolver. Ele não altera o código nem este arquivo.
 | F28 | Os dois fluxogramas aparecem desenhados, com as cores das camadas | Depois do push, abrir `docs/FLUXOGRAMAS.md` no GitHub e conferir os dois fluxogramas | GitHub | Testado |
 | F27 | Os dois diagramas aparecem desenhados | Depois do push, abrir `docs/DIAGRAMA_CLASSES.md` no GitHub e conferir os dois diagramas | GitHub | Testado |
 | F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
-| P04 | O app no celular continua falando com a API depois da mudança de endereço | Pelo cabo: rodar `adb reverse tcp:5000 tcp:5000`, abrir o app, entrar e ver a programação. Pelo IP: colocar `API_HOST=0.0.0.0` no `backend/.env` antes de ligar a API e repetir | Android (celular) | Pendente |
 | P06 | A data de uma avaliação feita depois das 21h aparece certa | Depois das 21h, avaliar uma palestra já iniciada em que a pessoa está inscrita e olhar a data do comentário nos detalhes da palestra. Com o erro, aparece o dia seguinte | App (celular ou emulador) | Pendente |
 | P19 | Inscrição, cancelamento e choque de horário continuam funcionando no app | Inscrever-se em uma palestra futura com vaga: as vagas caem 1. Cancelar: as vagas voltam. Inscrever-se em duas palestras no mesmo horário (se os dados não tiverem, criar uma como organizador): deve aparecer o aviso de choque, e a inscrição só é feita depois de confirmar | App (celular ou emulador) | Pendente |
 
@@ -327,17 +336,17 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 
 | # | Tarefa | Prioridade | Tempo estimado | Situação |
 |---|---|---|---|---|
-| 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João; P04 com a Manuela) | 🔴 | Cerca de 1 h | 06 a 09/11 |
+| 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João e a Bianca) | 🔴 | Cerca de 1 h | 06 a 09/11 |
 | 2 | F31 Trocar o texto provisório pelos termos definitivos | 🟢 | Cerca de 15 min | Quando o texto ficar pronto, antes do vídeo |
 | 3 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
 | 4 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
 | 5 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
-| 6 | F21 Marcar avisos como lidos | 🟢 | 2 a 3 h | Bloco D |
+| 6 | P24 Atualizar o banco sem recriá-lo | 🟢 | 1 a 2 h | Bloco D, antes da hospedagem com dados reais |
 | 7 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
 | 8 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
 | 9 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
 | 10 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
-| 11 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Sáb 07/11 |
+| 11 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Seg 09/11 |
 | 12 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
 | 13 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
 | 14 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
@@ -349,7 +358,7 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 | 20 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
 | 21 | P22 Refatoração da tela do organizador | 🟡 | A estimar | Dom 08/11, antes do vídeo |
 
-**Já saíram da tabela:** P05, P19, F28 e F31 (concluídas) e F34 (cancelada
+**Já saíram da tabela:** P05, P19, F21, F28 e F31 (concluídas) e F34 (cancelada
 em 06/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
 
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
@@ -357,7 +366,7 @@ em 06/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
   de capa. A P05 caiu de cerca de 1 h para cerca de 20 min, porque a
   tarefa ficou só em corrigir o comentário do `app_shell.dart`.
 - **Total, sem a linha 1 e sem a P22 (ainda sem estimativa):** cerca de
-  66 a 85 horas, contando 8 horas
+  65 a 84 horas, contando 8 horas
   para cada tarefa de "1 dia ou mais".
 - **Só o essencial (F30 e F32):** cerca de 5 a 7 horas.
 
@@ -425,7 +434,7 @@ o nome indicado, que aparece acima de cada tela.
 | F18 | — (protótipo) | 🟢 | Entrar com Google | Pendente |
 | F19 | — (D01) | 🔴 **primeira** | Atualizar o banco conforme a D01 | Concluído |
 | F20 | RF20 (S06) | 🔴 **segunda** | Padronização da interface: aplicar a nova proposta visual (inclui a F11) | Concluído |
-| F21 | RF09, RF18 (S08) | 🟢 | Marcar avisos como lidos (contador da barra de navegação) | Pendente |
+| F21 | RF09, RF18 (S08) | 🟢 | Marcar avisos como lidos (contador da barra de navegação) | Concluído |
 | F22 | — (sugestão na F08) | 🟢 | Perfil de administrador geral: promover organizadores pelo app | Pendente |
 | F23 | — (sugestão na F14) | 🟢 | Área do palestrante: o palestrante entra no app e vê as palestras dele | Pendente |
 | F24 | — (S05) | 🔴 | Dados de demonstração: eventos encerrado, acontecendo e futuro | Concluído |
@@ -1141,6 +1150,15 @@ o nome indicado, que aparece acima de cada tela.
   Falta o campo no banco (com script de migração, sem recriar o banco),
   uma rota para marcar como lido (por exemplo, ao abrir a aba Avisos) e
   passar a contagem para a barra no `app_shell.dart`.
+- **Decidido (06/11/2026, pela Manuela):** abrir a aba Avisos marca todos
+  os avisos como lidos, de uma vez. Os lembretes contam como avisos novos,
+  mesmo sendo ativados pela própria pessoa. O banco é recriado, e não
+  migrado, e a migração virou a P24.
+- **Concluída em 06/11/2026:** campo `lida` em `notificacao`, rota
+  `PUT /api/notificacoes/usuario/<id>/lidas` (só a própria pessoa), contador
+  na barra, rótulo `2 NOVOS · ATUALIZADO 08:30` e destaque nos avisos novos.
+  O contador é atualizado ao entrar no app e a cada troca de aba. O app conta
+  a partir da lista de avisos, sem uma rota só para isso.
 
 ### F22 Perfil de administrador geral
 
@@ -1507,6 +1525,8 @@ qualquer alteração.
 | P20 | 🟢 | Cancelamento lê a inscrição antes do bloqueio | Pendente |
 | P21 | 🟡 | Incluir o João como testador e o Mac no passo a passo | Concluído |
 | P22 | 🟡 | Refatoração da tela do organizador | Pendente |
+| P23 | 🟡 | Incluir a Bianca como testadora | Concluído |
+| P24 | 🟢 | Atualizar o banco sem recriá-lo | Pendente |
 
 ---
 
@@ -1634,6 +1654,10 @@ qualquer alteração.
   menos 32 caracteres, e `API_DEBUG`, `API_HOST` e `CORS_ORIGENS` vêm do
   `.env`, com o valor mais seguro como padrão. Ver a seção 14 do
   `DOCUMENTACAO.md`.
+- **Decidido (06/11/2026, pela Manuela):** o app roda e é gravado no
+  emulador, então saíram o teste no celular físico e as instruções pelo
+  cabo USB. O emulador chega à API mesmo com `API_HOST=127.0.0.1`, e as
+  instruções pelo IP continuam no README e no `FLUXO_DE_TRABALHO.md`.
 
 ## Bugs e inconsistências
 
@@ -1997,3 +2021,24 @@ qualquer alteração.
 - **O que fazer:** mostrar no painel do organizador quantas palestras há
   em cada sala, junto com o total de palestras, que já aparece. O restante
   da refatoração será definido com a Manuela no plano da tarefa.
+
+### P23 🟡 Incluir a Bianca como testadora
+
+- **Origem:** pedido da Manuela (06/11/2026).
+- **O que foi feito:** a Bianca passou a testar junto com o João, com a
+  mesma função: só testa e relata, e quem corrige é a Manuela. A seção
+  0.1 passou a ter o cronograma dos testes dos dois, e a seção 0.3, a
+  forma de testar e registrar de cada um. A rotina do Claude com quem
+  testa fica no `CLAUDE.md`, que a Manuela envia aos dois.
+
+### P24 🟢 Atualizar o banco sem recriá-lo
+
+- **Origem:** pedido da Manuela (06/11/2026), durante a F21.
+- **O que acontece:** toda mudança no banco exige rodar de novo o script
+  `sistema_eventos_atualizado.sql`, que começa com `DROP DATABASE` e apaga
+  todos os dados.
+- **Por que importa:** cada mudança faz quem testa recriar o banco, e, com
+  dados reais, isso não pode acontecer.
+- **O que fazer:** passar a registrar as mudanças em scripts de migração
+  (`ALTER TABLE`), que mantêm os dados, e explicar no README como rodá-los.
+- **Prazo:** antes da hospedagem com dados reais (F33).

@@ -169,6 +169,7 @@ classDiagram
         +int id_usuario FK
         +int id_palestra FK
         +int id_evento FK
+        +bool lida
     }
 
     class Certificado {

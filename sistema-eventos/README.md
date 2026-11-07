@@ -262,35 +262,10 @@ flutter run --dart-define=API_URL=http://192.168.0.10:5000
 
 Nesse caso, coloque `API_HOST=0.0.0.0` no `backend/.env` e tire o
 `API_DEBUG`: a API não sobe com o modo debug aberto para a rede.
-Pelo cabo USB (abaixo), nada disso é necessário.
 
-### Celular Android pelo cabo USB
-
-É o jeito mais simples de ver os avisos de início das palestras (F02),
-que só aparecem no Android:
-
-1. No celular: **Configurações → Sobre o telefone**, tocar 7 vezes em
-   **Número da versão**; depois, em **Opções do desenvolvedor**, ligar a
-   **Depuração USB**. Conectar o cabo e aceitar "Permitir depuração USB".
-2. Conferir se o celular aparece em `flutter devices`.
-3. Fazer o celular enxergar a API do computador pelo cabo (repetir
-   sempre que reconectar o celular):
-
-```bash
-adb reverse tcp:5000 tcp:5000
-```
-
-4. Rodar o app no celular, sem mudar o endereço da API (o `adb reverse`
-   faz o `127.0.0.1:5000` do celular chegar ao computador):
-
-```bash
-flutter run -d <id do celular em flutter devices>
-```
-
-Na primeira vez, o app pede permissão para mostrar notificações:
-toque em **Permitir**. O `adb` fica em
-`%LOCALAPPDATA%\Android\Sdk\platform-tools` no Windows e em
-`~/Library/Android/sdk/platform-tools` no Mac.
+Os avisos de início das palestras (F02) só aparecem no Android. Na
+primeira vez, o app pede permissão para mostrar notificações: toque em
+**Permitir**.
 
 O endereço fica em `lib/services/api_service.dart` e pode ser configurado
 sem alterar as telas.
@@ -486,6 +461,12 @@ palestra): cada destinatário recebe uma cópia. A lista de avisos traz
 (`ORGANIZAÇÃO`, `ATENÇÃO`, `LEMBRETE` ou `INFO`), e puxar a lista para
 baixo busca de novo.
 
+O campo `lida` (F21) alimenta o contador de avisos novos da barra de
+navegação. Abrir a aba Avisos marca todos os avisos da pessoa como lidos,
+inclusive os lembretes. Nessa abertura, os novos aparecem em destaque e o
+topo mostra quantos são (`2 NOVOS · ATUALIZADO 08:30`). O contador é
+atualizado ao entrar no app e a cada troca de aba.
+
 ## 7. Rotas principais
 
 ### Autenticação (token)
@@ -561,7 +542,8 @@ administrador; os outros recebem 403).
 | GET | `/api/favoritos/usuario/<id_usuario>` | Meus favoritos | própria |
 | POST | `/api/favoritos` | Adicionar favorito (corpo: `id_palestra`) | login |
 | DELETE | `/api/favoritos` | Remover favorito (corpo: `id_palestra`) | login |
-| GET | `/api/notificacoes/usuario/<id_usuario>` | Avisos | própria |
+| GET | `/api/notificacoes/usuario/<id_usuario>` | Avisos, com o campo `lida` | própria |
+| PUT | `/api/notificacoes/usuario/<id_usuario>/lidas` | Marcar todos os avisos como lidos (F21) | própria |
 | POST | `/api/lembretes` | Ativar lembrete (corpo: `id_palestra`) | login |
 | DELETE | `/api/lembretes` | Desativar lembrete (corpo: `id_palestra`) | login |
 | GET | `/api/avaliacoes/palestra/<id>` | Avaliações de uma palestra | login |

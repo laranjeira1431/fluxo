@@ -777,8 +777,9 @@ qualquer usuário, inclusive de um organizador.
   todo mundo precisa entrar de novo.
 - **Servidor de produção:** `app.run` é o servidor de desenvolvimento do
   Flask. A escolha do servidor da hospedagem fica para a F33.
-- **Teste pendente:** o acesso pelo celular depois da mudança ficou na seção
-  0.3 do `PENDENCIAS.md`.
+- **Celular físico:** o acesso por um celular depois da mudança não foi
+  testado. A Manuela decidiu rodar o app no emulador (06/11/2026), que chega
+  à API mesmo com `API_HOST=127.0.0.1`.
 
 ## 15. F28: fluxogramas dos casos de uso
 
@@ -813,3 +814,45 @@ era um bônus de 2 pontos na rubrica, não uma exigência, e os requisitos só
 pedem um Service próprio para a IA quando o projeto usa IA. A tarefa saiu do
 cronograma e da lista de pendências, e a sugestão de origem (S20) ficou
 marcada como cancelada.
+
+## 17. F21: avisos lidos e contador da barra de navegação
+
+Concluída em 06/11/2026, na branch `f21-avisos-lidos`. A barra de navegação
+já sabia mostrar um contador na aba Avisos, mas o banco não guardava se um
+aviso tinha sido visto, então não havia o que contar. O teste no app ficou
+pendente na seção 0.3 do `PENDENCIAS.md`.
+
+### 17.1 O que foi feito
+
+- **Banco:** a tabela `notificacao` ganhou o campo `lida`, que começa como
+  falso.
+- **API:** a lista de avisos passou a trazer `lida`, e a rota
+  `PUT /api/notificacoes/usuario/<id>/lidas` marca todos os avisos da pessoa
+  como lidos. Só a própria pessoa pode usá-la.
+- **App:** a barra mostra o contador, atualizado ao entrar no app e a cada
+  troca de aba. A aba Avisos mostra `2 NOVOS · ATUALIZADO 08:30`, com o texto
+  dos avisos novos em peso 600, e marca tudo como lido ao abrir.
+- **`README.md` e `DIAGRAMA_CLASSES.md`:** ganharam a rota e o campo novos.
+
+### 17.2 Decisões e motivos
+
+| Decisão | Motivo |
+|---|---|
+| Abrir a aba Avisos marca todos os avisos como lidos | É o caminho mais simples, e os avisos são textos curtos, lidos na própria lista. Marcar um por um exigiria um toque em cada aviso |
+| Os lembretes contam como avisos novos | Decisão da Manuela: todos os avisos seguem a mesma regra, mesmo os que a própria pessoa ativa |
+| Os avisos só são marcados depois que a lista chega | Se a pessoa sair da aba antes disso, ela não viu os avisos, então eles continuam novos |
+| O app conta a partir da lista de avisos, sem uma rota só para isso | Evita mais uma rota e mais um Service, ao custo de buscar a lista a cada troca de aba |
+| O banco foi recriado, sem script de migração | O projeto ainda não tem dados reais. A migração virou a P24, necessária antes da hospedagem com dados reais |
+
+### 17.3 Limitações conhecidas
+
+- **Comunicado no meio da marcação:** um aviso que chegue entre a busca da
+  lista e a marcação vira lido sem aparecer como novo. Esse intervalo é de
+  milissegundos.
+- **Contador sem tempo real:** um aviso recebido com o app aberto só aparece
+  no contador na próxima troca de aba.
+- **Desempenho:** a lista inteira é buscada para contar. Pode valer uma rota
+  própria se as pessoas passarem a ter muitos avisos.
+- **Vídeo:** depois da primeira abertura, os avisos deixam de ser novos. Para
+  mostrar o contador, é preciso enviar um comunicado na hora ou recriar o
+  banco antes de gravar.

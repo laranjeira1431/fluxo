@@ -221,6 +221,7 @@ CREATE TABLE notificacao (
     id_usuario      INT             NOT NULL,
     id_palestra     INT,
     id_evento       INT,
+    lida            BOOLEAN         NOT NULL DEFAULT FALSE,
     CONSTRAINT fk_notificacao_usuario
         FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
         ON DELETE CASCADE,

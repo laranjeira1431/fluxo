@@ -1,5 +1,5 @@
 """
-Validações dos dados de um usuário: nome, email e senha.
+Validações dos dados de um usuário: nome, email, senha e aceite dos termos.
 
 CAMADA: Services (regras de negócio compartilhadas pelos casos de uso de
 usuário).
@@ -17,7 +17,9 @@ exemplo) escaparia de uma conferência feita só no Flutter.
 
 Cada função recebe o valor enviado, levanta `ValueError` com uma mensagem
 clara se ele não servir (o `@tratar_erros` transforma isso em HTTP 400) e
-devolve o valor já arrumado para gravar.
+devolve o valor já arrumado para gravar. A exceção é
+`validar_aceite_termos`, usada só no cadastro: ela apenas confere o
+aceite, porque o que vai para o banco é a data, e não o valor recebido.
 
 Também é conferido se o valor é um texto (`isinstance(valor, str)`): o
 JSON pode trazer um número ou uma lista no lugar, e funções de texto como
@@ -76,3 +78,14 @@ def validar_senha(senha):
             f"{TAMANHO_MAXIMO_SENHA} caracteres."
         )
     return senha
+
+
+def validar_aceite_termos(aceitou_termos):
+    """Confere se a pessoa aceitou os termos de uso (F31).
+
+    Só o valor `true` do JSON serve: um texto como "false" ou um número
+    não contam como aceite. Só o cadastro usa esta regra, porque quem
+    atualiza a conta já aceitou os termos ao criá-la.
+    """
+    if aceitou_termos is not True:
+        raise ValueError("Aceite os termos de uso para criar a conta.")

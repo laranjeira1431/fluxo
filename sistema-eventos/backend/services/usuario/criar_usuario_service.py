@@ -19,6 +19,11 @@ Nome, email e senha passam pelas validações de `validacoes_usuario.py`
 (F01): nome preenchido, email em formato válido e senha com 8 a 16
 caracteres. As mesmas regras valem na atualização.
 
+O cadastro só acontece com o aceite dos termos de uso (F31). A tela do
+app já exige a caixa marcada, mas a conferência fica aqui porque a rota é
+pública. A data do aceite é gravada com `datetime.now()`, a hora local do
+servidor, a mesma usada nas regras de horário das palestras.
+
 O email repetido é conferido antes de gravar, para devolver uma mensagem
 clara. Se dois cadastros com o mesmo email chegarem ao mesmo tempo (ex.:
 toque duplo no botão), os dois passam pela conferência, e o banco recusa
@@ -29,12 +34,15 @@ Método principal:
     execute(dados): cria e retorna o novo Usuario.
 """
 
+from datetime import datetime
+
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash
 
 from backend.extensions import db
 from backend.models.usuario import TIPO_PARTICIPANTE, Usuario
 from backend.services.usuario.validacoes_usuario import (
+    validar_aceite_termos,
     validar_email,
     validar_nome,
     validar_senha,
@@ -48,6 +56,7 @@ class CriarUsuarioService:
         nome = validar_nome(dados.get("nome"))
         email = validar_email(dados.get("email"))
         senha = validar_senha(dados.get("senha"))
+        validar_aceite_termos(dados.get("aceitou_termos"))
 
         if Usuario.query.filter_by(email=email).first():
             raise ValueError("Já existe um usuário cadastrado com este email.")
@@ -58,6 +67,7 @@ class CriarUsuarioService:
                 email=email,
                 senha=generate_password_hash(senha),
                 tipo_usuario=TIPO_PARTICIPANTE,
+                data_aceite_termos=datetime.now(),
             )
         except IntegrityError:
             db.session.rollback()

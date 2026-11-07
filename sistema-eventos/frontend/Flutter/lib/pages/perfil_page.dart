@@ -7,6 +7,7 @@ import 'editar_perfil_page.dart';
 import 'favoritos_page.dart';
 import 'login_page.dart';
 import 'organizador_painel_page.dart';
+import 'termos_uso_page.dart';
 
 /// Os números do card do Perfil: quantas inscrições e quantas favoritas.
 typedef _Numeros = ({int inscricoes, int favoritas});
@@ -21,8 +22,9 @@ typedef _Numeros = ({int inscricoes, int favoritas});
 ///   `GET /api/favoritos/usuario/<id>`, buscados ao mesmo tempo);
 /// - a lista: Favoritos (que saíram da barra de navegação na F20),
 ///   Certificados ("Em breve" até a F12), o interruptor do modo escuro
-///   (F11, RF20), a "Área do organizador" (F08, só para organizadores) e
-///   "Sair" (F17), na cor de atenção.
+///   (F11, RF20), a "Área do organizador" (F08, só para organizadores),
+///   os "Termos de uso" (F31, a mesma leitura do cadastro, em tela própria)
+///   e "Sair" (F17), na cor de atenção.
 ///
 /// O nome e o e-mail vêm do login, pelo `AppShell`. "Editar perfil", abaixo
 /// do e-mail, abre a tela de edição; ao salvar, o `AppShell` troca o nome
@@ -191,6 +193,14 @@ class _PerfilPageState extends State<PerfilPage> {
                 MaterialPageRoute(builder: (_) => const OrganizadorPainelPage()),
               ),
             ),
+          _ItemPerfil(
+            icone: Icons.description_outlined,
+            titulo: 'Termos de uso',
+            aoTocar: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const TermosUsoPage()),
+            ),
+          ),
           // "Sair" na cor de atenção (Brasa), como na prancha, e sem linha
           // embaixo: é o último item.
           _ItemPerfil(

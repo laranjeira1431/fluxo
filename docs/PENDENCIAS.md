@@ -49,9 +49,9 @@ ficam com ela. Desde 06/11/2026, o João testa as tarefas concluídas
 |---|---|
 | Qua 04/11 | F29 (concluída) e, na ordem: P16 (concluída), F26 só o erro do e-mail repetido (concluído), P04 (concluída) e F31; F27 se der tempo |
 | Qui 05/11 | F27 (concluída) |
-| Sex 06/11 | P19 (`ParticipacaoRepository`, concluída) e, na ordem da seção 0.4: F28 (fluxogramas, concluída) |
+| Sex 06/11 | P19 (`ParticipacaoRepository`, concluída) e, na ordem da seção 0.4: F28 (fluxogramas, concluída) e F31 (termos de uso, concluída) |
 | Sáb 07/11 | F30 (slides) |
-| Dom 08/11 | Corrigir os erros encontrados pelo João, fazer a P22 (refatoração da tela do organizador), testar a P04 no celular e fazer o roteiro do vídeo; depois F31 ou P03, se der tempo |
+| Dom 08/11 | Corrigir os erros encontrados pelo João, fazer a P22 (refatoração da tela do organizador), testar a P04 no celular e fazer o roteiro do vídeo; depois P03, se der tempo |
 | Seg 09/11 | F32 (vídeo) e revisão final; P06 só se os testes mostrarem horário errado |
 
 - **Ordem de 06/11/2026 (decidida pela Manuela):** neste dia, as tarefas
@@ -60,7 +60,7 @@ ficam com ela. Desde 06/11/2026, o João testa as tarefas concluídas
   parte da F25 sobre o painel do organizador foi para a P22.
 - **Sem dia reservado para atrasos:** com uma pessoa só no desenvolvimento, o fim de semana
   virou dia de trabalho. Se algo atrasar, o primeiro corte é o que está
-  marcado como "se der tempo": F31 e P03. O bloco A não sai da lista.
+  marcado como "se der tempo": a P03. O bloco A não sai da lista.
 - **Ordem revista em 05/11/2026 (decidida pela Manuela):** a nova
   análise da rubrica mostrou que a inscrição não passa por um Repository,
   e por isso a P19 entrou antes da F28. Os testes da seção 0.3 ganharam
@@ -99,6 +99,10 @@ testa e relata: quem corrige é a Manuela. Novos testes entram na seção
 | Dom 08/11 | Refazer o que falhou e testar o que for concluído até lá |
 | Seg 09/11 | Conferir as correções antes da gravação do vídeo |
 
+- **Recriar o banco depois da F31:** a F31 mudou a tabela `usuario`. Na
+  primeira rodada depois do merge dela, logo depois do `git pull`, o João
+  recria o banco (passo 1.4 do `FLUXO_DE_TRABALHO.md`). Sem isso, o login
+  e o cadastro dão erro, e os outros testes falham por esse motivo.
 - **Fica com a Manuela:** a P04, que o João não consegue testar pelo cabo
   nem pelo IP. A parte do Windows da P16 continua valendo só se o projeto
   voltar a ser usado no Windows.
@@ -247,7 +251,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 
 | Ordem | Tarefa | Peso | Por que nessa posição |
 |---|---|---|---|
-| 12 | F31 Termos de consentimento | 1 ponto | A mudança é pequena |
+| 12 | F31 Termos de consentimento (concluída) | 1 ponto | A mudança é pequena |
 | 13 | F33 Hospedagem | 2 pontos | A P04, de que dependia, foi concluída |
 
 ### Bloco D: sem efeito na rubrica
@@ -291,6 +295,7 @@ Manuela resolver. Ele não altera o código nem este arquivo.
 
 | Tarefa | O que testar | Como testar | Onde | Status |
 |---|---|---|---|---|
+| F31 | O cadastro exige o aceite dos termos, e o Perfil mostra o mesmo texto | Com o banco recriado, tocar em "Criar conta" e preencher os campos. Tocar em "termos de uso": os termos abrem em uma janela. Tentar criar a conta sem marcar a caixa: deve aparecer "Aceite os termos de uso para criar a conta." e a conta não é criada. Marcar a caixa e criar a conta: deve entrar no app. Na aba Perfil, tocar em "Termos de uso", acima de "Sair": os mesmos termos abrem em uma tela própria, sem janela | App (celular ou emulador) | Testado |
 | F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
 | P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
 | P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
@@ -312,7 +317,9 @@ para ser refeito.
 
 ## 0.4 Tarefas pendentes por tempo de execução
 
-Lista feita em 05/11/2026, da tarefa mais rápida para a mais demorada.
+Lista feita em 05/11/2026 e atualizada em 06/11/2026, da tarefa mais
+rápida para a mais demorada. Ao concluir uma tarefa, ela sai da tabela e
+entra na lista "Já saíram da tabela", logo abaixo.
 Os tempos são estimativas, não medições, e consideram desenvolver,
 testar, revisar e abrir o Pull Request. A ordem aqui **não** é a ordem de
 trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
@@ -321,10 +328,10 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 | # | Tarefa | Prioridade | Tempo estimado | Situação |
 |---|---|---|---|---|
 | 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João; P04 com a Manuela) | 🔴 | Cerca de 1 h | 06 a 09/11 |
-| 2 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
-| 3 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
-| 4 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
-| 5 | F31 Termos de consentimento | 🟢 | Cerca de 2 h | Dom 08/11, se der tempo |
+| 2 | F31 Trocar o texto provisório pelos termos definitivos | 🟢 | Cerca de 15 min | Quando o texto ficar pronto, antes do vídeo |
+| 3 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
+| 4 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
+| 5 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
 | 6 | F21 Marcar avisos como lidos | 🟢 | 2 a 3 h | Bloco D |
 | 7 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
 | 8 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
@@ -342,12 +349,15 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 | 20 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
 | 21 | P22 Refatoração da tela do organizador | 🟡 | A estimar | Dom 08/11, antes do vídeo |
 
+**Já saíram da tabela:** P05, P19, F28 e F31 (concluídas) e F34 (cancelada
+em 06/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
+
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
   porque a tela "Escolher evento" já foi feita na F20 e falta só a imagem
   de capa. A P05 caiu de cerca de 1 h para cerca de 20 min, porque a
   tarefa ficou só em corrigir o comentário do `app_shell.dart`.
 - **Total, sem a linha 1 e sem a P22 (ainda sem estimativa):** cerca de
-  68 a 90 horas, contando 8 horas
+  66 a 85 horas, contando 8 horas
   para cada tarefa de "1 dia ou mais".
 - **Só o essencial (F30 e F32):** cerca de 5 a 7 horas.
 
@@ -425,7 +435,7 @@ o nome indicado, que aparece acima de cada tela.
 | F28 | — (S14) | 🔴 | Fluxogramas dos casos de uso | Concluído |
 | F29 | — (S15) | 🔴 | Nomes dos métodos de CRUD iguais aos dos requisitos | Concluído |
 | F30 | — (S16) | 🔴 | Slides da apresentação | Pendente |
-| F31 | — (S17) | 🟢 | Termos de consentimento no cadastro | Pendente |
+| F31 | — (S17) | 🟢 | Termos de consentimento no cadastro | Concluído |
 | F32 | — (S18) | 🔴 | Vídeo de demonstração | Pendente |
 | F33 | — (S19) | 🟢 | Hospedagem do frontend e da API | Pendente |
 
@@ -1311,8 +1321,17 @@ o nome indicado, que aparece acima de cada tela.
 ### F31 Termos de consentimento no cadastro (S17)
 
 - **Telas no [canvas](https://claude.ai/artifact/Eh68uUe4Q6xuAwYuT5UVvt):** "Cadastro (RF01)".
-- **O que falta:** mostrar os termos no cadastro (F01) e guardar no banco
-  a decisão da pessoa (ex.: coluna com a data do aceite em `usuario`).
+- **Concluído (06/11/2026):** o cadastro tem a caixa "Li e concordo com os
+  termos de uso", e o link abre o texto em uma janela. A conta só é criada
+  com a caixa marcada, regra conferida também na API
+  (`aceitou_termos: true`), e `usuario.data_aceite_termos` guarda a data
+  do aceite. Os mesmos termos aparecem na linha "Termos de uso" da aba
+  Perfil, acima de "Sair", que abre uma tela própria.
+- **Texto dos termos:** o texto atual é provisório. Os termos definitivos
+  entram na lista `paragrafosTermosUso` (`widgets/termos_uso.dart`).
+- **Atenção:** a tabela `usuario` mudou. Depois do merge, é preciso
+  recriar o banco local (passo 1.4 do `FLUXO_DE_TRABALHO.md`), senão o
+  login e o cadastro dão erro.
 - **Rubrica:** 1 ponto de bônus.
 
 ### F32 Vídeo de demonstração (S18)

@@ -69,6 +69,7 @@ classDiagram
         +string senha
         +string tipo_usuario
         +string google_id
+        +datetime data_aceite_termos
     }
 
     class Organizador {

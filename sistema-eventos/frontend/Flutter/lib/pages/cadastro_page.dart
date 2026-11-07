@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../services/api_service.dart';
 import '../widgets/tela_acesso.dart';
+import '../widgets/termos_uso.dart';
 import 'app_shell.dart';
 
 /// Mesmos números usados pelo backend (`TAMANHO_MINIMO_SENHA` e
@@ -20,8 +21,10 @@ final formatoEmail = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
 ///
 /// Aberta pelo link "Criar conta" da tela de login. Confere os campos no
 /// próprio app (preenchidos, formato do e-mail, senha mínima e as duas
-/// senhas iguais) e envia nome, e-mail e senha para `POST /api/usuarios`
-/// (`ApiService.cadastrar`). Em caso de sucesso, já faz o login com os
+/// senhas iguais) e envia nome, e-mail, senha e o aceite dos termos para
+/// `POST /api/usuarios` (`ApiService.cadastrar`). A conta só é criada com a
+/// caixa dos termos de uso marcada (F31); o link "termos de uso" abre o
+/// texto em uma janela. Em caso de sucesso, já faz o login com os
 /// mesmos dados (`ApiService.login`) e abre o `AppShell`, para a pessoa
 /// não precisar digitar tudo de novo.
 ///
@@ -46,6 +49,7 @@ class _CadastroPageState extends State<CadastroPage> {
   // Cada campo de senha tem o seu "olho" (mostrar/ocultar), como no login.
   bool senhaVisivel = false;
   bool confirmarSenhaVisivel = false;
+  bool aceitouTermos = false;
 
   /// Confere os campos antes de enviar. Devolve a mensagem do primeiro
   /// problema encontrado, ou `null` se estiver tudo certo.
@@ -61,6 +65,7 @@ class _CadastroPageState extends State<CadastroPage> {
       return 'A senha precisa ter de $tamanhoMinimoSenha a $tamanhoMaximoSenha caracteres.';
     }
     if (senha.text != confirmarSenha.text) return 'As senhas não são iguais.';
+    if (!aceitouTermos) return 'Aceite os termos de uso para criar a conta.';
     return null;
   }
 
@@ -77,7 +82,12 @@ class _CadastroPageState extends State<CadastroPage> {
 
     setState(() => carregando = true);
     try {
-      await ApiService.cadastrar(nome.text.trim(), email.text.trim(), senha.text);
+      await ApiService.cadastrar(
+        nome.text.trim(),
+        email.text.trim(),
+        senha.text,
+        aceitouTermos: aceitouTermos,
+      );
     } catch (erro) {
       if (mounted) {
         mostrarMensagem(erro.toString().replaceFirst('Exception: ', ''));
@@ -165,7 +175,48 @@ class _CadastroPageState extends State<CadastroPage> {
             'A senha precisa ter de $tamanhoMinimoSenha a $tamanhoMaximoSenha caracteres.',
             style: tema.textTheme.bodySmall?.copyWith(color: cores.onSurface),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              // Desativada durante o envio, como o link "Entrar": o aceite
+              // que vale é o que foi enviado.
+              Checkbox(
+                value: aceitouTermos,
+                semanticLabel: 'Li e concordo com os termos de uso',
+                onChanged: carregando ? null : (marcado) => setState(() => aceitouTermos = marcado ?? false),
+              ),
+              // `Wrap` em vez de `Row`: em telas estreitas, o link desce
+              // para a linha de baixo em vez de estourar a largura.
+              Expanded(
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    // Tocar na frase também marca a caixa.
+                    GestureDetector(
+                      onTap: carregando ? null : () => setState(() => aceitouTermos = !aceitouTermos),
+                      child: Text(
+                        'Li e concordo com os ',
+                        style: tema.textTheme.bodySmall?.copyWith(color: cores.onSurface),
+                      ),
+                    ),
+                    // Desativado durante o envio: com a janela aberta, o
+                    // `Navigator.pop` do fim do cadastro fecharia a janela
+                    // em vez de voltar para o login.
+                    TextButton(
+                      onPressed: carregando ? null : () => mostrarTermosUso(context),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(0, 44),
+                        textStyle: tema.textTheme.labelLarge?.copyWith(fontSize: 13),
+                      ),
+                      child: const Text('termos de uso'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
           FilledButton(
             onPressed: carregando ? null : criarConta,
             child: carregando

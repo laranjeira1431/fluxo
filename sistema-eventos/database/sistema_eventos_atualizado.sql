@@ -29,7 +29,11 @@ CREATE TABLE usuario (
     email           VARCHAR(150)    NOT NULL UNIQUE,
     senha           VARCHAR(255),
     tipo_usuario    VARCHAR(50)     NOT NULL,
-    google_id       VARCHAR(255)    UNIQUE
+    google_id       VARCHAR(255)    UNIQUE,
+    -- Data e hora em que a pessoa aceitou os termos de uso no cadastro
+    -- (F31). Fica vazia nos usuários criados direto no banco, como os de
+    -- exemplo, porque eles não passam pela tela de cadastro.
+    data_aceite_termos DATETIME
 ) ENGINE=InnoDB;
 
 -- =====================================================================

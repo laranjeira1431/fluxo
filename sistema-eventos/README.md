@@ -57,6 +57,8 @@ demonstração. Em relação ao banco oficial, ele:
   (`palestra.id_localizacao`, no lugar do texto `sala`);
 - deixa `usuario` preparado para o login com Google (`senha` opcional e
   `google_id`), ainda não implementado;
+- guarda em `usuario.data_aceite_termos` a data do aceite dos termos de
+  uso no cadastro (F31);
 - liga cada palestrante a um evento (`palestrante.id_evento`, F14): o
   organizador cadastra o palestrante no evento e o indica nas palestras.
 
@@ -297,7 +299,10 @@ sem alterar as telas.
 
 O app abre com a tela de abertura (logo, slogan e o rio da marca, por
 5 segundos) e segue para o login. Quem ainda não tem conta toca em
-**Criar conta**, preenche o cadastro e entra direto no app.
+**Criar conta**, preenche o cadastro, marca a caixa **Li e concordo com
+os termos de uso** e entra direto no app. O link **termos de uso** abre o
+texto em uma janela, e a conta só é criada com a caixa marcada. Os mesmos
+termos ficam na aba **Perfil**, na linha **Termos de uso**.
 
 Depois do login, a barra de baixo tem cinco abas: **Início**,
 **Programação** (do mesmo evento mostrado no Início), **Agenda**, **Avisos** e
@@ -534,7 +539,7 @@ administrador; os outros recebem 403).
 | POST | `/api/auth/login` | Login (devolve o token) | pública |
 | GET | `/api/auth/me` | Dados do usuário do token | login |
 | POST | `/api/auth/logout` | Logout (o app apaga o token) | pública |
-| POST | `/api/usuarios` | Cadastro (sempre como participante; nome preenchido, e-mail em formato válido e senha de 8 a 16 caracteres) | pública |
+| POST | `/api/usuarios` | Cadastro (sempre como participante; nome preenchido, e-mail em formato válido, senha de 8 a 16 caracteres e `aceitou_termos: true`, cuja data fica gravada em `data_aceite_termos`) | pública |
 | GET | `/api/usuarios` | Lista usuários | administrador |
 | GET, DELETE | `/api/usuarios/<id>` | Ver ou remover conta (quem é responsável por eventos não pode ser removido) | própria ou administrador |
 | PUT/PATCH | `/api/usuarios/<id>` | Alterar `nome`, `email` ou `senha` (outros campos são ignorados; mesmas regras do cadastro) | própria |

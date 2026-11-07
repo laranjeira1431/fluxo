@@ -119,16 +119,23 @@ class ApiService {
   ///
   /// Não envia `tipo_usuario`: o backend cria sempre um participante
   /// (P01). Não faz login: depois do cadastro, a tela chama `login` com o
-  /// mesmo e-mail e senha para receber o token.
+  /// mesmo e-mail e senha para receber o token. O backend só cria a conta
+  /// com `aceitouTermos` verdadeiro (F31).
   static Future<Map<String, dynamic>> cadastrar(
     String nome,
     String email,
-    String senha,
-  ) async {
+    String senha, {
+    required bool aceitouTermos,
+  }) async {
     final data = await request(
       '/api/usuarios',
       method: 'POST',
-      body: {'nome': nome, 'email': email, 'senha': senha},
+      body: {
+        'nome': nome,
+        'email': email,
+        'senha': senha,
+        'aceitou_termos': aceitouTermos,
+      },
     );
     return Map<String, dynamic>.from(data);
   }

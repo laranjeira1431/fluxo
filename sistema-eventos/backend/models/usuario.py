@@ -11,6 +11,10 @@ aceita vazio, porque quem entra pelo Google não tem senha no sistema, e
 `google_id` guarda o identificador da conta Google. O `to_dict` não expõe
 nenhum dos dois.
 
+`data_aceite_termos` registra quando a pessoa aceitou os termos de uso no
+cadastro (F31). Fica vazia em quem foi criado direto no banco, e o
+`to_dict` também não a expõe, porque o app não usa esse dado.
+
 IMPORTANTE: esta Model NÃO faz hash de senha sozinha. A geração do hash
 (quando um usuário novo é cadastrado) e a verificação de senha (no login)
 são regras de negócio de segurança e ficam nos Services
@@ -46,6 +50,7 @@ class Usuario(db.Model, CRUDMixin):
     senha = db.Column(db.String(255))
     tipo_usuario = db.Column(db.String(50), nullable=False)
     google_id = db.Column(db.String(255), unique=True)
+    data_aceite_termos = db.Column(db.DateTime)
 
     def to_dict(self):
         """Serializa o usuário sem expor o campo `senha`."""

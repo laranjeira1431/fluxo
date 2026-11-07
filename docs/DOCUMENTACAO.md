@@ -856,3 +856,12 @@ pendente na seção 0.3 do `PENDENCIAS.md`.
 - **Vídeo:** depois da primeira abertura, os avisos deixam de ser novos. Para
   mostrar o contador, é preciso enviar um comunicado na hora ou recriar o
   banco antes de gravar.
+
+## 18. Retirada da P12: testes automatizados
+
+Decisão da Manuela em 07/11/2026: os testes automatizados não serão feitos.
+Eles não são exigidos pelos requisitos nem pela rubrica, e os testes manuais
+da seção 0.3 do `PENDENCIAS.md` cobrem o que é preciso para a entrega. A
+tarefa saiu do cronograma e da lista de pendências, e ficou marcada como
+cancelada. A verificação do sistema continua sendo manual, então regras como
+vagas e inscrição repetida precisam ser testadas de novo quando mudarem.

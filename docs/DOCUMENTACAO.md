@@ -777,8 +777,9 @@ qualquer usuário, inclusive de um organizador.
   todo mundo precisa entrar de novo.
 - **Servidor de produção:** `app.run` é o servidor de desenvolvimento do
   Flask. A escolha do servidor da hospedagem fica para a F33.
-- **Teste pendente:** o acesso pelo celular depois da mudança ficou na seção
-  0.3 do `PENDENCIAS.md`.
+- **Celular físico:** o acesso por um celular depois da mudança não foi
+  testado. A Manuela decidiu rodar o app no emulador (06/11/2026), que chega
+  à API mesmo com `API_HOST=127.0.0.1`.
 
 ## 15. F28: fluxogramas dos casos de uso
 

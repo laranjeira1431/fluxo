@@ -555,20 +555,13 @@ do aparelho no `flutter devices` traz `arm64` no lugar de `x86 64`.
 **Windows:** o emulador fica em
 `%LOCALAPPDATA%\Android\Sdk\emulator\emulator.exe` (mesmas opções).
 
-**No celular Android (para a gravação e para a F02):** ativar as
-"Opções do desenvolvedor" e a "Depuração USB" no celular, conectar no
-computador pelo cabo e rodar `flutter devices` para ver se ele aparece.
-O celular não enxerga o `127.0.0.1` do computador. O jeito mais simples
-é ligar os dois pelo cabo (repetir sempre que reconectar o celular):
-
-```bash
-adb reverse tcp:5000 tcp:5000
-flutter run
-```
-
-Sem o cabo, use o IP do computador na rede (descobrir com `hostname -I`;
+**No celular Android (opcional):** a gravação do vídeo usa o emulador.
+Para rodar num celular, ativar as "Opções do desenvolvedor" e a
+"Depuração USB", conectar no computador e rodar `flutter devices` para
+ver se ele aparece. O celular não enxerga o `127.0.0.1` do computador,
+então use o IP do computador na rede (descobrir com `hostname -I`;
 no Mac, `ipconfig getifaddr en0`).
-Nesse caso, a API precisa estar aberta para a rede: coloque
+A API precisa estar aberta para a rede: coloque
 `API_HOST=0.0.0.0` no `backend/.env`, tire o `API_DEBUG` e reinicie a API.
 
 ```bash
@@ -586,7 +579,7 @@ O celular e o computador precisam estar no mesmo Wi-Fi.
 | `ModuleNotFoundError: No module named 'backend'` | Comando rodado dentro de `backend/` | Voltar para `sistema-eventos/` (`cd ..`) |
 | `Access denied for user` | Usuário ou senha errados no `.env` | Conferir o `DATABASE_URL` com o usuário criado no passo 0.2 |
 | `RuntimeError: Defina em backend/.env uma SECRET_KEY` | O `.env` não tem chave ou ela é curta (o exemplo antigo deste passo a passo tinha 30 caracteres) | Gerar uma chave com o comando da mensagem e colocá-la no `.env` |
-| `RuntimeError: API_DEBUG=1 só funciona` | O `.env` tem `API_DEBUG=1` e `API_HOST=0.0.0.0` | Tirar o `API_DEBUG`, ou o `API_HOST` se estiver usando o cabo |
+| `RuntimeError: API_DEBUG=1 só funciona` | O `.env` tem `API_DEBUG=1` e `API_HOST=0.0.0.0` | Tirar o `API_DEBUG`, ou o `API_HOST` se não estiver usando um celular físico |
 | `Unknown database 'sistema_eventos'` | O banco não foi criado | Rodar o passo 0.6 |
 | `Can't connect to MySQL server` | MySQL desligado | **Linux:** `sudo systemctl start mysql` · **Mac:** `brew services start mysql` · **Windows:** abrir "Serviços" e iniciar o serviço `MySQL` |
 | `Address already in use` (porta 5000) | Já existe uma API rodando em outro terminal | Fechar a outra com `Ctrl+C`, ou procurar o terminal esquecido |

@@ -275,13 +275,12 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 20 | F13 Restaurantes próximos | 🟢 |
 | 21 | F12 Certificado de participação | 🟢 |
 | 22 | F15 Aviso de alteração de palestra | 🟢 |
-| 23 | P12 Testes automatizados | 🟢 |
-| 24 | F18 Entrar com Google | 🟢 |
-| 25 | F22 Perfil de administrador geral | 🟢 |
-| 26 | F23 Área do palestrante | 🟢 |
-| 27 | S09 Imagem de capa do evento | 🟢 |
-| 28 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 |
-| 29 | P24 Atualizar o banco sem recriá-lo | 🟢 |
+| 23 | F18 Entrar com Google | 🟢 |
+| 24 | F22 Perfil de administrador geral | 🟢 |
+| 25 | F23 Área do palestrante | 🟢 |
+| 26 | S09 Imagem de capa do evento | 🟢 |
+| 27 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 |
+| 28 | P24 Atualizar o banco sem recriá-lo | 🟢 |
 
 A P13 não entra na lista: ela se resolve quando a F13 for feita. A F03,
 a F04 e a F08 já foram concluídas.
@@ -354,19 +353,18 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 | 16 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
 | 17 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
 | 18 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
-| 19 | P12 Testes automatizados | 🟢 | 1 dia ou mais | Bloco D |
-| 20 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
-| 21 | P22 Refatoração da tela do organizador | 🟡 | A estimar | Dom 08/11, antes do vídeo |
+| 19 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
+| 20 | P22 Refatoração da tela do organizador | 🟡 | A estimar | Dom 08/11, antes do vídeo |
 
 **Já saíram da tabela:** P05, P19, F21, F28 e F31 (concluídas) e F34 (cancelada
-em 06/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
+em 06/11/2026) e P12 (cancelada em 07/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
 
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
   porque a tela "Escolher evento" já foi feita na F20 e falta só a imagem
   de capa. A P05 caiu de cerca de 1 h para cerca de 20 min, porque a
   tarefa ficou só em corrigir o comentário do `app_shell.dart`.
 - **Total, sem a linha 1 e sem a P22 (ainda sem estimativa):** cerca de
-  65 a 84 horas, contando 8 horas
+  57 a 76 horas, contando 8 horas
   para cada tarefa de "1 dia ou mais".
 - **Só o essencial (F30 e F32):** cerca de 5 a 7 horas.
 
@@ -1514,7 +1512,7 @@ qualquer alteração.
 | P09 | 🔴 | README desatualizado | Concluído |
 | P10 | 🟢 | Comentário desatualizado na tela de favoritos | Concluído |
 | P11 | 🔴 **antes da P14** | Arquivos locais versionados e falta de `.gitignore` | Concluído |
-| P12 | 🟢 | Projeto sem testes automatizados | Pendente |
+| P12 | 🟢 | Projeto sem testes automatizados | Cancelada |
 | P13 | 🟢 | Tabelas sem uso no app | Decidido: todas terão uso (F03, F04, F08, F13) |
 | P14 | 🔴 | Versão antiga e nova sem commit | Concluído |
 | P15 | 🟡 | Botão de inscrição não mostra o estado da inscrição | Concluído |
@@ -1826,6 +1824,9 @@ qualquer alteração.
   o sistema é testar tudo manualmente.
 - **Por que importa:** a cada mudança não há como garantir que regras
   importantes (vagas, duplicidade de inscrição) continuam funcionando.
+- **Cancelada em 07/11/2026 (decisão da Manuela):** não é exigida pelos
+  requisitos nem pela rubrica, e os testes manuais cobrem o que é preciso
+  para a entrega. Ver a seção 18 do `DOCUMENTACAO.md`.
 
 ### P13 🟢 Tabelas sem uso no app
 

@@ -91,8 +91,11 @@ concluídas (cronograma abaixo). A ordem segue os blocos da seção 0.2.
 
 ### Cronograma dos testes: João e Bianca (06 a 09/11/2026)
 
-O João e a Bianca têm a mesma função: só testam e relatam, e quem corrige
-é a Manuela. O João usa Mac e testa no emulador Android, sem celular
+O João e a Bianca têm a mesma função. Desde 09/11/2026 (P25), eles têm as
+mesmas permissões que a Manuela: testam, registram os resultados direto na
+seção 0.3, corrigem erros e podem fazer tarefas abertas, avisando a
+Manuela antes de começar. Só não mudam as seções 0.1 e 0.2 nem
+redistribuem tarefas. O João usa Mac e testa no emulador Android, sem celular
 físico. Novos testes entram na seção 0.3 conforme as tarefas forem
 concluídas, então a lista vai crescer.
 
@@ -296,10 +299,10 @@ aconteceu).
 
 **Como o João e a Bianca testam e registram:** eles fazem os testes com
 status Pendente e, a cada teste, informam se deu algum erro ou mau
-funcionamento. Quem testou envia o relato à Manuela (teste, data, resultado, o que aconteceu, passos
-e aparelho), e ela registra o resultado aqui. Todo erro entra também na
-tabela "Erros encontrados" abaixo, com a situação "Pendente", até a
-Manuela resolver. Quem testa não altera o código nem este arquivo.
+funcionamento. Desde 09/11/2026 (P25), quem testou registra o resultado
+direto aqui, em uma branch própria, seguindo o `FLUXO_DE_TRABALHO.md`.
+Todo erro entra também na tabela "Erros encontrados" abaixo, com a
+situação "Pendente", até ser resolvido.
 
 | Tarefa | O que testar | Como testar | Onde | Status |
 |---|---|---|---|---|
@@ -316,7 +319,7 @@ Manuela resolver. Quem testa não altera o código nem este arquivo.
 
 ### Erros encontrados
 
-Erros relatados nos testes e fora deles, para a Manuela resolver. Depois
+Erros relatados nos testes e fora deles, para a equipe resolver. Depois
 de corrigir, a situação vira "Resolvido" e o teste volta para Pendente,
 para ser refeito.
 
@@ -1525,6 +1528,7 @@ qualquer alteração.
 | P22 | 🟡 | Refatoração da tela do organizador | Pendente |
 | P23 | 🟡 | Incluir a Bianca como testadora | Concluído |
 | P24 | 🟢 | Atualizar o banco sem recriá-lo | Pendente |
+| P25 | 🟡 | Liberar o João e a Bianca para desenvolver | Concluído |
 
 ---
 
@@ -2043,3 +2047,26 @@ qualquer alteração.
 - **O que fazer:** passar a registrar as mudanças em scripts de migração
   (`ALTER TABLE`), que mantêm os dados, e explicar no README como rodá-los.
 - **Prazo:** antes da hospedagem com dados reais (F33).
+
+### P25 🟡 Liberar o João e a Bianca para desenvolver
+
+- **Origem:** pedido da Manuela (09/11/2026).
+- **O que foi feito:** o João e a Bianca passaram a ter as mesmas
+  permissões que a Manuela. Eles podem alterar o código e os documentos,
+  criar branch, fazer commit, push e Pull Request, seguindo o
+  `FLUXO_DE_TRABALHO.md`. As seções 0.1 e 0.3 e o `CLAUDE.md` foram
+  atualizados.
+- **Decidido (09/11/2026, pela Manuela):**
+  - só a Manuela muda as seções 0.1 (cronograma) e 0.2 (ordem dos
+    blocos) e redistribui tarefas. Os dois podem atualizar as seções 0.3
+    (testes e erros) e 0.4 (tempos);
+  - as tarefas deles são principalmente os testes, mas eles também
+    podem fazer tarefas abertas, avisando a Manuela antes de começar
+    para duas pessoas não pegarem a mesma tarefa;
+  - quem testa registra o resultado direto na seção 0.3, sem precisar
+    enviar o relato à Manuela;
+  - eles já conhecem o projeto, então o Claude não faz a apresentação
+    completa para eles.
+- **O que cada um precisa fazer:** ser colaborador do repositório no
+  GitHub, configurar o Git com o próprio nome e e-mail e receber a cópia
+  nova do `CLAUDE.md`, que não vai para o Git.

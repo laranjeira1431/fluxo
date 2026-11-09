@@ -288,44 +288,30 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 A P13 não entra na lista: ela se resolve quando a F13 for feita. A F03,
 a F04 e a F08 já foram concluídas.
 
-## 0.3 Testes pendentes
+0.3 Testes pendentes
 
-Testes que não puderam ser feitos na hora em que a tarefa foi concluída
-(no celular, no emulador ou no app). O que dá para testar com `curl` é
-testado durante a tarefa e registrado no próprio item dela. Cada tarefa
-concluída acrescenta aqui os testes que ficaram para depois. Depois do
-teste, o status vira "Testado" ou "Falhou: ..." (com o resumo do que
-aconteceu).
+Testes que não puderam ser feitos na hora em que a tarefa foi concluída (no celular, no emulador ou no app). O que dá para testar com curl é testado durante a tarefa e registrado no próprio item dela. Cada tarefa concluída acrescenta aqui os testes que ficaram para depois. Depois do teste, o status vira "Testado" ou "Falhou: ..." (com o resumo do que aconteceu).
 
-**Como o João e a Bianca testam e registram:** eles fazem os testes com
-status Pendente e, a cada teste, informam se deu algum erro ou mau
-funcionamento. Desde 09/11/2026 (P25), quem testou registra o resultado
-direto aqui, em uma branch própria, seguindo o `FLUXO_DE_TRABALHO.md`.
-Todo erro entra também na tabela "Erros encontrados" abaixo, com a
-situação "Pendente", até ser resolvido.
+Como o João e a Bianca testam e registram: eles fazem os testes com status Pendente e, a cada teste, informam se deu algum erro ou mau funcionamento. Desde 09/11/2026 (P25), quem testou registra o resultado direto aqui, em uma branch própria, seguindo o FLUXO_DE_TRABALHO.md. Todo erro entra também na tabela "Erros encontrados" abaixo, com a situação "Pendente", até ser resolvido.
 
-| Tarefa | O que testar | Como testar | Onde | Status |
-|---|---|---|---|---|
-| F21 | O contador da barra mostra os avisos novos, e abrir a aba Avisos os marca como lidos | Com o banco recriado, entrar com `ana.silva@email.com`: a aba Avisos mostra um contador. Abrir a aba: o topo mostra `4 NOVOS · ATUALIZADO` e a hora, os textos ficam em destaque e o contador some. Trocar de aba e voltar: nenhum aviso aparece como novo. Ativar um lembrete e trocar de aba: o contador volta a aparecer. Como organizador, enviar um comunicado: o contador aparece para quem recebeu | App (celular ou emulador) | Pendente |
-| F31 | O cadastro exige o aceite dos termos, e o Perfil mostra o mesmo texto | Com o banco recriado, tocar em "Criar conta" e preencher os campos. Tocar em "termos de uso": os termos abrem em uma janela. Tentar criar a conta sem marcar a caixa: deve aparecer "Aceite os termos de uso para criar a conta." e a conta não é criada. Marcar a caixa e criar a conta: deve entrar no app. Na aba Perfil, tocar em "Termos de uso", acima de "Sair": os mesmos termos abrem em uma tela própria, sem janela | App (celular ou emulador) | Testado |
-| F29 | Criar, listar e remover continuam funcionando com o MySQL | Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra | App (celular ou emulador) | Pendente |
-| P08 | O lembrete aparece cerca de 10 minutos antes da palestra | Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra | Android (celular ou emulador) | Pendente |
-| P16 | O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos | Depois do merge, rodar `flutter run` no Android e, no Windows, conferir que `git status` continua limpo | Android e Windows (só se o projeto voltar a ser usado no Windows) | Pendente |
-| F28 | Os dois fluxogramas aparecem desenhados, com as cores das camadas | Depois do push, abrir `docs/FLUXOGRAMAS.md` no GitHub e conferir os dois fluxogramas | GitHub | Testado |
-| F27 | Os dois diagramas aparecem desenhados | Depois do push, abrir `docs/DIAGRAMA_CLASSES.md` no GitHub e conferir os dois diagramas | GitHub | Testado |
-| F26 | A tela de editar perfil mostra a mensagem do e-mail repetido | No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar | App (celular ou emulador) | Pendente |
-| P06 | A data de uma avaliação feita depois das 21h aparece certa | Depois das 21h, avaliar uma palestra já iniciada em que a pessoa está inscrita e olhar a data do comentário nos detalhes da palestra. Com o erro, aparece o dia seguinte | App (celular ou emulador) | Pendente |
-| P19 | Inscrição, cancelamento e choque de horário continuam funcionando no app | Inscrever-se em uma palestra futura com vaga: as vagas caem 1. Cancelar: as vagas voltam. Inscrever-se em duas palestras no mesmo horário (se os dados não tiverem, criar uma como organizador): deve aparecer o aviso de choque, e a inscrição só é feita depois de confirmar | App (celular ou emulador) | Pendente |
+Tarefa	O que testar	Como testar	Onde	Status
+F21	O contador da barra mostra os avisos novos, e abrir a aba Avisos os marca como lidos	Com o banco recriado, entrar com ana.silva@email.com: a aba Avisos mostra um contador. Abrir a aba: o topo mostra 4 NOVOS · ATUALIZADO e a hora, os textos ficam em destaque e o contador some. Trocar de aba e voltar: nenhum aviso aparece como novo. Ativar um lembrete e trocar de aba: o contador volta a aparecer. Como organizador, enviar um comunicado: o contador aparece para quem recebeu	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
+F31	O cadastro exige o aceite dos termos, e o Perfil mostra o mesmo texto	Com o banco recriado, tocar em "Criar conta" e preencher os campos. Tocar em "termos de uso": os termos abrem em uma janela. Tentar criar a conta sem marcar a caixa: deve aparecer "Aceite os termos de uso para criar a conta." e a conta não é criada. Marcar a caixa e criar a conta: deve entrar no app. Na aba Perfil, tocar em "Termos de uso", acima de "Sair": os mesmos termos abrem em uma tela própria, sem janela	App (celular ou emulador)	Testado
+F29	Criar, listar e remover continuam funcionando com o MySQL	Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
+P08	O lembrete aparece cerca de 10 minutos antes da palestra	Permitir as notificações do app, ativar o lembrete de uma palestra que começa em menos de 10 minutos e esperar o aviso na barra do celular. Tocar no aviso deve abrir os detalhes da palestra	Android (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac): o aviso chegou com cerca de 4 min de atraso (6 min antes do início), atraso esperado do agendamento aproximado do Android
+P16	O Flutter não marca mais arquivos como alterados no Windows, e o app compila com os fins de linha novos	Depois do merge, rodar flutter run no Android e, no Windows, conferir que git status continua limpo	Android e Windows (só se o projeto voltar a ser usado no Windows)	Testado no Android (João, 09/11): o app compilou com flutter run. Windows: não se aplica
+F28	Os dois fluxogramas aparecem desenhados, com as cores das camadas	Depois do push, abrir docs/FLUXOGRAMAS.md no GitHub e conferir os dois fluxogramas	GitHub	Testado
+F27	Os dois diagramas aparecem desenhados	Depois do push, abrir docs/DIAGRAMA_CLASSES.md no GitHub e conferir os dois diagramas	GitHub	Testado
+F26	A tela de editar perfil mostra a mensagem do e-mail repetido	No Perfil, abrir "Editar perfil", digitar o e-mail de outra conta e salvar: deve aparecer "Já existe um usuário cadastrado com este email." e a tela continua aberta. Depois, mudar só o nome e salvar: deve funcionar	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
+P06	A data de uma avaliação feita depois das 21h aparece certa	Depois das 21h, avaliar uma palestra já iniciada em que a pessoa está inscrita e olhar a data do comentário nos detalhes da palestra. Com o erro, aparece o dia seguinte	App (celular ou emulador)	Falhou: avaliação feita às 13:54 ficou gravada como 16:54 (UTC). Depois das 21h, a data aparece como o dia seguinte
+P19	Inscrição, cancelamento e choque de horário continuam funcionando no app	Inscrever-se em uma palestra futura com vaga: as vagas caem 1. Cancelar: as vagas voltam. Inscrever-se em duas palestras no mesmo horário (se os dados não tiverem, criar uma como organizador): deve aparecer o aviso de choque, e a inscrição só é feita depois de confirmar	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
+Erros encontrados
 
-### Erros encontrados
+Erros relatados nos testes e fora deles, para a equipe resolver. Depois de corrigir, a situação vira "Resolvido" e o teste volta para Pendente, para ser refeito.
 
-Erros relatados nos testes e fora deles, para a equipe resolver. Depois
-de corrigir, a situação vira "Resolvido" e o teste volta para Pendente,
-para ser refeito.
-
-| Data | Tarefa | O que aconteceu | Passos | Aparelho | Situação |
-|---|---|---|---|---|---|
-
+Data	Tarefa	O que aconteceu	Passos	Aparelho	Situação
+09/11/2026	P06	A avaliação é gravada em UTC (datetime.utcnow em backend/models/avaliacao.py), 3 h à frente. Depois das 21h, a data do comentário aparece como o dia seguinte	Avaliar uma palestra já iniciada às 13:54 e conferir a coluna data na tabela avaliacao: 16:54	Emulador Android no Mac	Pendente
+09/11/2026	F21	Melhoria: o contador do sino não é atualizado ao voltar da tela de detalhes da palestra depois de ativar um lembrete; só aparece ao trocar para outra aba que não seja Avisos	Ativar o lembrete de uma palestra, voltar e olhar o sino sem trocar de aba	Emulador Android no Mac	Pendente
 ## 0.4 Tarefas pendentes por tempo de execução
 
 Lista feita em 05/11/2026 e atualizada em 06/11/2026, da tarefa mais

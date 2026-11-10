@@ -295,6 +295,7 @@ Testes que não puderam ser feitos na hora em que a tarefa foi concluída (no ce
 Como o João e a Bianca testam e registram: eles fazem os testes com status Pendente e, a cada teste, informam se deu algum erro ou mau funcionamento. Desde 09/11/2026 (P25), quem testou registra o resultado direto aqui, em uma branch própria, seguindo o FLUXO_DE_TRABALHO.md. Todo erro entra também na tabela "Erros encontrados" abaixo, com a situação "Pendente", até ser resolvido.
 
 Tarefa	O que testar	Como testar	Onde	Status
+F31	O texto definitivo dos termos aparece inteiro no cadastro e no Perfil	Tocar em "Criar conta" e no link "termos de uso": a janela mostra a abertura e as 14 cláusulas, cada uma com o título em destaque e os itens com "•" recuados, e termina na linha "Pelo Projeto “Fluxo”: Bianca Tolentino Menezes…", sem título em destaque. Nos itens longos, a segunda linha começa alinhada ao texto, e não embaixo do "•". Rolar até o fim: nada fica cortado e o botão "Fechar" aparece. Entrar no app e abrir Perfil → Termos de uso: o mesmo texto, sem cortes. Criar uma conta sem marcar a caixa continua bloqueado	App (celular ou emulador)	Pendente
 F21	O contador da barra mostra os avisos novos, e abrir a aba Avisos os marca como lidos	Com o banco recriado, entrar com ana.silva@email.com: a aba Avisos mostra um contador. Abrir a aba: o topo mostra 4 NOVOS · ATUALIZADO e a hora, os textos ficam em destaque e o contador some. Trocar de aba e voltar: nenhum aviso aparece como novo. Ativar um lembrete e trocar de aba: o contador volta a aparecer. Como organizador, enviar um comunicado: o contador aparece para quem recebeu	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
 F31	O cadastro exige o aceite dos termos, e o Perfil mostra o mesmo texto	Com o banco recriado, tocar em "Criar conta" e preencher os campos. Tocar em "termos de uso": os termos abrem em uma janela. Tentar criar a conta sem marcar a caixa: deve aparecer "Aceite os termos de uso para criar a conta." e a conta não é criada. Marcar a caixa e criar a conta: deve entrar no app. Na aba Perfil, tocar em "Termos de uso", acima de "Sair": os mesmos termos abrem em uma tela própria, sem janela	App (celular ou emulador)	Testado
 F29	Criar, listar e remover continuam funcionando com o MySQL	Com o backend ligado ao MySQL, abrir o app e fazer pelo menos: criar um usuário, avaliar uma palestra, favoritar e desfavoritar, ativar e desativar um lembrete e, como organizador, criar e remover uma palestra	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
@@ -325,27 +326,26 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 | # | Tarefa | Prioridade | Tempo estimado | Situação |
 |---|---|---|---|---|
 | 1 | Testes da seção 0.3 (F29, F26, P19, P06, P08 e P16 com o João e a Bianca) | 🔴 | Cerca de 1 h | 06 a 09/11 |
-| 2 | F31 Trocar o texto provisório pelos termos definitivos | 🟢 | Cerca de 15 min | Quando o texto ficar pronto, antes do vídeo |
-| 3 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
-| 4 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
-| 5 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
-| 6 | P24 Atualizar o banco sem recriá-lo | 🟢 | 1 a 2 h | Bloco D, antes da hospedagem com dados reais |
-| 7 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
-| 8 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
-| 9 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
-| 10 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
-| 11 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Seg 09/11 |
-| 12 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
-| 13 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
-| 14 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
-| 15 | F13 Restaurantes próximos | 🟢 | 4 a 6 h | Bloco D |
-| 16 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
-| 17 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
-| 18 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
-| 19 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
-| 20 | P22 Refatoração da tela do organizador | 🟡 | A estimar | Dom 08/11, antes do vídeo |
+| 2 | P20 Cancelamento lê a inscrição antes do bloqueio | 🟢 | Cerca de 1 h | Bloco D |
+| 3 | F25 Total de palestras e salas na API | 🟢 | 1 a 2 h | Bloco D |
+| 4 | P06 Fuso horário inconsistente | 🟡 | 1 a 2 h | Só se os testes mostrarem erro |
+| 5 | P24 Atualizar o banco sem recriá-lo | 🟢 | 1 a 2 h | Bloco D, antes da hospedagem com dados reais |
+| 6 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
+| 7 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
+| 8 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
+| 9 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
+| 10 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Seg 09/11 |
+| 11 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
+| 12 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
+| 13 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
+| 14 | F13 Restaurantes próximos | 🟢 | 4 a 6 h | Bloco D |
+| 15 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
+| 16 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
+| 17 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
+| 18 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
+| 19 | P22 Refatoração da tela do organizador | 🟡 | A estimar | Dom 08/11, antes do vídeo |
 
-**Já saíram da tabela:** P05, P19, F21, F28 e F31 (concluídas) e F34 (cancelada
+**Já saíram da tabela:** P05, P19, F21, F28 e F31 (concluídas; o texto definitivo da F31 entrou em 09/11/2026) e F34 (cancelada
 em 06/11/2026) e P12 (cancelada em 07/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
 
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
@@ -1358,8 +1358,26 @@ o nome indicado, que aparece acima de cada tela.
   (`aceitou_termos: true`), e `usuario.data_aceite_termos` guarda a data
   do aceite. Os mesmos termos aparecem na linha "Termos de uso" da aba
   Perfil, acima de "Sair", que abre uma tela própria.
-- **Texto dos termos:** o texto atual é provisório. Os termos definitivos
-  entram na lista `paragrafosTermosUso` (`widgets/termos_uso.dart`).
+- **Texto definitivo (09/11/2026):** o texto provisório foi trocado pelo
+  Termo de Uso da equipe (`docs/arq_ref/TermoDeUso_Fluxo_atualizado.pdf`).
+  O app mostra só o texto: a abertura, as 14 cláusulas e a linha da DPO.
+  Ficaram de fora a data e os campos de assinatura e testemunhas, porque
+  no app quem assina é a caixa de aceite, e a data fica em
+  `data_aceite_termos`. O texto fica na lista `secoesTermosUso`
+  (`widgets/termos_uso.dart`), em que cada `SecaoTermos` tem o título da
+  cláusula e os parágrafos; os itens começam com "• " e aparecem com o
+  "•" numa coluna própria. A linha "Pelo Projeto “Fluxo”" fecha o texto
+  sem título de cláusula.
+- **Ajustes em relação ao PDF (aprovados pela Manuela em 09/11/2026):** a
+  Cláusula 2 ganhou três itens, com os dados que o app guarda e o PDF não
+  citava: inscrições, favoritos e lembretes (e o acesso dos organizadores
+  às inscrições), avisos lidos e a data do aceite, escritos sem presumir
+  o gênero de quem lê. A Cláusula 3 ganhou a
+  finalidade "controlar as inscrições e as vagas e enviar avisos e
+  lembretes". **Falta:** colocar os mesmos ajustes no PDF, para os dois
+  textos ficarem iguais. O termo cita check-in, certificados e arquivos
+  carregados, que o app ainda não tem; o texto foi mantido como está no
+  PDF.
 - **Atenção:** a tabela `usuario` mudou. Depois do merge, é preciso
   recriar o banco local (passo 1.4 do `FLUXO_DE_TRABALHO.md`), senão o
   login e o cadastro dão erro.

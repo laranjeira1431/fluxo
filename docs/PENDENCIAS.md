@@ -1358,7 +1358,8 @@ o nome indicado, que aparece acima de cada tela.
   dos casos de uso. Arquitetura e pastas viraram um slide só
   ("Arquitetura e organização do código"), e os 5 passos do fluxo de uma
   inscrição foram para as anotações do apresentador. O texto do
-  encerramento ficou mais formal.
+  encerramento ficou mais formal. O vídeo fica numa moldura de celular,
+  e o print G4 saiu: o README será mostrado direto no repositório.
 - **Fontes:** Bricolage Grotesque, Figtree e JetBrains Mono precisam
   estar instaladas no computador da apresentação. Levar também um PDF.
 

@@ -295,6 +295,7 @@ Testes que não puderam ser feitos na hora em que a tarefa foi concluída (no ce
 Como o João e a Bianca testam e registram: eles fazem os testes com status Pendente e, a cada teste, informam se deu algum erro ou mau funcionamento. Desde 09/11/2026 (P25), quem testou registra o resultado direto aqui, em uma branch própria, seguindo o FLUXO_DE_TRABALHO.md. Todo erro entra também na tabela "Erros encontrados" abaixo, com a situação "Pendente", até ser resolvido.
 
 Tarefa	O que testar	Como testar	Onde	Status
+P26	O Início do organizador mostra o selo e o atalho da área	Entrar com bruno.costa@email.com: no Início, o selo ORGANIZAÇÃO aparece ao lado da data e, abaixo da saudação, o cartão "Área do organizador" (Areia; no modo escuro, azul-escuro). Tocar no cartão: abre o painel no mesmo evento mostrado no Início (trocar o evento em "Outros eventos" e tocar de novo: o painel abre no evento novo); voltar: o Início continua igual. Entrar com ana.silva@email.com: o Início não mostra nem o selo nem o cartão. Conferir no modo escuro	App (celular ou emulador)	Pendente
 P22	O novo painel do organizador mostra os cartões, os botões e as palestras por sala	Entrar com bruno.costa@email.com e abrir Perfil → Área do organizador. No topo aparece o selo ORGANIZAÇÃO. Os números ficam em cartões com ícone (palestras, inscrições, esgotadas, média) e, embaixo, a ocupação com uma barra. Os 8 botões (Inscrições, Comunicado, Evento e planta, Locais e rotas, Palestrantes, Palestras, Patrocinadores, Novo evento) abrem as telas certas. Na Semana de Tecnologia, "Palestras por sala" mostra SALA A1 e SALA A2 com 3 palestras e AUDITÓRIO PRINCIPAL com 1, e o ranking mostra só 5 palestras. Trocar de evento atualiza tudo. Entrar com elisa.prado@email.com: só a Feira de Ciências, sem o seletor. Ligar o modo escuro e conferir se nada fica ilegível ou cortado	App (celular ou emulador)	Pendente
 F31	O texto definitivo dos termos aparece inteiro no cadastro e no Perfil	Tocar em "Criar conta" e no link "termos de uso": a janela mostra a abertura e as 14 cláusulas, cada uma com o título em destaque e os itens com "•" recuados, e termina na linha "Pelo Projeto “Fluxo”: Bianca Tolentino Menezes…", sem título em destaque. Nos itens longos, a segunda linha começa alinhada ao texto, e não embaixo do "•". Rolar até o fim: nada fica cortado e o botão "Fechar" aparece. Entrar no app e abrir Perfil → Termos de uso: o mesmo texto, sem cortes. Criar uma conta sem marcar a caixa continua bloqueado	App (celular ou emulador)	Pendente
 F21	O contador da barra mostra os avisos novos, e abrir a aba Avisos os marca como lidos	Com o banco recriado, entrar com ana.silva@email.com: a aba Avisos mostra um contador. Abrir a aba: o topo mostra 4 NOVOS · ATUALIZADO e a hora, os textos ficam em destaque e o contador some. Trocar de aba e voltar: nenhum aviso aparece como novo. Ativar um lembrete e trocar de aba: o contador volta a aparecer. Como organizador, enviar um comunicado: o contador aparece para quem recebeu	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
@@ -1559,6 +1560,7 @@ qualquer alteração.
 | P23 | 🟡 | Incluir a Bianca como testadora | Concluído |
 | P24 | 🟢 | Atualizar o banco sem recriá-lo | Pendente |
 | P25 | 🟡 | Liberar o João e a Bianca para desenvolver | Concluído |
+| P26 | 🟡 | Indicador de organizador no Início | Concluído |
 
 ---
 
@@ -2114,3 +2116,17 @@ qualquer alteração.
 - **O que cada um precisa fazer:** ser colaborador do repositório no
   GitHub, configurar o Git com o próprio nome e e-mail e receber a cópia
   nova do `CLAUDE.md`, que não vai para o Git.
+
+### P26 🟡 Indicador de organizador no Início
+
+- **Origem:** pedido da Manuela (09/11/2026), depois da P22: o Início do
+  organizador era igual ao do participante.
+- **Decidido (09/11/2026):** só para organizadores, o Início mostra o selo
+  `ORGANIZAÇÃO` (Areia) ao lado da data e, abaixo da saudação, o cartão
+  "Área do organizador" (fundo Areia), que abre o painel direto. A entrada
+  do Perfil continua. O participante vê o Início como antes.
+- **Status:** Concluído (09/11/2026), em `pages/home_page.dart`,
+  `pages/app_shell.dart` (que passa o `ehOrganizador` para o Início) e
+  `pages/organizador_painel_page.dart` (o parâmetro opcional
+  `eventoInicialId`, para o atalho abrir o painel no evento mostrado no
+  Início). O teste no app ficou na seção 0.3.

@@ -317,7 +317,8 @@ para o login. A escolha do tema é salva no próprio aparelho com o pacote
   favoritos; tocar no resto da linha abre os detalhes.
 
 Quem entra como organizador (ex.: `elisa.prado@email.com`) vê também a
-**Área do organizador** no Perfil. Ela abre o painel do evento dessa
+**Área do organizador** no Perfil e, no Início, o selo **ORGANIZAÇÃO**
+ao lado da data e um cartão de atalho para a mesma área (P26). Ela abre o painel do evento dessa
 pessoa (o administrador, `bruno.costa@email.com`, vê todos, com o
 seletor **Trocar evento**). O painel (refeito na P22) mostra, de cima
 para baixo: o selo **ORGANIZAÇÃO**; os números do evento em cartões com

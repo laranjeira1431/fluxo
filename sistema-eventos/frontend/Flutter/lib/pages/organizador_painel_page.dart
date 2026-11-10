@@ -36,12 +36,19 @@ import 'organizador_patrocinadores_page.dart';
 /// de novo a lista de eventos e mostra o evento criado.
 ///
 /// Mostra só os eventos que a pessoa gerencia (`GET /api/organizador/eventos`):
-/// os ligados a ela, ou todos, para o administrador. Começa pelo primeiro;
+/// os ligados a ela, ou todos, para o administrador. Começa pelo
+/// `eventoInicialId`, se a pessoa gerencia esse evento, ou pelo primeiro;
 /// com mais de um, aparece um seletor no topo para trocar de evento (o
 /// "trocar evento" do canvas). Os números vêm de
 /// `GET /api/organizador/eventos/<id>/painel` (`ApiService.painelOrganizador`).
 class OrganizadorPainelPage extends StatefulWidget {
-  const OrganizadorPainelPage({super.key});
+  /// Evento que o painel mostra primeiro (opcional). O atalho do Início
+  /// (P26) passa o evento que está aparecendo lá; o Perfil não passa nada.
+  /// Se a pessoa não gerencia esse evento, o painel começa pelo primeiro
+  /// dos dela.
+  final int? eventoInicialId;
+
+  const OrganizadorPainelPage({super.key, this.eventoInicialId});
 
   @override
   State<OrganizadorPainelPage> createState() => _OrganizadorPainelPageState();
@@ -62,6 +69,9 @@ class _OrganizadorPainelPageState extends State<OrganizadorPainelPage> {
   @override
   void initState() {
     super.initState();
+    // O `carregar` confere se o evento está na lista da pessoa e, se não
+    // estiver, troca pelo primeiro.
+    eventoId = widget.eventoInicialId;
     futuro = carregar();
   }
 

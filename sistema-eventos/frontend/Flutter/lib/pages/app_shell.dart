@@ -101,6 +101,8 @@ class _AppShellState extends State<AppShell> {
       HomePage(
         usuarioId: widget.usuarioId,
         nomeUsuario: nome,
+        // Organizadores veem no Início o selo e o atalho da área (P26).
+        ehOrganizador: widget.ehOrganizador,
         // "Ver agenda" do Início troca para a aba Agenda (índice 2).
         aoVerAgenda: () => trocarAba(2),
         eventoId: eventoInicio,

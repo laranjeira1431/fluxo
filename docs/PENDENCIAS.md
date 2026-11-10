@@ -295,6 +295,7 @@ Testes que não puderam ser feitos na hora em que a tarefa foi concluída (no ce
 Como o João e a Bianca testam e registram: eles fazem os testes com status Pendente e, a cada teste, informam se deu algum erro ou mau funcionamento. Desde 09/11/2026 (P25), quem testou registra o resultado direto aqui, em uma branch própria, seguindo o FLUXO_DE_TRABALHO.md. Todo erro entra também na tabela "Erros encontrados" abaixo, com a situação "Pendente", até ser resolvido.
 
 Tarefa	O que testar	Como testar	Onde	Status
+P22	O novo painel do organizador mostra os cartões, os botões e as palestras por sala	Entrar com bruno.costa@email.com e abrir Perfil → Área do organizador. No topo aparece o selo ORGANIZAÇÃO. Os números ficam em cartões com ícone (palestras, inscrições, esgotadas, média) e, embaixo, a ocupação com uma barra. Os 8 botões (Inscrições, Comunicado, Evento e planta, Locais e rotas, Palestrantes, Palestras, Patrocinadores, Novo evento) abrem as telas certas. Na Semana de Tecnologia, "Palestras por sala" mostra SALA A1 e SALA A2 com 3 palestras e AUDITÓRIO PRINCIPAL com 1, e o ranking mostra só 5 palestras. Trocar de evento atualiza tudo. Entrar com elisa.prado@email.com: só a Feira de Ciências, sem o seletor. Ligar o modo escuro e conferir se nada fica ilegível ou cortado	App (celular ou emulador)	Pendente
 F31	O texto definitivo dos termos aparece inteiro no cadastro e no Perfil	Tocar em "Criar conta" e no link "termos de uso": a janela mostra a abertura e as 14 cláusulas, cada uma com o título em destaque e os itens com "•" recuados, e termina na linha "Pelo Projeto “Fluxo”: Bianca Tolentino Menezes…", sem título em destaque. Nos itens longos, a segunda linha começa alinhada ao texto, e não embaixo do "•". Rolar até o fim: nada fica cortado e o botão "Fechar" aparece. Entrar no app e abrir Perfil → Termos de uso: o mesmo texto, sem cortes. Criar uma conta sem marcar a caixa continua bloqueado	App (celular ou emulador)	Pendente
 F21	O contador da barra mostra os avisos novos, e abrir a aba Avisos os marca como lidos	Com o banco recriado, entrar com ana.silva@email.com: a aba Avisos mostra um contador. Abrir a aba: o topo mostra 4 NOVOS · ATUALIZADO e a hora, os textos ficam em destaque e o contador some. Trocar de aba e voltar: nenhum aviso aparece como novo. Ativar um lembrete e trocar de aba: o contador volta a aparecer. Como organizador, enviar um comunicado: o contador aparece para quem recebeu	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
 F31	O cadastro exige o aceite dos termos, e o Perfil mostra o mesmo texto	Com o banco recriado, tocar em "Criar conta" e preencher os campos. Tocar em "termos de uso": os termos abrem em uma janela. Tentar criar a conta sem marcar a caixa: deve aparecer "Aceite os termos de uso para criar a conta." e a conta não é criada. Marcar a caixa e criar a conta: deve entrar no app. Na aba Perfil, tocar em "Termos de uso", acima de "Sair": os mesmos termos abrem em uma tela própria, sem janela	App (celular ou emulador)	Testado
@@ -343,16 +344,15 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 | 16 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
 | 17 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
 | 18 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
-| 19 | P22 Refatoração da tela do organizador | 🟡 | A estimar | Dom 08/11, antes do vídeo |
 
-**Já saíram da tabela:** P05, P19, F21, F28 e F31 (concluídas; o texto definitivo da F31 entrou em 09/11/2026) e F34 (cancelada
+**Já saíram da tabela:** P05, P19, F21, F28, F31 e P22 (concluídas; o texto definitivo da F31 e a P22 entraram em 09/11/2026) e F34 (cancelada
 em 06/11/2026) e P12 (cancelada em 07/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
 
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
   porque a tela "Escolher evento" já foi feita na F20 e falta só a imagem
   de capa. A P05 caiu de cerca de 1 h para cerca de 20 min, porque a
   tarefa ficou só em corrigir o comentário do `app_shell.dart`.
-- **Total, sem a linha 1 e sem a P22 (ainda sem estimativa):** cerca de
+- **Total, sem a linha 1:** cerca de
   57 a 76 horas, contando 8 horas
   para cada tarefa de "1 dia ou mais".
 - **Só o essencial (F30 e F32):** cerca de 5 a 7 horas.
@@ -1555,7 +1555,7 @@ qualquer alteração.
 | P19 | 🔴 | Consultas da inscrição fora do Repository | Concluído |
 | P20 | 🟢 | Cancelamento lê a inscrição antes do bloqueio | Pendente |
 | P21 | 🟡 | Incluir o João como testador e o Mac no passo a passo | Concluído |
-| P22 | 🟡 | Refatoração da tela do organizador | Pendente |
+| P22 | 🟡 | Refatoração da tela do organizador | Concluído |
 | P23 | 🟡 | Incluir a Bianca como testadora | Concluído |
 | P24 | 🟢 | Atualizar o banco sem recriá-lo | Pendente |
 | P25 | 🟡 | Liberar o João e a Bianca para desenvolver | Concluído |
@@ -2056,6 +2056,20 @@ qualquer alteração.
 - **O que fazer:** mostrar no painel do organizador quantas palestras há
   em cada sala, junto com o total de palestras, que já aparece. O restante
   da refatoração será definido com a Manuela no plano da tarefa.
+- **Decidido (09/11/2026, pela Manuela):** o painel passa a ser diferente
+  das telas do participante e usa ícones para ficar mais fácil de ler,
+  afastando-se da prancha "Área do organizador" do canvas:
+  - selo `ORGANIZAÇÃO` (Areia) no topo;
+  - os números em cartões brancos com ícone, dois por linha, no lugar da
+    faixa Marinho, e a ocupação em um cartão largo com barra de progresso;
+  - as ações em botões com ícone, dois por linha, no lugar da lista;
+  - as palestras por sala são contadas no próprio app, com a lista de
+    palestras que o painel já recebe. Por isso, salas sem palestra não
+    aparecem, e o backend não mudou;
+  - o ranking mostra só as 5 palestras mais procuradas.
+- **Status:** Concluído (09/11/2026), em
+  `frontend/Flutter/lib/pages/organizador_painel_page.dart`. O teste no
+  app ficou na seção 0.3.
 
 ### P23 🟡 Incluir a Bianca como testadora
 

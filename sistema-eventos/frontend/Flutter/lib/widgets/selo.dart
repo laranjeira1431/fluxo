@@ -7,8 +7,9 @@ import '../theme/app_theme.dart';
 /// - `destaque`: preenchido na cor principal (ex.: `INSCRITA`);
 /// - `alerta`: contorno e texto na cor de atenção (ex.: `ESGOTADA`);
 /// - `neutro`: contorno discreto (ex.: `48 VAGAS`);
-/// - `organizacao`: preenchido na cor Areia, para os comunicados do
-///   organizador na aba Avisos (ex.: `ORGANIZAÇÃO`, F09).
+/// - `organizacao`: preenchido na cor Areia, para o que vem do
+///   organizador: os comunicados na aba Avisos (F09) e o topo da Área do
+///   organizador (P22) (ex.: `ORGANIZAÇÃO`).
 enum TipoSelo { destaque, alerta, neutro, organizacao }
 
 /// Componente compartilhado: selo (etiqueta) de situação.

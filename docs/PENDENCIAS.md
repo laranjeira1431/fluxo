@@ -336,18 +336,17 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 | 5 | P24 Atualizar o banco sem recriá-lo | 🟢 | 1 a 2 h | Bloco D, antes da hospedagem com dados reais |
 | 6 | F15 Aviso de alteração de palestra | 🟢 | 2 a 3 h | Bloco D |
 | 7 | S09 Imagem de capa do evento | 🟢 | 2 a 3 h | Bloco D |
-| 8 | F32 Vídeo de demonstração | 🔴 | 2 a 3 h | Seg 09/11 |
-| 9 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
-| 10 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Seg 09/11 |
-| 11 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
-| 12 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
-| 13 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
-| 14 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
-| 15 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
-| 16 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
-| 17 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
+| 8 | P03 Validações que faltam nos dados recebidos | 🟡 | Cerca de 3 h | Dom 08/11, se der tempo |
+| 9 | F30 Slides da apresentação | 🔴 | 3 a 4 h | Seg 09/11 |
+| 10 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
+| 11 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
+| 12 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
+| 13 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
+| 14 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
+| 15 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
+| 16 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
 
-**Já saíram da tabela:** P05, P19, F21, F28, F31, P22 e F13 (concluídas; o texto definitivo da F31, a P22 e a F13 entraram em 09/11/2026) e F34 (cancelada
+**Já saíram da tabela:** P05, P19, F21, F28, F31, P22 e F13 (concluídas; o texto definitivo da F31, a P22 e a F13 entraram em 09/11/2026), F32 (concluída em 10/11/2026) e F34 (cancelada
 em 06/11/2026) e P12 (cancelada em 07/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
 
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
@@ -434,7 +433,7 @@ o nome indicado, que aparece acima de cada tela.
 | F29 | — (S15) | 🔴 | Nomes dos métodos de CRUD iguais aos dos requisitos | Concluído |
 | F30 | — (S16) | 🔴 | Slides da apresentação | Em andamento |
 | F31 | — (S17) | 🟢 | Termos de consentimento no cadastro | Concluído |
-| F32 | — (S18) | 🔴 | Vídeo de demonstração | Pendente |
+| F32 | — (S18) | 🔴 | Vídeo de demonstração | Concluído |
 | F33 | — (S19) | 🟢 | Hospedagem do frontend e da API | Pendente |
 
 ### F01 Tela de cadastro de usuário (RF01)
@@ -1422,6 +1421,14 @@ o nome indicado, que aparece acima de cada tela.
 - **Quando gravar:** no último dia do cronograma (seção 0.1), com o que
   estiver pronto do bloco B. As tarefas que ficarem de fora não impedem
   a gravação.
+- **Concluído (10/11/2026):** o vídeo `docs/apresentacao/demonstracao.mp4`
+  (1 min 15 s, sem áudio) junta trechos das duas gravações de tela, na
+  ordem do slide 4: inscrição com vagas (com o aviso de choque de
+  horário), agenda personalizada, como chegar até a sala, comunicado aos
+  inscritos e painel do evento. Ficaram de fora o cadastro, os logins e
+  o "Sair". O vídeo também está embutido no slide 4 do
+  `Fluxo_Eventos_apresentacao.pptx`. O PDF da apresentação não toca
+  vídeo e ficou como estava.
 
 ### F33 Hospedagem do frontend e da API (S19)
 

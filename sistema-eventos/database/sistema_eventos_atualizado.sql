@@ -52,6 +52,9 @@ CREATE TABLE evento (
 -- =====================================================================
 -- 3. TABELA: restaurante
 -- Restaurantes que podem estar associados a um ou mais eventos.
+-- No app (F13, "Onde comer"), o organizador cadastra cada restaurante
+-- dentro de um evento, e a ligação fica em `restaurante_evento`.
+-- A distância é em km.
 -- =====================================================================
 CREATE TABLE restaurante (
     id_restaurante  INT AUTO_INCREMENT PRIMARY KEY,
@@ -385,11 +388,16 @@ INSERT INTO evento (nome, descricao, data_inicio, data_fim, local, id_organizado
 
 INSERT INTO restaurante (nome, avaliacao, distancia, categoria, endereco) VALUES
 ('Sabor Mineiro',   4.5, 0.80, 'Comida Mineira', 'Rua das Flores, 100'),
-('Cantina Italiana',4.2, 1.20, 'Italiana',       'Av. Central, 250');
+('Cantina Italiana',4.2, 1.20, 'Italiana',       'Av. Central, 250'),
+('Quintal Vegano',  4.7, 0.35, 'Vegetariana',    'Rua do Ginásio, 42');
 
+-- F13: a Semana de Tecnologia e a Feira de Ciências têm restaurantes
+-- indicados; a Mostra de Projetos não tem nenhum, para mostrar que o
+-- atalho "Onde comer" some quando o organizador não cadastra nada.
 INSERT INTO restaurante_evento (id_restaurante, id_evento) VALUES
 (1, 1),
-(2, 1);
+(2, 1),
+(3, 2);
 
 -- Os palestrantes de exemplo (F05), cada um no seu evento. Carla Souza
 -- era uma usuária do tipo 'palestrante'; agora é palestrante aqui e

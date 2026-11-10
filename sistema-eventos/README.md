@@ -136,6 +136,9 @@ O que dá para testar com cada usuário:
   avaliações e inscrições para remover; a Mostra de Projetos não tem
   patrocinadores e tem uma palestra sem palestrante.
 - **Elisa (organizadora):** vê só a Feira de Ciências.
+- **Onde comer:** a Semana de Tecnologia tem 2 restaurantes e a Feira de
+  Ciências tem 1. A Mostra de Projetos não tem nenhum, para mostrar que
+  o atalho some.
 - **Agenda e Favoritos vazios:** crie uma conta nova pela tela de
   cadastro.
 
@@ -283,8 +286,8 @@ Depois do login, a barra de baixo tem cinco abas: **Início**,
 **Programação** (do mesmo evento mostrado no Início), **Agenda**, **Avisos** e
 **Perfil**. O **Início** mostra o próximo evento: o cartão **Você está no
 evento**, datas, nome, local, quantas palestras e salas ele tem, o botão
-**Ver programação**, os atalhos (**Localização**, **Palestrantes** e **Patrocínio** já
-abrem; **Onde comer** aparece como "Em breve"), a descrição e a próxima palestra
+**Ver programação**, os atalhos (**Localização**, **Palestrantes**, **Onde comer** e
+**Patrocínio**), a descrição e a próxima palestra
 da agenda da pessoa nesse evento. Com mais de um evento, tocar no
 cartão (**Outros eventos**) abre a tela **Escolher evento**, com as datas,
 o lugar e as palestras de cada evento; tocar em um deles troca o evento
@@ -312,7 +315,13 @@ para o login. A escolha do tema é salva no próprio aparelho com o pacote
   em linha do tempo; as setas do topo pulam entre os dias com inscrição.
   No dia de hoje, a palestra em andamento (ou a próxima) aparece em
   destaque. Entre duas palestras aparece o intervalo livre ou o almoço;
-  as que já terminaram ficam acinzentadas.
+  as que já terminaram ficam acinzentadas. No almoço, o link **ver onde
+  comer** abre os restaurantes do evento.
+- **Onde comer (F13):** os restaurantes que a organização indicou perto
+  do evento, do mais perto para o mais longe, com a nota, a categoria, a
+  distância e o endereço. É opcional para o organizador: se o evento não
+  tiver restaurantes, o atalho do Início e o link da Agenda não
+  aparecem.
 - **Favoritos:** tocar na estrela de uma palestra tira ela dos
   favoritos; tocar no resto da linha abre os detalhes.
 
@@ -330,8 +339,10 @@ inscritos, com busca e o botão **Remover**.
 
 Em **Cadastros do evento**, o organizador abre, nesta ordem: **Evento e
 planta**, **Locais e rotas**, **Palestrantes**, **Palestras** e
-**Patrocinadores** (cada um com a lista e o formulário), além de **Novo
-evento**. Quem ainda não tem evento vê o botão **Criar meu primeiro
+**Patrocinadores** e **Restaurantes** (cada um com a lista e o
+formulário), além de **Novo evento**. No restaurante, o nome e a
+distância até o evento (em km, ex.: `0,8`) são obrigatórios; a nota
+(de 0 a 5), a categoria e o endereço são opcionais. Quem ainda não tem evento vê o botão **Criar meu primeiro
 evento**. A imagem é escolhida com o pacote `image_picker` (galeria no
 celular, janela de arquivos na web).
 
@@ -391,6 +402,7 @@ ficam numa subpasta por recurso:
 | `palestrante/` | `CriarPalestranteService`, `BuscarPalestranteService`, `ListarPalestrantesService`, `AtualizarPalestranteService`, `RemoverPalestranteService` |
 | `localizacao/` | `CriarLocalService`, `ListarLocaisService`, `AtualizarLocalService`, `RemoverLocalService` |
 | `patrocinador/` | `CriarPatrocinadorService`, `ListarPatrocinadoresService`, `AtualizarPatrocinadorService`, `RemoverPatrocinadorService` |
+| `restaurante/` | `CriarRestauranteService`, `ListarRestaurantesService`, `AtualizarRestauranteService`, `RemoverRestauranteService` (validações em `validacoes_restaurante.py`) |
 | `planta/` | `BuscarPlantaService`, `SalvarPlantaService` |
 | `upload/` | `SalvarImagemService` (confere o tipo e o tamanho da imagem e grava o arquivo) |
 
@@ -564,6 +576,9 @@ administrador; os outros recebem 403).
 | GET | `/api/patrocinadores?id_evento=` | Patrocinadores do evento, em ordem alfabética | login |
 | POST | `/api/patrocinadores` | Cria patrocinador (`id_evento`, `nome_empresa`, `logo`, `site`, `descricao`) | dono do evento |
 | PUT/PATCH, DELETE | `/api/patrocinadores/<id>` | Altera ou remove patrocinador | dono do evento |
+| GET | `/api/restaurantes?id_evento=` | Restaurantes do evento, do mais perto para o mais longe (lista vazia: o app esconde "Onde comer") | login |
+| POST | `/api/restaurantes` | Cria restaurante e a ligação com o evento (`id_evento`, `nome`, `distancia` em km; opcionais `categoria`, `endereco` e `avaliacao` de 0 a 5) | dono do evento |
+| PUT/PATCH, DELETE | `/api/restaurantes/<id>` | Altera ou remove restaurante | dono do evento |
 | GET | `/api/locais?id_evento=` | Locais do evento, com o passo a passo da rota em `descricao` | login |
 | POST | `/api/locais` | Cria local (`id_evento`, `nome_local`, `descricao`) | dono do evento |
 | PUT/PATCH, DELETE | `/api/locais/<id>` | Altera ou remove local (as palestras dele ficam sem local) | dono do evento |
@@ -685,7 +700,7 @@ Programação -> Patrocinadores -> GET /api/patrocinadores?id_evento=1 -> cards
 ```text
 Login (organizador) -> Perfil -> Área do organizador -> Novo evento
   -> Evento e planta (envia a imagem) -> Locais e rotas -> Palestrantes
-  -> Palestras (escolhe local e palestrante) -> Patrocinadores
+  -> Palestras (escolhe local e palestrante) -> Patrocinadores -> Restaurantes
   -> Login (participante) -> Início -> Outros eventos (o novo) -> Ver programação
 ```
 
@@ -712,6 +727,21 @@ curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Content-Type: application/js
   http://127.0.0.1:5000/api/organizador/eventos/1/comunicados
 # {"mensagem": "Comunicado enviado.", "total_destinatarios": 1}
 # Só para os inscritos da palestra 1: acrescente "id_palestra": 1 no corpo.
+```
+
+### Fluxo 14 — onde comer
+
+```text
+Início -> Onde comer -> GET /api/restaurantes?id_evento=1 -> cards
+Agenda -> Almoço · ver onde comer -> restaurantes do evento da palestra
+Login (organizador) -> Área do organizador -> Restaurantes -> Adicionar
+```
+
+```bash
+curl -X POST -H "Authorization: Bearer <TOKEN>" -H "Content-Type: application/json" \
+  -d '{"id_evento": 1, "nome": "Café do Campus", "distancia": 0.3, "avaliacao": 4.6}' \
+  http://127.0.0.1:5000/api/restaurantes
+# {"id_restaurante": 4, "nome": "Café do Campus", "distancia": 0.3, ...}
 ```
 
 ## 9. Tratamento de erros

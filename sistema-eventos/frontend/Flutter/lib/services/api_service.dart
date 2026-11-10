@@ -327,6 +327,12 @@ class ApiService {
   static Future<List<dynamic>> patrocinadores(int eventoId) async =>
       List<dynamic>.from(await request('/api/patrocinadores?id_evento=$eventoId'));
 
+  /// Lista os restaurantes indicados perto do evento, do mais perto para o
+  /// mais longe (`GET /api/restaurantes?id_evento=<id>`, F13). Lista
+  /// vazia: o evento não tem restaurantes, e o app esconde "Onde comer".
+  static Future<List<dynamic>> restaurantes(int eventoId) async =>
+      List<dynamic>.from(await request('/api/restaurantes?id_evento=$eventoId'));
+
   // ---------------------------------------------------------------------
   // Cadastros do organizador (F14)
   // ---------------------------------------------------------------------
@@ -429,8 +435,8 @@ class ApiService {
 
   /// Cria, altera ou remove um registro de um cadastro do organizador
   /// (F14). `recurso` é o caminho da API sem o `/api/` (ex.: `locais`,
-  /// `palestrantes`, `palestras`, `patrocinadores`), porque as quatro
-  /// rotas seguem o mesmo padrão:
+  /// `palestrantes`, `palestras`, `patrocinadores`, `restaurantes`),
+  /// porque as cinco rotas seguem o mesmo padrão:
   /// - sem `id`: `POST /api/<recurso>` (cria);
   /// - com `id`: `PUT /api/<recurso>/<id>` (altera).
   static Future<void> salvarCadastro(String recurso, int? id, Map<String, dynamic> dados) async {

@@ -13,6 +13,7 @@ import 'organizador_locais_page.dart';
 import 'organizador_palestrantes_page.dart';
 import 'organizador_palestras_page.dart';
 import 'organizador_patrocinadores_page.dart';
+import 'organizador_restaurantes_page.dart';
 
 /// Tela "Área do organizador" (F08, RF17): o painel do evento.
 ///
@@ -300,6 +301,15 @@ class _OrganizadorPainelPageState extends State<OrganizadorPainelPage> {
                           nome: 'Patrocinadores',
                           aoTocar: () => abrirCadastro(
                               OrganizadorPatrocinadoresPage(
+                                  eventoId: eventoId!)),
+                        ),
+                        // F13: opcional. Sem restaurantes, o app só não
+                        // mostra "Onde comer" aos participantes.
+                        _BotaoAcao(
+                          icone: Icons.restaurant_outlined,
+                          nome: 'Restaurantes',
+                          aoTocar: () => abrirCadastro(
+                              OrganizadorRestaurantesPage(
                                   eventoId: eventoId!)),
                         ),
                         _BotaoAcao(

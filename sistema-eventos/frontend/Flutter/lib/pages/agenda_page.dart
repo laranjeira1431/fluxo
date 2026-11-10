@@ -7,6 +7,7 @@ import '../widgets/aviso_vazio.dart';
 import '../widgets/cabecalho_aba.dart';
 import '../widgets/selo.dart';
 import 'palestra_details_page.dart';
+import 'restaurantes_page.dart';
 
 /// Tela de agenda pessoal (aba Agenda), no visual da prancha "Minha
 /// agenda" do canvas.
@@ -20,6 +21,8 @@ import 'palestra_details_page.dart';
 /// esquerda, a linha do rio com um ponto no meio e o card à direita. As
 /// setas do cabeçalho pulam entre os dias que têm inscrição. Entre duas
 /// palestras aparece a pausa ("Intervalo livre de 30 min" ou "Almoço").
+/// No almoço, o link "ver onde comer" (F13) abre os restaurantes do
+/// evento, se o organizador indicou algum.
 ///
 /// Destaque (fundo na cor principal): só no dia de hoje, vai para a
 /// palestra que está acontecendo ou, se nenhuma estiver, para a próxima.
@@ -33,8 +36,12 @@ class AgendaPage extends StatefulWidget {
   State<AgendaPage> createState() => _AgendaPageState();
 }
 
+/// O que a Agenda carrega: as palestras inscritas e os eventos delas que
+/// têm restaurantes indicados (id do evento -> nome do evento).
+typedef _DadosAgenda = ({List<Palestra> palestras, Map<int, String> eventosComRestaurante});
+
 class _AgendaPageState extends State<AgendaPage> {
-  late Future<List<Palestra>> futuro;
+  late Future<_DadosAgenda> futuro;
 
   /// Dia mostrado (`null` = escolher o dia inicial ao carregar).
   DateTime? diaEscolhido;
@@ -47,12 +54,38 @@ class _AgendaPageState extends State<AgendaPage> {
 
   /// Busca a agenda e ordena pelo início. Palestras sem horário ficam de
   /// fora: sem data, não há em que dia da linha do tempo colocá-las.
-  Future<List<Palestra>> carregar() async {
+  ///
+  /// Depois busca, ao mesmo tempo (`Future.wait`), os restaurantes de cada
+  /// evento da agenda (normalmente um ou dois). Se a busca de um evento
+  /// falhar, ele só fica sem o link "ver onde comer".
+  Future<_DadosAgenda> carregar() async {
     final lista = [
       for (final json in await ApiService.agenda(widget.usuarioId)) Palestra.fromJson(Map<String, dynamic>.from(json)),
     ].where((p) => p.dataInicio != null).toList();
     lista.sort((a, b) => a.dataInicio!.compareTo(b.dataInicio!));
-    return lista;
+
+    final eventos = <int, String>{
+      for (final p in lista)
+        if (p.idEvento != null) p.idEvento!: p.nomeEvento ?? '',
+    };
+    final ids = eventos.keys.toList();
+    final restaurantes = await Future.wait([
+      for (final id in ids) ApiService.restaurantes(id).catchError((_) => <dynamic>[]),
+    ]);
+    final comRestaurante = <int, String>{
+      for (var i = 0; i < ids.length; i++)
+        if (restaurantes[i].isNotEmpty) ids[i]: eventos[ids[i]]!,
+    };
+    return (palestras: lista, eventosComRestaurante: comRestaurante);
+  }
+
+  /// Abre "Onde comer" do evento. Ao voltar, não precisa recarregar: a
+  /// tela só mostra informações.
+  void abrirOndeComer(int idEvento, String nomeEvento) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => RestaurantesPage(eventoId: idEvento, nomeEvento: nomeEvento)),
+    );
   }
 
   Future<void> abrirDetalhes(Palestra palestra) async {
@@ -80,7 +113,7 @@ class _AgendaPageState extends State<AgendaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Palestra>>(
+      body: FutureBuilder<_DadosAgenda>(
         future: futuro,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -95,13 +128,13 @@ class _AgendaPageState extends State<AgendaPage> {
               Expanded(child: Center(child: Text(snapshot.error.toString().replaceFirst('Exception: ', '')))),
             ]);
           }
-          return _corpo(context, snapshot.data!);
+          return _corpo(context, snapshot.data!.palestras, snapshot.data!.eventosComRestaurante);
         },
       ),
     );
   }
 
-  Widget _corpo(BuildContext context, List<Palestra> palestras) {
+  Widget _corpo(BuildContext context, List<Palestra> palestras, Map<int, String> eventosComRestaurante) {
     // Dias com inscrição, sem repetir e em ordem (a lista já vem ordenada).
     final dias = <DateTime>[];
     for (final p in palestras) {
@@ -153,7 +186,15 @@ class _AgendaPageState extends State<AgendaPage> {
       final fim = p.fimOuInicio!;
       if (ocupadoAte == null || fim.isAfter(ocupadoAte)) ocupadoAte = fim;
       if (i < doDia.length - 1 && doDia[i + 1].dataInicio!.isAfter(ocupadoAte)) {
-        paradas.add(_ParadaPausa(inicio: ocupadoAte, fim: doDia[i + 1].dataInicio!));
+        // "ver onde comer" leva aos restaurantes do evento da palestra
+        // antes da pausa (onde a pessoa está na hora do almoço).
+        final idEvento = p.idEvento;
+        final nomeEvento = idEvento == null ? null : eventosComRestaurante[idEvento];
+        paradas.add(_ParadaPausa(
+          inicio: ocupadoAte,
+          fim: doDia[i + 1].dataInicio!,
+          aoVerOndeComer: nomeEvento == null ? null : () => abrirOndeComer(idEvento!, nomeEvento),
+        ));
       }
     }
 
@@ -339,12 +380,14 @@ class _ParadaPalestra extends StatelessWidget {
 /// pelo menos 30 min, ganha o link "ver onde comer"; se tem até 3 h, o
 /// texto é "Almoço", e se é maior continua "Intervalo livre de 8 h", para
 /// não esconder que a pessoa tem o dia livre. O link leva aos
-/// restaurantes da F13 e, até lá, só avisa "Em breve".
+/// restaurantes do evento (F13) e só aparece se o evento tiver algum
+/// (`aoVerOndeComer` não nulo).
 class _ParadaPausa extends StatelessWidget {
   final DateTime inicio;
   final DateTime fim;
+  final VoidCallback? aoVerOndeComer;
 
-  const _ParadaPausa({required this.inicio, required this.fim});
+  const _ParadaPausa({required this.inicio, required this.fim, this.aoVerOndeComer});
 
   @override
   Widget build(BuildContext context) {
@@ -379,13 +422,11 @@ class _ParadaPausa extends StatelessWidget {
       ),
       conteudo: Padding(
         padding: const EdgeInsets.fromLTRB(0, 4, 0, 22),
-        child: passaPeloAlmoco
+        child: passaPeloAlmoco && aoVerOndeComer != null
             ? Wrap(children: [
                 Text('$texto · ', style: estilo),
                 GestureDetector(
-                  onTap: () => ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(const SnackBar(content: Text('Em breve: onde comer perto do evento.'))),
+                  onTap: aoVerOndeComer,
                   child: Text(
                     'ver onde comer',
                     style: estilo?.copyWith(fontWeight: FontWeight.w600, color: cores.primary),

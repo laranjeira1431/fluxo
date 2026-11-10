@@ -8,7 +8,8 @@ Ao remover um evento, o `cascade="all, delete-orphan"` definido na Model
 integridade dos dados sem precisar de lógica extra aqui.
 
 Confirmação com senha (F14): apagar um evento apaga também as palestras,
-as inscrições, os locais e os patrocinadores dele, e não tem volta. Por
+as inscrições, os locais, os patrocinadores e os restaurantes dele, e
+não tem volta. Por
 isso, além de ser o dono do evento (ou o administrador), conferido no
 Controller, a pessoa precisa digitar a própria senha do app. Assim um
 celular esquecido aberto não basta para apagar um evento inteiro. A
@@ -19,6 +20,7 @@ Método principal:
 """
 
 from backend.models.evento import Evento
+from backend.models.restaurante import Restaurante
 from backend.services.auth.autenticar_usuario_service import AutenticarUsuarioService
 
 
@@ -31,6 +33,10 @@ class RemoverEventoService:
         if AutenticarUsuarioService().execute(usuario.email, senha) is None:
             raise PermissionError("Senha incorreta.")
 
+        # Os restaurantes (F13) não têm `id_evento`: a ligação fica em
+        # `restaurante_evento`, que o banco apaga sozinho, mas o restaurante
+        # ficaria solto. O commit do `deletar` grava as duas remoções.
+        Restaurante.marcar_remocao_do_evento(id_evento)
         removido = Evento.deletar(id_evento)
         if not removido:
             raise ValueError("Evento não encontrado.")

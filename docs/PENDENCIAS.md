@@ -275,7 +275,7 @@ camadas" são obrigatórios: o bônus não recupera pontos perdidos neles.
 | 17 | P05 Abas do app recarregam a cada troca (concluída) | 🟢 |
 | 18 | F21 Marcar avisos como lidos (concluída) | 🟢 |
 | 19 | F25 Total de palestras e salas na lista de eventos da API | 🟢 |
-| 20 | F13 Restaurantes próximos | 🟢 |
+| 20 | F13 Restaurantes próximos (concluída) | 🟢 |
 | 21 | F12 Certificado de participação | 🟢 |
 | 22 | F15 Aviso de alteração de palestra | 🟢 |
 | 23 | F18 Entrar com Google | 🟢 |
@@ -295,8 +295,10 @@ Testes que não puderam ser feitos na hora em que a tarefa foi concluída (no ce
 Como o João e a Bianca testam e registram: eles fazem os testes com status Pendente e, a cada teste, informam se deu algum erro ou mau funcionamento. Desde 09/11/2026 (P25), quem testou registra o resultado direto aqui, em uma branch própria, seguindo o FLUXO_DE_TRABALHO.md. Todo erro entra também na tabela "Erros encontrados" abaixo, com a situação "Pendente", até ser resolvido.
 
 Tarefa	O que testar	Como testar	Onde	Status
+F13	O participante vê "Onde comer" só nos eventos com restaurantes	Com o banco recriado, entrar com ana.silva@email.com. No Início da Semana de Tecnologia, tocar no atalho "Onde comer": aparecem Sabor Mineiro (800 M) e Cantina Italiana (1,2 KM), nessa ordem, cada um com ★, categoria e endereço. Em "Outros eventos", escolher a Feira de Ciências: o atalho mostra o Quintal Vegano (350 M). Escolher a Mostra de Projetos: o atalho "Onde comer" não aparece (a grade fica com 3 atalhos). Na Agenda, num dia com pausa no almoço, tocar em "ver onde comer": abre os restaurantes do evento. Conferir no modo escuro	App (celular ou emulador)	Pendente
+F13	O organizador cadastra, edita e remove restaurantes	Entrar com elisa.prado@email.com e abrir Área do organizador → Restaurantes. Tocar em "Adicionar restaurante" e salvar sem distância: aparece "Informe a distância até o evento, em km". Preencher nome, distância 0,5 e nota 7: aparece "A nota precisa ser um número de 0 a 5". Com nota 4,5, salvar: o restaurante entra na lista. Voltar ao Início: ele aparece em "Onde comer". Editar e apagar a nota: o card fica sem estrela. Remover o restaurante: ele some da lista e do app	App (celular ou emulador)	Pendente
 P26	O Início do organizador mostra o selo e o atalho da área	Entrar com bruno.costa@email.com: no Início, o selo ORGANIZAÇÃO aparece ao lado da data e, abaixo da saudação, o cartão "Área do organizador" (Areia; no modo escuro, azul-escuro). Tocar no cartão: abre o painel no mesmo evento mostrado no Início (trocar o evento em "Outros eventos" e tocar de novo: o painel abre no evento novo); voltar: o Início continua igual. Entrar com ana.silva@email.com: o Início não mostra nem o selo nem o cartão. Conferir no modo escuro	App (celular ou emulador)	Pendente
-P22	O novo painel do organizador mostra os cartões, os botões e as palestras por sala	Entrar com bruno.costa@email.com e abrir Perfil → Área do organizador. No topo aparece o selo ORGANIZAÇÃO. Os números ficam em cartões com ícone (palestras, inscrições, esgotadas, média) e, embaixo, a ocupação com uma barra. Os 8 botões (Inscrições, Comunicado, Evento e planta, Locais e rotas, Palestrantes, Palestras, Patrocinadores, Novo evento) abrem as telas certas. Na Semana de Tecnologia, "Palestras por sala" mostra SALA A1 e SALA A2 com 3 palestras e AUDITÓRIO PRINCIPAL com 1, e o ranking mostra só 5 palestras. Trocar de evento atualiza tudo. Entrar com elisa.prado@email.com: só a Feira de Ciências, sem o seletor. Ligar o modo escuro e conferir se nada fica ilegível ou cortado	App (celular ou emulador)	Pendente
+P22	O novo painel do organizador mostra os cartões, os botões e as palestras por sala	Entrar com bruno.costa@email.com e abrir Perfil → Área do organizador. No topo aparece o selo ORGANIZAÇÃO. Os números ficam em cartões com ícone (palestras, inscrições, esgotadas, média) e, embaixo, a ocupação com uma barra. Os 9 botões (Inscrições, Comunicado, Evento e planta, Locais e rotas, Palestrantes, Palestras, Patrocinadores, Restaurantes, Novo evento) abrem as telas certas. Na Semana de Tecnologia, "Palestras por sala" mostra SALA A1 e SALA A2 com 3 palestras e AUDITÓRIO PRINCIPAL com 1, e o ranking mostra só 5 palestras. Trocar de evento atualiza tudo. Entrar com elisa.prado@email.com: só a Feira de Ciências, sem o seletor. Ligar o modo escuro e conferir se nada fica ilegível ou cortado	App (celular ou emulador)	Pendente
 F31	O texto definitivo dos termos aparece inteiro no cadastro e no Perfil	Tocar em "Criar conta" e no link "termos de uso": a janela mostra a abertura e as 14 cláusulas, cada uma com o título em destaque e os itens com "•" recuados, e termina na linha "Pelo Projeto “Fluxo”: Bianca Tolentino Menezes…", sem título em destaque. Nos itens longos, a segunda linha começa alinhada ao texto, e não embaixo do "•". Rolar até o fim: nada fica cortado e o botão "Fechar" aparece. Entrar no app e abrir Perfil → Termos de uso: o mesmo texto, sem cortes. Criar uma conta sem marcar a caixa continua bloqueado	App (celular ou emulador)	Pendente
 F21	O contador da barra mostra os avisos novos, e abrir a aba Avisos os marca como lidos	Com o banco recriado, entrar com ana.silva@email.com: a aba Avisos mostra um contador. Abrir a aba: o topo mostra 4 NOVOS · ATUALIZADO e a hora, os textos ficam em destaque e o contador some. Trocar de aba e voltar: nenhum aviso aparece como novo. Ativar um lembrete e trocar de aba: o contador volta a aparecer. Como organizador, enviar um comunicado: o contador aparece para quem recebeu	App (celular ou emulador)	Testado (João, 09/11, emulador Android no Mac)
 F31	O cadastro exige o aceite dos termos, e o Perfil mostra o mesmo texto	Com o banco recriado, tocar em "Criar conta" e preencher os campos. Tocar em "termos de uso": os termos abrem em uma janela. Tentar criar a conta sem marcar a caixa: deve aparecer "Aceite os termos de uso para criar a conta." e a conta não é criada. Marcar a caixa e criar a conta: deve entrar no app. Na aba Perfil, tocar em "Termos de uso", acima de "Sair": os mesmos termos abrem em uma tela própria, sem janela	App (celular ou emulador)	Testado
@@ -340,13 +342,12 @@ trabalho: quem define a ordem são as seções 0.1 e 0.2. A exceção é o dia
 | 11 | F17 Logout e login lembrado (o que falta) | 🟡 | 3 a 4 h | Bloco B, fora da semana |
 | 12 | F26 Editar perfil (senha e foto) | 🟡 | 4 a 5 h | Bloco B, fora da semana |
 | 13 | F12 Certificado de participação | 🟢 | 4 a 6 h | Bloco D |
-| 14 | F13 Restaurantes próximos | 🟢 | 4 a 6 h | Bloco D |
-| 15 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
-| 16 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
-| 17 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
-| 18 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
+| 14 | F33 Hospedagem do frontend e da API | 🟢 | 4 a 8 h | Bônus, 2 pontos |
+| 15 | F22 Perfil de administrador geral | 🟢 | 6 a 8 h | Bloco D |
+| 16 | F23 Área do palestrante | 🟢 | 1 dia ou mais | Bloco D |
+| 17 | F18 Entrar com Google | 🟢 | 1 dia ou mais | Bloco D |
 
-**Já saíram da tabela:** P05, P19, F21, F28, F31 e P22 (concluídas; o texto definitivo da F31 e a P22 entraram em 09/11/2026) e F34 (cancelada
+**Já saíram da tabela:** P05, P19, F21, F28, F31, P22 e F13 (concluídas; o texto definitivo da F31, a P22 e a F13 entraram em 09/11/2026) e F34 (cancelada
 em 06/11/2026) e P12 (cancelada em 07/11/2026). A F27 e a F29 foram concluídas antes de a lista existir.
 
 - **Revisão dos tempos (05/11/2026):** a S09 caiu de 4 a 6 h para 2 a 3 h,
@@ -414,7 +415,7 @@ o nome indicado, que aparece acima de cada tela.
 | F10 | RF19 | 🔴 | Patrocinadores do evento | Concluído |
 | F11 | RF20 | 🔴 | Modo claro e escuro (feita dentro da F20) | Concluído |
 | F12 | — (diagrama) | 🟢 | Certificado de participação | Pendente |
-| F13 | — (Seção 1 e diagrama) | 🟢 | Restaurantes próximos (opcional para o organizador) | Pendente |
+| F13 | — (Seção 1 e diagrama) | 🟢 | Restaurantes próximos (opcional para o organizador) | Concluído |
 | F14 | — (S04) | 🔴 | Telas do organizador para cadastrar eventos e palestras | Concluído |
 | F15 | RF09, RF18 | 🟢 | Aviso de alteração de palestra na aba Avisos | Pendente |
 | F16 | — (S01, S02) | 🟡 | Regras de inscrição: choque de horário e palestra já iniciada | Concluído |
@@ -773,6 +774,29 @@ o nome indicado, que aparece acima de cada tela.
   evento não tiver restaurantes cadastrados, o app não mostra a seção.
 - **Não é um dos 20 RFs:** registrar isso na documentação final.
 - **Depende de:** F08 e P01 (área do organizador).
+- **Concluída em 09/11/2026 (branch `f13-restaurantes`):**
+  - **Banco:** as tabelas do diagrama não mudaram. No app, cada
+    restaurante é cadastrado dentro de um evento:
+    `Restaurante.salvar_no_evento` grava o restaurante e a ligação em
+    `restaurante_evento` num só commit, e a propriedade
+    `Restaurante.id_evento` devolve o evento. Com ela, a conferência de
+    dono (`verificar_dono_pelo_evento`) é a mesma do patrocinador.
+  - **API:** `GET /api/restaurantes?id_evento=` (login, do mais perto
+    para o mais longe, pelo `RestauranteRepository`) e `POST`,
+    `PUT/PATCH` e `DELETE /api/restaurantes/<id>` (dono do evento).
+  - **Decidido com a Manuela:** o cadastro é igual ao dos patrocinadores;
+    nome e distância (km) são obrigatórios; a nota (0 a 5), a categoria e
+    o endereço são opcionais; sem nota, o card não mostra a estrela. O
+    atalho "Onde comer" do Início e o link "ver onde comer" da Agenda só
+    aparecem se o evento tiver restaurantes. Dados de demonstração: 2
+    restaurantes na Semana de Tecnologia, 1 na Feira de Ciências e
+    nenhum na Mostra de Projetos.
+  - **Telas:** "Onde comer" (participante, como a prancha do canvas) e
+    "Restaurantes" no painel do organizador.
+  - **Testado com curl (porta de teste):** listar, criar, editar e remover;
+    participante e organizadora de outro evento recebem 403; sem login,
+    401; nota 7, nome vazio e distância vazia ou em texto recebem 400;
+    remover apaga também a ligação. Os testes no app estão na seção 0.3.
 
 ### F14 Telas do organizador para cadastrar eventos e palestras (S04)
 
@@ -1547,7 +1571,7 @@ qualquer alteração.
 | P10 | 🟢 | Comentário desatualizado na tela de favoritos | Concluído |
 | P11 | 🔴 **antes da P14** | Arquivos locais versionados e falta de `.gitignore` | Concluído |
 | P12 | 🟢 | Projeto sem testes automatizados | Cancelada |
-| P13 | 🟢 | Tabelas sem uso no app | Decidido: todas terão uso (F03, F04, F08, F13) |
+| P13 | 🟢 | Tabelas sem uso no app | Concluído (todas têm uso: F03, F04, F08, F13) |
 | P14 | 🔴 | Versão antiga e nova sem commit | Concluído |
 | P15 | 🟡 | Botão de inscrição não mostra o estado da inscrição | Concluído |
 | P16 | 🟡 | Fim de linha diferente entre sistemas (falta `.gitattributes`) | Concluído |
@@ -1878,6 +1902,9 @@ qualquer alteração.
   também. O CRUD de comentários saiu com a tabela `comentario`. Continuam
   sem uso `restaurante` e `restaurante_evento`, que aguardam a F13. A
   tarefa continua aberta.
+- **Concluída em 09/11/2026:** com a F13, `restaurante` e
+  `restaurante_evento` passaram a ser usadas pela tela "Onde comer" e
+  pelo cadastro do organizador. Todas as tabelas do banco têm uso.
 
 ### P14 🔴 Versão antiga e nova sem commit
 

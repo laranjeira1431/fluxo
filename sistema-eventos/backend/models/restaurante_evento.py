@@ -9,8 +9,9 @@ Herda `db.Model` (tabela `restaurante_evento`) e `CRUDMixin`.
 Como a chave primária é composta (`id_restaurante` + `id_evento`), os
 métodos genéricos `buscar_por_id`/`atualizar`/`deletar` do CRUDMixin (que
 assumem uma única chave primária) não se aplicam diretamente a esta
-Model; ela é manipulada pelo `salvar` genérico e por consultas específicas
-quando necessário.
+Model. Ela é gravada por `Restaurante.salvar_no_evento` (F13), lida pela
+propriedade `Restaurante.id_evento` e pelo `RestauranteRepository`, e
+apagada pelo banco junto com o restaurante (`ON DELETE CASCADE`).
 """
 
 from backend.extensions import db

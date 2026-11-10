@@ -16,10 +16,17 @@ import 'palestrantes_page.dart';
 import 'planta_page.dart';
 import 'patrocinadores_page.dart';
 import 'programacao_page.dart';
+import 'restaurantes_page.dart';
 
-/// O que o Início carrega: os eventos, a agenda da pessoa e a programação
-/// do evento mostrado (para contar palestras e salas no card).
-typedef _DadosInicio = ({List<dynamic> eventos, List<dynamic> agenda, List<dynamic> programacao});
+/// O que o Início carrega: os eventos, a agenda da pessoa, a programação
+/// do evento mostrado (para contar palestras e salas no card) e os
+/// restaurantes dele (sem nenhum, o atalho "Onde comer" some).
+typedef _DadosInicio = ({
+  List<dynamic> eventos,
+  List<dynamic> agenda,
+  List<dynamic> programacao,
+  List<dynamic> restaurantes,
+});
 
 /// Tela Início (F20 parte 2), como a prancha "Início" do canvas.
 ///
@@ -34,7 +41,7 @@ typedef _DadosInicio = ({List<dynamic> eventos, List<dynamic> agenda, List<dynam
 /// - o card do evento: datas, nome, local, quantas palestras e salas ele
 ///   tem e o botão "Ver programação";
 /// - os atalhos do evento (mapa, palestrantes, onde comer, patrocínio).
-///   Os que ainda não têm tela aparecem como "Em breve";
+///   "Onde comer" (F13) só aparece se o organizador indicou restaurantes;
 /// - a descrição do evento, quando houver;
 /// - a próxima palestra da agenda da pessoa nesse evento.
 ///
@@ -46,8 +53,8 @@ typedef _DadosInicio = ({List<dynamic> eventos, List<dynamic> agenda, List<dynam
 ///
 /// Busca `GET /api/eventos` e a agenda da pessoa
 /// (`GET /api/eventos/<id_usuario>/agenda`) ao mesmo tempo, com
-/// `Future.wait`, e depois a programação do evento mostrado (só dá para
-/// saber qual é depois que os eventos chegam).
+/// `Future.wait`, e depois a programação e os restaurantes do evento
+/// mostrado (só dá para saber qual é depois que os eventos chegam).
 class HomePage extends StatefulWidget {
   final int usuarioId;
   final String nomeUsuario;
@@ -109,10 +116,16 @@ class _HomePageState extends State<HomePage> {
     ]);
     final eventos = respostas[0];
     final evento = escolherEvento(eventos, widget.eventoId);
-    // Sem a programação, o card só fica sem a contagem.
-    final programacao =
-        evento == null ? <dynamic>[] : await ApiService.programacao(evento['id_evento']).catchError((_) => <dynamic>[]);
-    return (eventos: eventos, agenda: respostas[1], programacao: programacao);
+    if (evento == null) {
+      return (eventos: eventos, agenda: respostas[1], programacao: <dynamic>[], restaurantes: <dynamic>[]);
+    }
+    final doEvento = await Future.wait([
+      // Sem a programação, o card só fica sem a contagem.
+      ApiService.programacao(evento['id_evento']).catchError((_) => <dynamic>[]),
+      // Se os restaurantes falharem, o atalho "Onde comer" só não aparece.
+      ApiService.restaurantes(evento['id_evento']).catchError((_) => <dynamic>[]),
+    ]);
+    return (eventos: eventos, agenda: respostas[1], programacao: doEvento[0], restaurantes: doEvento[1]);
   }
 
   /// Abre a tela Escolher evento e, se a pessoa tocar em outro evento,
@@ -248,6 +261,13 @@ class _HomePageState extends State<HomePage> {
                       eventoId: evento['id_evento'],
                       nomeEvento: evento['nome'] ?? '',
                     )),
+                    // `null`: o evento não tem restaurantes e o atalho some.
+                    aoAbrirOndeComer: snapshot.data!.restaurantes.isEmpty
+                        ? null
+                        : () => abrir(RestaurantesPage(
+                              eventoId: evento['id_evento'],
+                              nomeEvento: evento['nome'] ?? '',
+                            )),
                   ),
                   if ((evento['descricao'] ?? '').toString().trim().isNotEmpty) ...[
                     const SizedBox(height: 22),
@@ -617,26 +637,31 @@ class _RioDoCard extends CustomPainter {
   bool shouldRepaint(_RioDoCard antigo) => antigo.cor != cor;
 }
 
-/// Os quatro atalhos do evento, em duas colunas. Localização (F03),
-/// Palestrantes (F05) e Patrocínio (F10) já têm tela; "Onde comer"
-/// aparece como "Em breve" (F13).
+/// Os atalhos do evento, em duas colunas: Localização (F03),
+/// Palestrantes (F05), Onde comer (F13) e Patrocínio (F10).
+///
+/// "Onde comer" é opcional para o organizador: com `aoAbrirOndeComer`
+/// nulo (evento sem restaurantes), o atalho não aparece e a grade fica
+/// com três.
 class _Atalhos extends StatelessWidget {
   final VoidCallback aoAbrirPlanta;
   final VoidCallback aoAbrirPalestrantes;
   final VoidCallback aoAbrirPatrocinio;
+  final VoidCallback? aoAbrirOndeComer;
 
   const _Atalhos({
     required this.aoAbrirPlanta,
     required this.aoAbrirPalestrantes,
     required this.aoAbrirPatrocinio,
+    this.aoAbrirOndeComer,
   });
 
   @override
   Widget build(BuildContext context) {
-    final atalhos = <(String, VoidCallback?)>[
+    final atalhos = <(String, VoidCallback)>[
       ('Localização', aoAbrirPlanta),
       ('Palestrantes', aoAbrirPalestrantes),
-      ('Onde comer', null),
+      if (aoAbrirOndeComer != null) ('Onde comer', aoAbrirOndeComer!),
       ('Patrocínio', aoAbrirPatrocinio),
     ];
     return GridView.count(
@@ -655,15 +680,14 @@ class _Atalhos extends StatelessWidget {
 
 class _Atalho extends StatelessWidget {
   final String nome;
-  final VoidCallback? aoTocar;
+  final VoidCallback aoTocar;
 
-  const _Atalho({required this.nome, this.aoTocar});
+  const _Atalho({required this.nome, required this.aoTocar});
 
   @override
   Widget build(BuildContext context) {
     final cores = Theme.of(context).colorScheme;
     final textos = Theme.of(context).textTheme;
-    final ativo = aoTocar != null;
 
     return Material(
       color: cores.surfaceContainer,
@@ -679,20 +703,13 @@ class _Atalho extends StatelessWidget {
                 width: 8,
                 height: 8,
                 decoration: BoxDecoration(
-                  color: ativo ? cores.primary : cores.outline,
+                  color: cores.primary,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(nome, style: textos.titleSmall, overflow: TextOverflow.ellipsis),
-                    if (!ativo) Text('Em breve', style: textos.bodySmall),
-                  ],
-                ),
+                child: Text(nome, style: textos.titleSmall, overflow: TextOverflow.ellipsis),
               ),
             ],
           ),

@@ -20,7 +20,8 @@ cada rota protegida ganha apenas uma linha (`@login_obrigatorio`).
 - `verificar_dono_do_evento` e `verificar_dono_da_palestra` (F08): o
   organizador só mexe no evento ligado a ele (e no que pertence ao
   evento); o administrador mexe em todos. `verificar_dono_pelo_evento`
-  (F14) faz o mesmo para locais, palestrantes e patrocinadores. É a "autorização por dono":
+  (F14) faz o mesmo para locais, palestrantes, patrocinadores e
+  restaurantes (F13). É a "autorização por dono":
   além de saber QUEM é a pessoa e QUAL o perfil dela, a API confere se o
   recurso é DELA.
 
@@ -120,7 +121,8 @@ def verificar_dono_pelo_evento(model, id_registro, nome):
     """Confere se a pessoa logada pode gerenciar um registro de um evento.
 
     Serve para tudo o que pertence a um evento pela coluna `id_evento`
-    (F14: local, palestrante, patrocinador). Busca o registro na `model`
+    (F14: local, palestrante, patrocinador; F13: restaurante, pela
+    propriedade `Restaurante.id_evento`). Busca o registro na `model`
     e confere o dono do evento dele. `nome` aparece na mensagem de erro
     (ex.: "Local não encontrado."). Retorna o registro encontrado.
     """

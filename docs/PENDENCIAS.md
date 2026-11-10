@@ -430,7 +430,7 @@ o nome indicado, que aparece acima de cada tela.
 | F27 | — (S13) | 🔴 | Diagrama de classes do domínio | Concluído |
 | F28 | — (S14) | 🔴 | Fluxogramas dos casos de uso | Concluído |
 | F29 | — (S15) | 🔴 | Nomes dos métodos de CRUD iguais aos dos requisitos | Concluído |
-| F30 | — (S16) | 🔴 | Slides da apresentação | Pendente |
+| F30 | — (S16) | 🔴 | Slides da apresentação | Em andamento |
 | F31 | — (S17) | 🟢 | Termos de consentimento no cadastro | Concluído |
 | F32 | — (S18) | 🔴 | Vídeo de demonstração | Pendente |
 | F33 | — (S19) | 🟢 | Hospedagem do frontend e da API | Pendente |
@@ -1322,6 +1322,32 @@ o nome indicado, que aparece acima de cada tela.
   Services, Repositories e Models; tecnologias; apresentação do README.
 - **Rubrica:** ligados a 3 dos 4 pontos de "Apresentação e
   documentação".
+- **Primeira versão (09/11/2026):** `docs/apresentacao/Fluxo_Eventos_apresentacao.pptx`,
+  com 16 slides na ordem do roteiro do professor e anotações do
+  apresentador com o tempo de cada parte. Os prints das telas (A1 a A9)
+  vêm do canvas e serão trocados por prints do app rodando, com os mesmos
+  nomes, em `docs/apresentacao/prints/`. Faltam o print do README no
+  GitHub (G4) e, se quiserem, o do cadastro com os termos (A10). O
+  diagrama de classes (G1) e os fluxogramas (G2, G3) foram desenhados a
+  partir de `docs/DIAGRAMA_CLASSES.md` e `docs/FLUXOGRAMAS.md`.
+- **Segunda versão (09/11/2026):** 12 slides. Os cinco casos de uso
+  ficaram em um slide só, sem prints, porque as telas aparecem no vídeo
+  da demonstração (F32). Casos escolhidos pela equipe, que são também as
+  funcionalidades do vídeo, nesta ordem: inscrição com vagas, agenda
+  personalizada, como chegar até a sala, comunicado aos inscritos e
+  painel do evento. O slide da demonstração tem o espaço para o `.mp4`,
+  e o slide de persistência mostra os métodos do `CRUDMixin`, a consulta
+  da agenda no `AgendaRepository` e o resultado dela. Dos prints, só o
+  A1 (Início) continua nos slides.
+- **Terceira versão (09/11/2026):** 11 slides. A capa ficou sem o
+  parágrafo e com o curso "TI Mobile". A demonstração vem logo depois
+  dos casos de uso. Arquitetura e pastas viraram um slide só
+  ("Arquitetura e organização do código"), e os 5 passos do fluxo de uma
+  inscrição foram para as anotações do apresentador. O texto do
+  encerramento ficou mais formal. O vídeo fica numa moldura de celular,
+  e o print G4 saiu: o README será mostrado direto no repositório.
+- **Fontes:** Bricolage Grotesque, Figtree e JetBrains Mono precisam
+  estar instaladas no computador da apresentação. Levar também um PDF.
 
 ### F31 Termos de consentimento no cadastro (S17)
 

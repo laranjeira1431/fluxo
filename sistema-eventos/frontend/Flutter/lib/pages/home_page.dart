@@ -7,8 +7,10 @@ import '../utils/datas.dart';
 import '../widgets/marca_texto.dart';
 import '../widgets/picote.dart';
 import '../widgets/rotulo_secao.dart';
+import '../widgets/selo.dart';
 import 'avaliacoes_evento_page.dart';
 import 'escolher_evento_page.dart';
+import 'organizador_painel_page.dart';
 import 'palestra_details_page.dart';
 import 'palestrantes_page.dart';
 import 'planta_page.dart';
@@ -24,6 +26,9 @@ typedef _DadosInicio = ({List<dynamic> eventos, List<dynamic> agenda, List<dynam
 /// Mostra as informações principais de UM evento, de cima para baixo:
 ///
 /// - a saudação, com o primeiro nome grifado (marca-texto);
+/// - só para organizadores (P26): o selo `ORGANIZAÇÃO` ao lado da data e
+///   o cartão "Área do organizador", que abre o painel do evento. Assim o
+///   Início do organizador fica diferente do Início do participante;
 /// - o cartão "Você está no evento", que abre a tela Escolher evento
 ///   quando há mais de um evento;
 /// - o card do evento: datas, nome, local, quantas palestras e salas ele
@@ -47,6 +52,11 @@ class HomePage extends StatefulWidget {
   final int usuarioId;
   final String nomeUsuario;
 
+  /// Se a pessoa logada é organizadora (P26). Só muda o que aparece: o
+  /// selo `ORGANIZAÇÃO` e o atalho "Área do organizador". Quem protege as
+  /// rotas do organizador é o backend.
+  final bool ehOrganizador;
+
   /// Abre a aba Agenda da barra de navegação ("Ver agenda"). Quem troca a
   /// aba é o `AppShell`.
   final VoidCallback aoVerAgenda;
@@ -61,6 +71,7 @@ class HomePage extends StatefulWidget {
     super.key,
     required this.usuarioId,
     required this.nomeUsuario,
+    this.ehOrganizador = false,
     required this.aoVerAgenda,
     required this.eventoId,
     required this.aoTrocarEvento,
@@ -183,8 +194,20 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               padding: const EdgeInsets.fromLTRB(20, 22, 20, 24),
               children: [
-                _Saudacao(nome: widget.nomeUsuario),
+                _Saudacao(nome: widget.nomeUsuario, ehOrganizador: widget.ehOrganizador),
                 const SizedBox(height: 20),
+                // Fica fora do `if (evento == null)` abaixo: quem ainda
+                // não tem evento também precisa chegar ao painel para
+                // criar o primeiro.
+                if (widget.ehOrganizador) ...[
+                  // Passa o evento mostrado no Início, para o painel abrir
+                  // nele. Ao voltar, o `abrir` recarrega o Início, porque
+                  // no painel o evento e as palestras podem ter mudado.
+                  _AtalhoOrganizador(
+                    aoTocar: () => abrir(OrganizadorPainelPage(eventoInicialId: evento?['id_evento'])),
+                  ),
+                  const SizedBox(height: 14),
+                ],
                 if (evento == null)
                   const Text('Nenhum evento encontrado.')
                 else ...[
@@ -269,11 +292,13 @@ Map<String, dynamic>? escolherEvento(List<dynamic> eventos, int? eventoId) {
 }
 
 /// Topo da tela: dia e hora em JetBrains Mono (`SEX 23 OUT · 08:30`) e
-/// "Bom dia, Ana", com o primeiro nome grifado.
+/// "Bom dia, Ana", com o primeiro nome grifado. Para organizadores, o
+/// selo `ORGANIZAÇÃO` (Areia) aparece ao lado da data (P26).
 class _Saudacao extends StatelessWidget {
   final String nome;
+  final bool ehOrganizador;
 
-  const _Saudacao({required this.nome});
+  const _Saudacao({required this.nome, this.ehOrganizador = false});
 
   @override
   Widget build(BuildContext context) {
@@ -287,10 +312,21 @@ class _Saudacao extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '${diasSemana[agora.weekday - 1]} ${agora.day} ${meses[agora.month - 1]} · '
-          '${hora.toString().padLeft(2, '0')}:$minutos',
-          style: textos.labelMedium,
+        // `Wrap` em vez de `Row`: se a data e o selo não couberem numa
+        // linha (tela estreita ou fonte grande), o selo desce para a linha
+        // de baixo em vez de ser cortado.
+        Wrap(
+          spacing: 10,
+          runSpacing: 4,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(
+              '${diasSemana[agora.weekday - 1]} ${agora.day} ${meses[agora.month - 1]} · '
+              '${hora.toString().padLeft(2, '0')}:$minutos',
+              style: textos.labelMedium,
+            ),
+            if (ehOrganizador) const Selo('Organização', tipo: TipoSelo.organizacao),
+          ],
         ),
         const SizedBox(height: 6),
         Text.rich(
@@ -307,6 +343,55 @@ class _Saudacao extends StatelessWidget {
           style: textos.headlineMedium,
         ),
       ],
+    );
+  }
+}
+
+/// Cartão "Área do organizador" (P26), só para organizadores: abre o
+/// painel do evento direto do Início, sem passar pelo Perfil (a entrada
+/// do Perfil continua lá).
+///
+/// Usa o `secondaryContainer`, a mesma cor do selo `ORGANIZAÇÃO` (Areia no
+/// modo claro, azul-escuro #12304A no escuro), para se destacar dos
+/// cartões do participante.
+class _AtalhoOrganizador extends StatelessWidget {
+  final VoidCallback aoTocar;
+
+  const _AtalhoOrganizador({required this.aoTocar});
+
+  @override
+  Widget build(BuildContext context) {
+    final cores = Theme.of(context).colorScheme;
+    final textos = Theme.of(context).textTheme;
+    final cantos = BorderRadius.circular(10);
+
+    return Material(
+      color: cores.secondaryContainer,
+      shape: RoundedRectangleBorder(borderRadius: cantos),
+      child: InkWell(
+        borderRadius: cantos,
+        onTap: aoTocar,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          child: Row(children: [
+            Icon(Icons.dashboard_outlined, color: cores.onSecondaryContainer),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Área do organizador',
+                      style: textos.titleSmall?.copyWith(color: cores.onSecondaryContainer)),
+                  const SizedBox(height: 2),
+                  Text('Números, inscrições e cadastros do evento',
+                      style: textos.bodySmall?.copyWith(color: cores.onSecondaryContainer)),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right, color: cores.onSecondaryContainer),
+          ]),
+        ),
+      ),
     );
   }
 }

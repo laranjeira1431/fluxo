@@ -319,8 +319,13 @@ para o login. A escolha do tema é salva no próprio aparelho com o pacote
 Quem entra como organizador (ex.: `elisa.prado@email.com`) vê também a
 **Área do organizador** no Perfil. Ela abre o painel do evento dessa
 pessoa (o administrador, `bruno.costa@email.com`, vê todos, com o
-seletor **Trocar evento**); tocar numa palestra (ou em **Inscrições**)
-abre a lista de inscritos, com busca e o botão **Remover**.
+seletor **Trocar evento**). O painel (refeito na P22) mostra, de cima
+para baixo: o selo **ORGANIZAÇÃO**; os números do evento em cartões com
+ícone (palestras, inscrições, esgotadas, média das avaliações e a
+ocupação das vagas, com uma barra); as ações em botões com ícone, dois
+por linha; quantas palestras há em cada sala; e as 5 palestras mais
+procuradas. Tocar numa palestra (ou em **Inscrições**) abre a lista de
+inscritos, com busca e o botão **Remover**.
 
 Em **Cadastros do evento**, o organizador abre, nesta ordem: **Evento e
 planta**, **Locais e rotas**, **Palestrantes**, **Palestras** e
